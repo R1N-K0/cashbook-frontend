@@ -6,9 +6,11 @@ type Props = {
 export default function FinanceCard(props: Props) {
   const { title, amount } = props
   return (
-    <div className="container bg-white w-full flex flex-col border border-gray-200 items-start py-4 justify-center space-y-2 -5 shadow-sm rounded-lg px-4">
+    <div className="container bg-white w-full flex flex-col border border-gray-200 items-start py-4 justify-center space-y-2 shadow-sm rounded-lg px-4">
       <div className="text-lg font-semibold text-gray-400">{title}</div>
-      <div className="text-4xl font-bold mt-4">{amount}</div>
+      <div className="lg:text-4xl md:text-3xl text-4xl font-bold mt-4">
+        {amount.toLocaleString()}
+      </div>
       <div className="text-lg  text-green-400  flex items-center">
         <svg
           className="w-4 h-4"

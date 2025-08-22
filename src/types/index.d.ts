@@ -8,3 +8,8 @@ export type PieChartData = {
   value: number
   color: string
 }
+
+export type LineChartData = {
+  name: string
+  value: number
+}

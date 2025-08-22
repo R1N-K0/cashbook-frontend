@@ -2,7 +2,7 @@ import MainHeader from '@/features/components/MainHeader'
 import FinanceBarChart from '@/features/finance/components/FinanceBarChart'
 import FinanceCardList from '@/features/finance/components/FinanceCardList'
 import FinancePieChart from '@/features/finance/components/FinancePieChart'
-import type { BarChartData, PieChartData } from '@/types'
+import type { BarChartData, LineChartData, PieChartData } from '@/types'
 
 export default function Home() {
   const barChartData: BarChartData[] = [
@@ -22,11 +22,20 @@ export default function Home() {
     { name: 'Group C', value: 300, color: '#F1D3CE' },
     { name: 'Group D', value: 200, color: '#EECAD5' },
   ]
+
+  const lineChartData: LineChartData[] = [
+    { name: 'Day 7', value: 5000 },
+    { name: 'Day 8', value: 8100 },
+    { name: 'Day 9', value: 19000 },
+    { name: 'Day 10', value: 23000 },
+    { name: 'Day 11', value: 5500 },
+    { name: 'Day 12', value: 10400 },
+  ]
   return (
     <div className="container-fluid bg-auto">
       <MainHeader />
       <div className="container-fluid px-10 mt-3">
-        <FinanceCardList />
+        <FinanceCardList balanceData={lineChartData} />
         <div className="grid grid-flow-row gap-8 grid-cols-1 lg:grid-cols-2">
           <FinanceBarChart data={barChartData} />
           <FinancePieChart data={categoryData} />
