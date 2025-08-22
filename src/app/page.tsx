@@ -6,10 +6,6 @@ import type { BarChartData, PieChartData } from '@/types'
 
 export default function Home() {
   const barChartData: BarChartData[] = [
-    { name: '1月', value: 10000 },
-    { name: '2月', value: 12000 },
-    { name: '3月', value: 9000 },
-    { name: '4月', value: 15000 },
     { name: '5月', value: 13000 },
     { name: '6月', value: 8000 },
     { name: '7月', value: 14000 },
@@ -27,9 +23,9 @@ export default function Home() {
     { name: 'Group D', value: 200, color: '#EECAD5' },
   ]
   return (
-    <div className="container-fluid bg-white">
+    <div className="container-fluid bg-auto">
       <MainHeader />
-      <div className="container-fluid px-8 mt-5">
+      <div className="container-fluid px-10 mt-3">
         <FinanceCardList />
         <div className="grid grid-flow-row gap-8 grid-cols-1 lg:grid-cols-2">
           <FinanceBarChart data={barChartData} />

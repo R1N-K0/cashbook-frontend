@@ -1,11 +1,11 @@
 export default function MainHeader() {
   return (
     <>
-      <nav className="bg-blue-900 py-6 px-8">
+      <nav className=" py-6 px-10">
         <div className="w-full flex flex-row items-center justify-between">
-          <div className="text-3xl font-bold text-white">ページ名</div>
+          <div className="text-3xl font-extrabold text-gray-700">ページ名</div>
           <div className="flex flex-row items-center justify-center space-x-7">
-            <div className="text-white">
+            <div className="text-gray-700">
               <svg
                 className="w-10 h-10"
                 xmlns="http://www.w3.org/2000/svg"
@@ -19,7 +19,7 @@ export default function MainHeader() {
                 />
               </svg>
             </div>
-            <div className="text-white">
+            <div className="text-gray-700">
               <svg
                 className="w-10 h-10"
                 xmlns="http://www.w3.org/2000/svg"

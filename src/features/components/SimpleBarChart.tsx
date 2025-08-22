@@ -39,9 +39,9 @@ export default function SimpleBarChart(props: Props) {
         <Legend />
         <Bar
           dataKey="value"
-          fill="#77BEF0"
-          stroke="gray"
-          activeBar={<Rectangle fill="#799EFF" stroke="white" />}
+          fill="#CAE7EE"
+          stroke="CAE7EE"
+          activeBar={<Rectangle fill="#55B2C9" stroke="#55B2C9" />}
         />
       </BarChart>
     </ResponsiveContainer>
