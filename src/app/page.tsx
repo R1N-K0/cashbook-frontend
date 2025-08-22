@@ -1,10 +1,11 @@
 import MainHeader from '@/features/components/MainHeader'
 import FinanceBarChart from '@/features/finance/components/FinanceBarChart'
 import FinanceCardList from '@/features/finance/components/FinanceCardList'
-import type { BarChartData } from '@/types'
+import FinancePieChart from '@/features/finance/components/FinancePieChart'
+import type { BarChartData, PieChartData } from '@/types'
 
 export default function Home() {
-  const data: BarChartData[] = [
+  const barChartData: BarChartData[] = [
     { name: '1月', value: 10000 },
     { name: '2月', value: 12000 },
     { name: '3月', value: 9000 },
@@ -18,13 +19,21 @@ export default function Home() {
     { name: '11月', value: 9000 },
     { name: '12月', value: 20000 },
   ]
+
+  const categoryData: PieChartData[] = [
+    { name: 'Group A', value: 400, color: '#D1E9F6' },
+    { name: 'Group B', value: 300, color: '#F6EACB' },
+    { name: 'Group C', value: 300, color: '#F1D3CE' },
+    { name: 'Group D', value: 200, color: '#EECAD5' },
+  ]
   return (
     <div className="container-fluid bg-white">
       <MainHeader />
       <div className="container-fluid px-8 mt-5">
         <FinanceCardList />
-        <div className="grid grid-flow-row gap-8 grid-cols-1 md:grid-cols-2">
-          <FinanceBarChart data={data} />
+        <div className="grid grid-flow-row gap-8 grid-cols-1 lg:grid-cols-2">
+          <FinanceBarChart data={barChartData} />
+          <FinancePieChart data={categoryData} />
         </div>
       </div>
     </div>
