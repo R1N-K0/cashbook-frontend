@@ -1,5 +1,3 @@
-import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
-import AppSidebar from '@/features/components/sideBar'
 import type { Metadata } from 'next'
 import { Noto_Sans_JP } from 'next/font/google'
 import './globals.css'
@@ -25,15 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
-      <body className={`${notoSansJp.variable} antialiased `}>
-        <SidebarProvider>
-          <AppSidebar />
-          <main>
-            <SidebarTrigger />
-            {children}
-          </main>
-        </SidebarProvider>
-      </body>
+      <body className={`${notoSansJp.variable} antialiased `}>{children}</body>
     </html>
   )
 }
