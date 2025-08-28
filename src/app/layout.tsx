@@ -23,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
-      <body className={`${notoSansJp.variable} antialiased`}>{children}</body>
+      <body className={`${notoSansJp.variable} antialiased `}>{children}</body>
     </html>
   )
 }
