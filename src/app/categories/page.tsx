@@ -1,7 +1,31 @@
+'use client'
+import { Button } from '@/components/ui/button'
+import CategoriesList from '@/features/category/components/CategoriesList'
+import SearchBox from '@/features/components/SearchBox'
+import { useState } from 'react'
+
 const CategoryPage = () => {
+  const [keyword, setKeyword] = useState<string>('')
   return (
     <>
-      <div>カテゴリ一覧</div>
+      <div className="container-fluid px-8 py-8 flex flex-col space-y-5">
+        <div className="flex flex-row items-center justify-between">
+          <div className="text-3xl font-bold text-gray-700">カテゴリー管理</div>
+          <div>
+            <Button variant="outline" size="lg">
+              + カテゴリーの追加
+            </Button>
+          </div>
+        </div>
+
+        <div className="flex flex-row items-center justify-end gap-5">
+          <div>フィルター</div>
+          <SearchBox setState={setKeyword} placeholder="カテゴリーを検索" />
+        </div>
+
+        <CategoriesList />
+        <CategoriesList />
+      </div>
     </>
   )
 }
