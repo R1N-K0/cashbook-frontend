@@ -1,4 +1,3 @@
-import SidebarLayout from '@/app/layouts/SidebarLayout'
 import MainHeader from '@/features/components/MainHeader'
 import FinanceBarChart from '@/features/finance/components/FinanceBarChart'
 import FinanceCardList from '@/features/finance/components/FinanceCardList'
@@ -33,17 +32,15 @@ export default function Home() {
     { name: 'Day 12', value: 10400 },
   ]
   return (
-    <SidebarLayout>
-      <div className="container-fluid bg-auto">
-        <MainHeader />
-        <div className="container-fluid px-10 mt-3">
-          <FinanceCardList balanceData={lineChartData} />
-          <div className="grid grid-flow-row gap-8 grid-cols-1 lg:grid-cols-2">
-            <FinanceBarChart data={barChartData} />
-            <FinancePieChart data={categoryData} />
-          </div>
+    <div className="container-fluid bg-auto">
+      <MainHeader />
+      <div className="container-fluid px-10 mt-3">
+        <FinanceCardList balanceData={lineChartData} />
+        <div className="grid grid-flow-row gap-8 grid-cols-1 lg:grid-cols-2">
+          <FinanceBarChart data={barChartData} />
+          <FinancePieChart data={categoryData} />
         </div>
       </div>
-    </SidebarLayout>
+    </div>
   )
 }
