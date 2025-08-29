@@ -13,3 +13,7 @@ export type LineChartData = {
   name: string
   value: number
 }
+
+export type CategoryType = {
+  type: 'income' | 'expense'
+}
