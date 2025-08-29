@@ -1,6 +1,6 @@
 'use client'
-import { Button } from '@/components/ui/button'
 import CategoriesList from '@/features/category/components/CategoriesList'
+import ModalForm from '@/features/category/components/ModalForm'
 import FilterBox from '@/features/components/FilterBox'
 import SearchBox from '@/features/components/SearchBox'
 import { useState } from 'react'
@@ -8,6 +8,7 @@ import { useState } from 'react'
 const CategoryPage = () => {
   const [keyword, setKeyword] = useState<string>('')
   const [filter, setFilter] = useState<string>('')
+  const [isVisible, setVisible] = useState<boolean>(false)
 
   return (
     <>
@@ -15,9 +16,7 @@ const CategoryPage = () => {
         <div className="flex flex-row items-center justify-between">
           <div className="text-3xl font-bold text-gray-700">カテゴリー管理</div>
           <div>
-            <Button variant="outline" size="lg">
-              + カテゴリーの追加
-            </Button>
+            <ModalForm />
           </div>
         </div>
 
