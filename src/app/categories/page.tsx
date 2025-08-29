@@ -8,7 +8,6 @@ import { useState } from 'react'
 const CategoryPage = () => {
   const [keyword, setKeyword] = useState<string>('')
   const [filter, setFilter] = useState<string>('')
-  const [isVisible, setVisible] = useState<boolean>(false)
 
   return (
     <>
