@@ -1,9 +1,17 @@
+'use client'
+
+import { useGetPageName } from '@/hooks/useGetPageName'
+
 export default function MainHeader() {
+  const pageName = useGetPageName()
+
   return (
     <>
-      <nav className=" py-6 px-10">
+      <nav className="py-6 px-10 border-b-4">
         <div className="w-full flex flex-row items-center justify-between">
-          <div className="text-3xl font-extrabold text-gray-700">ページ名</div>
+          <div className="text-3xl font-extrabold text-gray-700">
+            {pageName}
+          </div>
           <div className="flex flex-row items-center justify-center space-x-7">
             <div className="text-gray-700">
               <svg
