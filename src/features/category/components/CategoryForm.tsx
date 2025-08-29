@@ -18,6 +18,7 @@ import {
 } from '@/components/ui/select'
 import type { CategoryFormValues } from '@/features/category/lib/schemas/categorySchema'
 import { categorySchema } from '@/features/category/lib/schemas/categorySchema'
+import ColorPicker from '@/features/components/ColorPicker'
 import { zodResolver } from '@hookform/resolvers/zod'
 import type { SubmitHandler } from 'react-hook-form'
 import { useForm } from 'react-hook-form'
@@ -44,13 +45,11 @@ export default function CategoryForm() {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>カテゴリー名</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input placeholder="カテゴリー名" {...field} />
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
+
               <FormMessage />
             </FormItem>
           )}
@@ -72,9 +71,7 @@ export default function CategoryForm() {
                   </SelectContent>
                 </Select>
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
+
               <FormMessage />
             </FormItem>
           )}
@@ -87,7 +84,13 @@ export default function CategoryForm() {
             <FormItem>
               <FormLabel>カラー</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <ColorPicker
+                  inputRef={field.ref}
+                  handleChange={(newColor) => {
+                    field.onChange(`#${newColor.hex}`)
+                  }}
+                  default_value="#33A1E0"
+                />
               </FormControl>
               <FormDescription>
                 This is your public display name.
