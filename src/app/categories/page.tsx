@@ -1,18 +1,14 @@
 'use client'
-import { Button } from '@/components/ui/button'
 import CategoriesList from '@/features/category/components/CategoriesList'
-import CategoryForm from '@/features/category/components/CategoryForm'
+import ModalForm from '@/features/category/components/ModalForm'
 import FilterBox from '@/features/components/FilterBox'
 import SearchBox from '@/features/components/SearchBox'
-import type { CategoryType } from '@/types'
 import { useState } from 'react'
-import { FormProvider, useForm } from 'react-hook-form'
 
 const CategoryPage = () => {
   const [keyword, setKeyword] = useState<string>('')
   const [filter, setFilter] = useState<string>('')
   const [isVisible, setVisible] = useState<boolean>(false)
-  const methods = useForm<CategoryType>()
 
   return (
     <>
@@ -20,9 +16,7 @@ const CategoryPage = () => {
         <div className="flex flex-row items-center justify-between">
           <div className="text-3xl font-bold text-gray-700">カテゴリー管理</div>
           <div>
-            <Button variant="outline" size="lg">
-              + カテゴリーの追加
-            </Button>
+            <ModalForm />
           </div>
         </div>
 
@@ -40,9 +34,6 @@ const CategoryPage = () => {
           <CategoriesList name="支出カテゴリ" />
           <CategoriesList name="収入カテゴリ" />
         </div>
-        <FormProvider {...methods}>
-          <CategoryForm />
-        </FormProvider>
       </div>
     </>
   )
