@@ -9,6 +9,13 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import type { CategoryFormValues } from '@/features/category/lib/schemas/categorySchema'
 import { categorySchema } from '@/features/category/lib/schemas/categorySchema'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -51,11 +58,19 @@ export default function CategoryForm() {
         <FormField
           control={form.control}
           name="type"
-          render={({ field }) => (
+          render={({ field: { ref, onChange, ...field } }) => (
             <FormItem>
               <FormLabel>タイプ</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Select {...field} onValueChange={onChange}>
+                  <SelectTrigger className="w-[180px]" ref={ref}>
+                    <SelectValue placeholder="Theme" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="income">収入</SelectItem>
+                    <SelectItem value="expense">支出</SelectItem>
+                  </SelectContent>
+                </Select>
               </FormControl>
               <FormDescription>
                 This is your public display name.
