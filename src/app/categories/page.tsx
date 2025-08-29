@@ -23,8 +23,10 @@ const CategoryPage = () => {
           <SearchBox setState={setKeyword} placeholder="カテゴリーを検索" />
         </div>
 
-        <CategoriesList name="支出カテゴリ" />
-        <CategoriesList name="収入カテゴリ" />
+        <div className="grid lg:gap-12 gap-5 lg:grid-cols-2 grid-cols-1">
+          <CategoriesList name="支出カテゴリ" />
+          <CategoriesList name="収入カテゴリ" />
+        </div>
       </div>
     </>
   )
