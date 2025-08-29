@@ -1,7 +1,9 @@
 const TransactionCreatePage = () => {
   return (
     <>
-      <div>取引作成</div>
+      <div className="container-fluid px-8 py-8">
+        <div></div>
+      </div>
     </>
   )
 }
