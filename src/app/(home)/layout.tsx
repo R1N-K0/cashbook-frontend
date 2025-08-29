@@ -6,9 +6,9 @@ const SidebarLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div className="grid grid-rows-[auto_1fr] h-full">
       <MainHeader />
-      <div className="flex gird-cols-[auto_1fr]">
+      <div className="flex gird-cols-[auto_1fr] ">
         <MainSidebar />
-        <div>{children}</div>
+        <div className="w-full">{children}</div>
       </div>
     </div>
   )
