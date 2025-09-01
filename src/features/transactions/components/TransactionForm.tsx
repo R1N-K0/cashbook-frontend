@@ -1,23 +1,10 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import {
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import CategoryTag from '@/features/transactions/components/CategoryTag'
+import DateField from '@/features/components/fields/DateField'
+import InputField from '@/features/components/fields/InputFiled'
+import NumberField from '@/features/components/fields/NumberField'
+import CategorySelectField from '@/features/transactions/components/fields/CategorySelectField'
 import type { TransactionFormValue } from '@/features/transactions/lib/schemas/transactionSchema.ts'
 import { transactionSchema } from '@/features/transactions/lib/schemas/transactionSchema.ts'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -29,7 +16,6 @@ export default function TransactionForm() {
     resolver: zodResolver(transactionSchema),
     defaultValues: {
       description: '',
-      date: '',
       memo: null,
       amount: 0,
       categoryId: 1,
@@ -37,95 +23,62 @@ export default function TransactionForm() {
   })
 
   const onSubmit: SubmitHandler<TransactionFormValue> = (data) => {
-    console.log('フォームデータ:', data)
+    const formattedData = {
+      ...data,
+      date: data.date ? data.date.toISOString().split('T')[0] : null,
+      amount: Number(data.amount || 0),
+    }
+
+    console.log(JSON.stringify(formattedData))
   }
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
+      <form
+        onSubmit={methods.handleSubmit(onSubmit)}
+        className="space-y-8 mx-auto px-8 lg:container-fluid container lg:max-w-5xl"
+      >
+        <InputField
           control={methods.control}
           name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>取引内容</FormLabel>
-              <FormControl>
-                <Input placeholder="取引内容" {...field} />
-              </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={methods.control}
-          name="amount"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>金額</FormLabel>
-              <FormControl>
-                <Input placeholder="金額" {...field} type="number" min={0} />
-              </FormControl>
-
-              <FormMessage />
-            </FormItem>
-          )}
+          label="取引内容"
+          placeholder="取引内容を入力"
         />
 
-        <FormField
+        <InputField
           control={methods.control}
           name="memo"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>取引理由</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="取引理由"
-                  {...field}
-                  value={field.value ?? ''}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          placeholder="取引理由を入力"
+          label="取引理由"
         />
 
-        <FormField
+        <NumberField
           control={methods.control}
-          name="categoryId"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <Select
-                onValueChange={(val) => field.onChange(Number(val))}
-                defaultValue={field.value?.toString()}
-              >
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="1" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="1">
-                    <CategoryTag />
-                  </SelectItem>
-                  <SelectItem value="2">
-                    <CategoryTag />
-                  </SelectItem>
-                  <SelectItem value="3">
-                    <CategoryTag />
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-
-              <FormMessage />
-            </FormItem>
-          )}
+          name="amount"
+          placeholder="取引金額を入力"
+          label="取引金額"
         />
 
-        <Button type="submit">Submit</Button>
+        <div className="flex flex-row justify-start space-x-7">
+          <DateField name="date" label="取引日" />
+
+          <CategorySelectField name="categoryId" label="カテゴリー" />
+        </div>
+
+        <div className="grid grid-cols-2 w-full gap-5">
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full"
+            onClick={() => methods.reset()}
+          >
+            キャンセル
+          </Button>
+
+          <Button type="submit" className="w-full">
+            取引を登録する
+          </Button>
+        </div>
       </form>
     </FormProvider>
   )
