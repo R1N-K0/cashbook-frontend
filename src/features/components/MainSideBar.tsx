@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 const MainSidebar = () => {
   const items = [
     { title: 'ホーム', url: '/' },
@@ -5,17 +7,15 @@ const MainSidebar = () => {
     { title: '取引レポート', url: '/reports' },
     { title: '取引ログ', url: '/logs' },
     { title: 'カテゴリ一覧', url: '/categories' },
-    { title: '新規登録', url: '/signUp' },
-    { title: 'ログイン', url: '/login' },
   ]
 
   return (
     <div className="flex flex-col p-8 gap-6 border-r-4 h-full">
       {items.map((item) => (
         <div key={item.title}>
-          <a href={item.url}>
+          <Link href={item.url}>
             <span>{item.title}</span>
-          </a>
+          </Link>
         </div>
       ))}
     </div>
