@@ -26,6 +26,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import type { CategoryType } from '@/types'
 
 const data: Payment[] = [
   {
@@ -33,7 +34,7 @@ const data: Payment[] = [
     date: '2023-09-28',
     user: '太郎',
     description: '買い物',
-    category: '食費',
+    type: 'expense',
     memo: '週末の買い出し',
     amount: 20000,
   },
@@ -42,7 +43,7 @@ const data: Payment[] = [
     date: '2023-09-29',
     user: '花子',
     description: '外食',
-    category: '食費',
+    type: 'expense',
     memo: '友人とランチ',
     amount: 1500,
   },
@@ -51,7 +52,7 @@ const data: Payment[] = [
     date: '2023-09-30',
     user: '次郎',
     description: '交通費',
-    category: '交通',
+    type: 'expense',
     memo: '出張の交通費',
     amount: 5000,
   },
@@ -60,7 +61,7 @@ const data: Payment[] = [
     date: '2023-10-01',
     user: '四郎',
     description: '光熱費',
-    category: '生活費',
+    type: 'expense',
     memo: '10月分の電気代',
     amount: 8000,
   },
@@ -69,18 +70,26 @@ const data: Payment[] = [
     date: '2023-10-02',
     user: '五郎',
     description: '通信費',
-    category: '生活費',
+    type: 'expense',
     memo: '10月分の携帯電話代',
     amount: 3000,
   },
+  {
+    id: '6f7g8h9i',
+    date: '2023-10-03',
+    user: '六郎',
+    description: 'バイト代',
+    type: 'income',
+    memo: '10月分のバイト代',
+    amount: 80000,
+  },
 ]
 
-export type Payment = {
+export type Payment = CategoryType & {
   id: string
   date: string
   user: string
   description: string
-  category: string
   memo: string
   amount: number
 }
@@ -116,10 +125,16 @@ export const columns: ColumnDef<Payment>[] = [
     ),
   },
   {
-    accessorKey: 'category',
+    accessorKey: 'type',
     header: 'カテゴリ',
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue('category')}</div>
+      <div className="capitalize">
+        {row.getValue('type') === 'income' ? (
+          <div className="text-green-500">収入</div>
+        ) : (
+          <div className="text-blue-500">支出</div>
+        )}
+      </div>
     ),
   },
   {
@@ -149,7 +164,15 @@ export const columns: ColumnDef<Payment>[] = [
         currency: 'JPY',
       }).format(amount)
 
-      return <div className="font-medium">{formatted}</div>
+      return (
+        <div className="font-medium">
+          {row.getValue('type') === 'income' ? (
+            <div className="text-green-500">{formatted}</div>
+          ) : (
+            <div className="text-blue-500">{formatted}</div>
+          )}
+        </div>
+      )
     },
   },
   {
@@ -217,8 +240,9 @@ export function DataTableDemo() {
   })
 
   return (
-    <div className="w-full">
-      {/* <div className="flex items-center py-4">
+    <div className="w-full font-bold text-gray-500">
+      {/* 以下
+      <div className="flex items-center py-4">
         <Input
           placeholder="Filter emails..."
           value={(table.getColumn('email')?.getFilterValue() as string) ?? ''}
@@ -256,7 +280,7 @@ export function DataTableDemo() {
       </div> */}
       <div className="overflow-hidden rounded-md border">
         <Table>
-          <TableHeader>
+          <TableHeader className="font-bold">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
