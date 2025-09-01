@@ -17,3 +17,10 @@ export type LineChartData = {
 export type CategoryType = {
   type: 'income' | 'expense'
 }
+
+export type CategoryRes = {
+  id: number
+  name: string
+  type: CategoryType
+  color: string
+}
