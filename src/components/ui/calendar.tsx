@@ -6,28 +6,35 @@ import {
   ChevronRightIcon,
 } from 'lucide-react'
 import * as React from 'react'
-import type { DayButton } from 'react-day-picker'
+import type { DayButton, Locale } from 'react-day-picker'
 import { DayPicker, getDefaultClassNames } from 'react-day-picker'
 
 import { Button, buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-
+import { format } from 'date-fns'
+import { ja } from 'date-fns/locale'
 function Calendar({
   className,
   classNames,
   showOutsideDays = true,
   captionLayout = 'label',
   buttonVariant = 'ghost',
-  formatters,
   components,
   ...props
 }: React.ComponentProps<typeof DayPicker> & {
   buttonVariant?: React.ComponentProps<typeof Button>['variant']
 }) {
   const defaultClassNames = getDefaultClassNames()
+  const formatCaption = (date: Date, options?: { locale?: Locale }) => {
+    const y = format(date, 'yyyy')
+    const m = format(date, 'MM', { locale: options?.locale })
+    return `${y}年${m}月`
+  }
 
   return (
     <DayPicker
+      locale={ja}
+      weekStartsOn={1}
       showOutsideDays={showOutsideDays}
       className={cn(
         'bg-background group/calendar p-3 [--cell-size:--spacing(8)] [[data-slot=card-content]_&]:bg-transparent [[data-slot=popover-content]_&]:bg-transparent',
@@ -36,11 +43,7 @@ function Calendar({
         className,
       )}
       captionLayout={captionLayout}
-      formatters={{
-        formatMonthDropdown: (date) =>
-          date.toLocaleString('default', { month: 'short' }),
-        ...formatters,
-      }}
+      formatters={{ formatCaption }}
       classNames={{
         root: cn('w-fit', defaultClassNames.root),
         months: cn(
