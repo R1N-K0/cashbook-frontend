@@ -14,10 +14,16 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { ArrowUpDown } from 'lucide-react'
+import { ArrowUpDown, ChevronDown } from 'lucide-react'
 import * as React from 'react'
 
 import { Button } from '@/components/ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 import {
   Table,
   TableBody,
@@ -97,13 +103,14 @@ export type Payment = CategoryType & {
 export const columns: ColumnDef<Payment>[] = [
   {
     accessorKey: 'date',
+    meta: { label: '日付' },
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          日付
+          {column.columnDef.meta?.label}
           <ArrowUpDown />
         </Button>
       )
@@ -114,19 +121,28 @@ export const columns: ColumnDef<Payment>[] = [
   },
   {
     accessorKey: 'user',
-    header: 'ユーザー',
+    meta: { label: 'ユーザー' },
+    header: ({ column }) => {
+      return <>{column.columnDef.meta?.label}</>
+    },
     cell: ({ row }) => <div className="capitalize">{row.getValue('user')}</div>,
   },
   {
     accessorKey: 'description',
-    header: '説明',
+    meta: { label: '説明' },
+    header: ({ column }) => {
+      return <>{column.columnDef.meta?.label}</>
+    },
     cell: ({ row }) => (
       <div className="capitalize">{row.getValue('description')}</div>
     ),
   },
   {
     accessorKey: 'type',
-    header: 'カテゴリ',
+    meta: { label: 'カテゴリ' },
+    header: ({ column }) => {
+      return <>{column.columnDef.meta?.label}</>
+    },
     cell: ({ row }) => (
       <div className="capitalize">
         {row.getValue('type') === 'income' ? (
@@ -139,11 +155,15 @@ export const columns: ColumnDef<Payment>[] = [
   },
   {
     accessorKey: 'memo',
-    header: 'メモ',
+    meta: { label: 'メモ' },
+    header: ({ column }) => {
+      return <>{column.columnDef.meta?.label}</>
+    },
     cell: ({ row }) => <div className="capitalize">{row.getValue('memo')}</div>,
   },
   {
     accessorKey: 'amount',
+    meta: { label: '金額' },
     header: ({ column }) => {
       return (
         <Button
@@ -151,7 +171,7 @@ export const columns: ColumnDef<Payment>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
           className="p-0"
         >
-          金額
+          {column.columnDef.meta?.label}
           <ArrowUpDown />
         </Button>
       )
@@ -167,9 +187,9 @@ export const columns: ColumnDef<Payment>[] = [
       return (
         <div className="font-medium">
           {row.getValue('type') === 'income' ? (
-            <div className="text-green-500">{formatted}</div>
+            <div className="text-green-500">{`+${formatted}`}</div>
           ) : (
-            <div className="text-blue-500">{formatted}</div>
+            <div className="text-blue-500">{`-${formatted}`}</div>
           )}
         </div>
       )
@@ -177,7 +197,10 @@ export const columns: ColumnDef<Payment>[] = [
   },
   {
     id: 'edit',
-    header: '編集',
+    meta: { label: '編集' },
+    header: ({ column }) => {
+      return <>{column.columnDef.meta?.label}</>
+    },
     cell: ({ row }) => (
       <>
         <button className="p-2 rounded-lg hover:bg-gray-100 text-blue-500">
@@ -241,16 +264,7 @@ export function DataTableDemo() {
 
   return (
     <div className="w-full font-bold text-gray-500">
-      {/* 以下
       <div className="flex items-center py-4">
-        <Input
-          placeholder="Filter emails..."
-          value={(table.getColumn('email')?.getFilterValue() as string) ?? ''}
-          onChange={(event) =>
-            table.getColumn('email')?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
@@ -271,13 +285,13 @@ export function DataTableDemo() {
                       column.toggleVisibility(!!value)
                     }
                   >
-                    {column.id}
+                    {column.columnDef.meta?.label}
                   </DropdownMenuCheckboxItem>
                 )
               })}
           </DropdownMenuContent>
         </DropdownMenu>
-      </div> */}
+      </div>
       <div className="overflow-hidden rounded-md border">
         <Table>
           <TableHeader className="font-bold">

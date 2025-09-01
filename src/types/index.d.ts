@@ -17,3 +17,5 @@ export type LineChartData = {
 export type CategoryType = {
   type: 'income' | 'expense'
 }
+
+export type 
