@@ -7,7 +7,7 @@ const CategoryPage = async () => {
 
   return (
     <>
-      <CategoryTable />
+      <CategoryTable initialData={initialCategories} />
     </>
   )
 }

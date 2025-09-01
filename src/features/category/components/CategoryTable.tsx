@@ -1,13 +1,28 @@
 'use client'
+import { getAllCategory } from '@/features/category/actions/categoryAction'
 import CategoriesList from '@/features/category/components/CategoriesList'
 import ModalForm from '@/features/category/components/ModalForm'
 import FilterBox from '@/features/components/FilterBox'
 import SearchBox from '@/features/components/SearchBox'
+import useCategorySWR from '@/hooks/useCategorySWR'
+import type { CategoryRes } from '@/types'
 import { useState } from 'react'
 
-export default function CategoryTable() {
+type Props = {
+  initialData: CategoryRes[]
+}
+
+const fetcher = async () => {
+  return await getAllCategory()
+}
+
+export default function CategoryTable({ initialData }: Props) {
   const [keyword, setKeyword] = useState<string>('')
   const [filter, setFilter] = useState<string>('')
+
+  const { data, error, isLoading } = useCategorySWR({
+    initialData,
+  })
 
   return (
     <>
