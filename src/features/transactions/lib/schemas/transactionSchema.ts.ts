@@ -6,7 +6,7 @@ export const transactionSchema = z.object({
   description: z
     .string({ message: '取引内容を入力してください' })
     .max(255)
-    .nonempty(),
+    .nonempty({ message: '取引内容を入力してください' }),
   memo: z.string().nullable(),
   amount: z
     .number({ message: '金額を指定してください' })

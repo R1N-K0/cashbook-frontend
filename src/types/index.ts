@@ -21,6 +21,7 @@ export type Category = {
   name: string
   type: CategoryType
   color: string
+  count: number
 }
 
 export type CategoryRes = {

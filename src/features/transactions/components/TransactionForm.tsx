@@ -60,7 +60,7 @@ export default function TransactionForm() {
           label="取引金額"
         />
 
-        <div className="flex flex-row justify-start space-x-7">
+        <div className="flex flex-row justify-start items-center space-x-7">
           <DateField name="date" label="取引日" />
 
           <CategorySelectField name="categoryId" label="カテゴリー" />
