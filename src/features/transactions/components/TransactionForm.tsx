@@ -19,6 +19,7 @@ export default function TransactionForm() {
       memo: null,
       amount: 0,
       categoryId: 1,
+      createdUser: '',
     },
   })
 
@@ -63,6 +64,12 @@ export default function TransactionForm() {
           <DateField name="date" label="取引日" />
 
           <CategorySelectField name="categoryId" label="カテゴリー" />
+
+          <InputField
+            name="createdUser"
+            label="担当者"
+            placeholder="担当者の名前を入力"
+          />
         </div>
 
         <div className="grid grid-cols-2 w-full gap-5">
