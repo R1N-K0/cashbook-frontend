@@ -9,7 +9,7 @@ import type { CategoryRes } from '@/types'
 import { useState } from 'react'
 
 type Props = {
-  initialData: CategoryRes[]
+  initialData: CategoryRes
 }
 
 const fetcher = async () => {
@@ -20,7 +20,11 @@ export default function CategoryTable({ initialData }: Props) {
   const [keyword, setKeyword] = useState<string>('')
   const [filter, setFilter] = useState<string>('')
 
-  const { data, error, isLoading } = useCategorySWR({
+  const {
+    data = { income: [], expense: [] },
+    error,
+    isLoading,
+  } = useCategorySWR({
     initialData,
   })
 
@@ -45,8 +49,8 @@ export default function CategoryTable({ initialData }: Props) {
         </div>
 
         <div className="grid lg:gap-12 gap-5 lg:grid-cols-2 grid-cols-1">
-          <CategoriesList name="支出カテゴリ" />
-          <CategoriesList name="収入カテゴリ" />
+          <CategoriesList name="支出カテゴリ" categories={data.expense} />
+          <CategoriesList name="収入カテゴリ" categories={data.income} />
         </div>
       </div>
     </>

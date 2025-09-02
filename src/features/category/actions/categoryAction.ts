@@ -2,8 +2,8 @@
 
 import type { CategoryFormValues } from '@/features/category/lib/schemas/categorySchema'
 import type { CategoryRes } from '@/types'
+import { type Category } from '@/types'
 import { cookies } from 'next/headers'
-
 export async function createCategory(data: CategoryFormValues) {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get('access_token')?.value
@@ -42,9 +42,21 @@ export async function getAllCategory() {
       credentials: 'include',
     },
   )
-  const data: CategoryRes[] = await res.json()
+  const data: Category[] = await res.json()
+  const response: CategoryRes = data.reduce(
+    (acc, val) => {
+      if (val.type === 'income') {
+        acc.income.push(val)
+      } else if (val.type === 'expense') {
+        acc.expense.push(val)
+      }
+      return acc
+    },
+    { income: [] as Category[], expense: [] as Category[] },
+  )
+
   if (!res.ok) {
     throw new Error(`Failed to fetch: ${res.status}`)
   }
-  return data
+  return response
 }

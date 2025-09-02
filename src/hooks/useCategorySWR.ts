@@ -3,7 +3,7 @@ import type { CategoryRes } from '@/types'
 import useSWR from 'swr'
 
 type Props = {
-  initialData?: CategoryRes[]
+  initialData?: CategoryRes
 }
 
 export default function useCategorySWR({ initialData }: Props) {
@@ -11,11 +11,14 @@ export default function useCategorySWR({ initialData }: Props) {
     return await getAllCategory()
   }
 
-  const { data, error, isLoading, mutate } = useSWR<CategoryRes[]>(
+  const { data, error, isLoading, mutate } = useSWR<CategoryRes>(
     '/api/categories',
     fetcher,
 
-    { fallbackData: initialData ?? [], revalidateOnMount: true },
+    {
+      fallbackData: initialData ?? { income: [], expense: [] },
+      revalidateOnMount: true,
+    },
   )
 
   return { data, error, isLoading, mutate }
