@@ -1,26 +1,26 @@
 'use client'
 
-import { getAllCategory } from '@/features/category/actions/categoryAction'
-import type { CategoryRes } from '@/types'
+import { getAllTransaction } from '@/features/transactions/actions/transactionAction'
+import type { Transaction } from '@/types'
 import { useRouter } from 'next/navigation'
 import useSWR from 'swr'
 
 type Props = {
-  initialData?: CategoryRes
+  initialData?: Transaction[]
 }
 
-export default function useCategorySWR({ initialData }: Props) {
+export default function useTransactionSWR({ initialData }: Props) {
   const router = useRouter()
 
   const fetcher = async () => {
-    return await getAllCategory()
+    return await getAllTransaction()
   }
 
-  const { data, error, isLoading, mutate } = useSWR<CategoryRes>(
+  const { data, error, isLoading, mutate } = useSWR<Transaction[]>(
     '/api/categories',
     fetcher,
     {
-      fallbackData: initialData ?? { income: [], expense: [] },
+      fallbackData: initialData ?? [],
       revalidateOnMount: false,
       onErrorRetry: (error) => {
         if (error.status === 401) router.push('/auth')
