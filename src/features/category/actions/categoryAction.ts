@@ -2,6 +2,7 @@
 import type { CategoryFormValues } from '@/features/category/lib/schemas/categorySchema'
 import type { CategoryRes } from '@/types'
 import { type Category } from '@/types'
+import { CategoryType } from 'enums/category-type'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 export async function createCategory(data: CategoryFormValues) {
@@ -52,9 +53,9 @@ export async function getAllCategory() {
   const data: Category[] = await res.json()
   const response: CategoryRes = data.reduce(
     (acc, val) => {
-      if (val.type === 'income') {
+      if (val.type === CategoryType.income) {
         acc.income.push(val)
-      } else if (val.type === 'expense') {
+      } else if (val.type === CategoryType.expense) {
         acc.expense.push(val)
       }
       return acc

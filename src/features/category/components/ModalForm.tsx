@@ -6,7 +6,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import CategoryForm from '@/features/category/components/CategoryForm'
-import type { CategoryType } from '@/types'
+import type { CategoryType } from 'enums/category-type'
 
 import { FormProvider, useForm } from 'react-hook-form'
 
