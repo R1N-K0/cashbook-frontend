@@ -1,7 +1,7 @@
 'use server'
 
 import type { CategoryFormValues } from '@/features/category/lib/schemas/categorySchema'
-import type { CategoryRes } from '@/types'
+import type { CategoryRes, FetchError } from '@/types'
 import { type Category } from '@/types'
 import { cookies } from 'next/headers'
 export async function createCategory(data: CategoryFormValues) {
@@ -42,6 +42,12 @@ export async function getAllCategory() {
       credentials: 'include',
     },
   )
+  if (!res.ok) {
+    const errorData = await res.json()
+    throw Object.assign(new Error(errorData.message), {
+      status: res.status,
+    }) as FetchError
+  }
   const data: Category[] = await res.json()
   const response: CategoryRes = data.reduce(
     (acc, val) => {
@@ -55,8 +61,5 @@ export async function getAllCategory() {
     { income: [] as Category[], expense: [] as Category[] },
   )
 
-  if (!res.ok) {
-    throw new Error(`Failed to fetch: ${res.status}`)
-  }
   return response
 }
