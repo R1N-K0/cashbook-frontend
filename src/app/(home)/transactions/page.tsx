@@ -3,6 +3,7 @@ import Calendar22 from '@/features/components/DateOfBirthPicker'
 import FilterBox from '@/features/components/FilterBox'
 import SearchBox from '@/features/components/SearchBox'
 import { DataTableDemo } from '@/features/transactions/components/DataTable/DataTable'
+import Link from 'next/link'
 import { useState } from 'react'
 
 const TarnsactionPage = () => {
@@ -25,6 +26,11 @@ const TarnsactionPage = () => {
             setFilter={setFilter}
           />
           <SearchBox setState={setKeyWord} placeholder="検索" />
+          <Link href="/transactions/create">
+            <button className="bg-gray-900 text-white font-bold rounded-md text-sm px-5 py-2 hover:bg-gray-700 focus:outline-none focus:ring-4">
+              + 新規取引作成
+            </button>
+          </Link>
         </div>
       </div>
       <DataTableDemo />
