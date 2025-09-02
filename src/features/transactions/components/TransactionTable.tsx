@@ -5,12 +5,12 @@ import FilterBox from '@/features/components/FilterBox'
 import SearchBox from '@/features/components/SearchBox'
 import { DataTableDemo } from '@/features/transactions/components/DataTable/DataTable'
 import useTransactionSWR from '@/hooks/useTransactionSWR'
-import type { Transaction } from '@/types'
+import type { TransactionData } from '@/types'
 import { Link } from 'lucide-react'
 import { useState } from 'react'
 
 type Props = {
-  initialData: Transaction[]
+  initialData: TransactionData[]
 }
 
 export default function TransactionTable({ initialData }: Props) {
@@ -18,6 +18,7 @@ export default function TransactionTable({ initialData }: Props) {
   const [filte, setFilter] = useState<string>('')
 
   const { data, isLoading, error } = useTransactionSWR({ initialData })
+  console.log(data)
 
   return (
     <div className="grid grid-rows-[auto_1fr] h-full p-8">
@@ -43,7 +44,7 @@ export default function TransactionTable({ initialData }: Props) {
           </Link>
         </div>
       </div>
-      <DataTableDemo />
+      <DataTableDemo data={data} />
     </div>
   )
 }

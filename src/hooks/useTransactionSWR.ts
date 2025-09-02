@@ -1,12 +1,12 @@
 'use client'
 
 import { getAllTransaction } from '@/features/transactions/actions/transactionAction'
-import type { Transaction } from '@/types'
+import type { TransactionData } from '@/types'
 import { useRouter } from 'next/navigation'
 import useSWR from 'swr'
 
 type Props = {
-  initialData?: Transaction[]
+  initialData?: TransactionData[]
 }
 
 export default function useTransactionSWR({ initialData }: Props) {
@@ -16,7 +16,7 @@ export default function useTransactionSWR({ initialData }: Props) {
     return await getAllTransaction()
   }
 
-  const { data, error, isLoading, mutate } = useSWR<Transaction[]>(
+  const { data, error, isLoading, mutate } = useSWR<TransactionData[]>(
     '/api/categories',
     fetcher,
     {
@@ -28,5 +28,5 @@ export default function useTransactionSWR({ initialData }: Props) {
     },
   )
 
-  return { data, error, isLoading, mutate }
+  return { data: data ?? [], error, isLoading, mutate }
 }
