@@ -1,3 +1,5 @@
+import type { CategoryType } from 'enums/category-type'
+
 export type BarChartData = {
   name: string
   value: number
@@ -12,11 +14,6 @@ export type PieChartData = {
 export type LineChartData = {
   name: string
   value: number
-}
-
-export enum CategoryType {
-  income = 'income',
-  expense = 'expense',
 }
 
 export type Category = {
@@ -35,11 +32,12 @@ interface FetchError extends Error {
   status?: number
 }
 
-export type transactionData = CategoryType & {
+export type transactionData = {
   id: string
   date: string
   user: string
   description: string
+  type: CategoryType
   memo: string
   amount: number
 }
