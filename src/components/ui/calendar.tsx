@@ -19,7 +19,6 @@ function Calendar({
   showOutsideDays = true,
   captionLayout = 'label',
   buttonVariant = 'ghost',
-  formatters,
   components,
   ...props
 }: React.ComponentProps<typeof DayPicker> & {

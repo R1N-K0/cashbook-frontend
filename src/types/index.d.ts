@@ -34,3 +34,12 @@ export type CategoryRes = {
 interface FetchError extends Error {
   status?: number
 }
+
+export type transactionData = CategoryType & {
+  id: string
+  date: string
+  user: string
+  description: string
+  memo: string
+  amount: number
+}
