@@ -8,7 +8,10 @@ export default function CategoryCard({ data }: Props) {
   return (
     <div className="flex flex-row items-center justify-between rounded-2xl border border-gray-200 bg-white shadow-sm hover:shadow-md transition-shadow duration-200 p-4  w-full">
       <div className="flex flex-row items-center space-x-4">
-        <div className={`p-3 rounded-xl bg-blue-50 text-[${data.color}]`}>
+        <div
+          style={{ color: data.color }}
+          className="p-3 rounded-xl bg-blue-50"
+        >
           <svg
             className="w-8 h-8"
             xmlns="http://www.w3.org/2000/svg"

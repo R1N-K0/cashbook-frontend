@@ -17,7 +17,7 @@ export default function useCategorySWR({ initialData }: Props) {
 
     {
       fallbackData: initialData ?? { income: [], expense: [] },
-      revalidateOnMount: true,
+      revalidateOnMount: false,
     },
   )
 

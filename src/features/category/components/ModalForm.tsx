@@ -10,8 +10,13 @@ import type { CategoryType } from '@/types'
 
 import { FormProvider, useForm } from 'react-hook-form'
 
+type CategoryFormValues = {
+  name: string
+  type: CategoryType
+}
+
 export default function ModalForm() {
-  const methods = useForm<CategoryType>()
+  const methods = useForm<CategoryFormValues>()
   return (
     <>
       <Dialog>
