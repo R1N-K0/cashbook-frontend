@@ -16,10 +16,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { createCategory } from '@/features/category/actions/categoryAction'
 import type { CategoryFormValues } from '@/features/category/lib/schemas/categorySchema'
 import { categorySchema } from '@/features/category/lib/schemas/categorySchema'
 import ColorPicker from '@/features/components/ColorPicker'
+import useCategorySWR from '@/hooks/useCategorySWR'
+
 import { zodResolver } from '@hookform/resolvers/zod'
+
 import type { SubmitHandler } from 'react-hook-form'
 import { useForm } from 'react-hook-form'
 
@@ -32,9 +36,16 @@ export default function CategoryForm() {
       color: '#33A1E0',
     },
   })
+  const { data, mutate } = useCategorySWR({})
 
-  const onSubmit: SubmitHandler<CategoryFormValues> = (data) => {
-    console.log('フォームデータ:', data)
+  const onSubmit: SubmitHandler<CategoryFormValues> = async (val) => {
+    try {
+      console.log('フォームデータ:', val)
+      const res = await createCategory(val)
+      mutate()
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
