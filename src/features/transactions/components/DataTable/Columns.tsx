@@ -48,14 +48,13 @@ export const columns: ColumnDef<TransactionData>[] = [
     ),
   },
   {
-    accessorFn: (row) => row.user.name,
-    id: 'UserName',
-    meta: { label: 'ユーザー' },
+    accessorKey: 'createdUser',
+    meta: { label: '作成者' },
     header: ({ column }) => {
       return <>{column.columnDef.meta?.label}</>
     },
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue('UserName')}</div>
+      <div className="capitalize">{row.getValue('createdUser')}</div>
     ),
   },
   {

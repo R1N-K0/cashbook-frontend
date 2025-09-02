@@ -6,7 +6,7 @@ import SearchBox from '@/features/components/SearchBox'
 import { DataTableDemo } from '@/features/transactions/components/DataTable/DataTable'
 import useTransactionSWR from '@/hooks/useTransactionSWR'
 import type { TransactionData } from '@/types'
-import { Link } from 'lucide-react'
+import Link from 'next/link'
 import { useState } from 'react'
 
 type Props = {
