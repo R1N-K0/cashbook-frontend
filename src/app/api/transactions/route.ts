@@ -20,12 +20,12 @@ export async function POST(req: NextRequest) {
       if (res.status === 401) redirect('/auth')
       const errorData = await res.json().catch(() => ({}))
 
-      return NextResponse.json(errorData, { status: res.status })
+      return NextResponse.json(errorData.message, { status: res.status })
     }
 
     return NextResponse.json(res.json())
   } catch (error) {
-    console.error('GET /api/transactions failed:', error)
+    console.error('createTransaction failed:', (error as Error).message)
     return NextResponse.json(
       { message: (error as Error).message || '不明なエラーが発生しました' },
       { status: 500 },
@@ -54,7 +54,8 @@ export async function GET(req: NextRequest) {
     const data = await res.json().catch(() => [])
     return NextResponse.json(data)
   } catch (error) {
-    console.error('GET /api/transactions failed:', error)
+    console.error('createTransaction failed:', (error as Error).message)
+
     return NextResponse.json(
       { message: (error as Error).message || '不明なエラーが発生しました' },
       { status: 500 },

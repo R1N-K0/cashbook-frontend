@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/ui/button'
 import DateField from '@/features/components/fields/DateField'
+import { FormError } from '@/features/components/fields/FormError'
 import InputField from '@/features/components/fields/InputFiled'
 import NumberField from '@/features/components/fields/NumberField'
 import { createTransaction } from '@/features/transactions/actions/transactionAction'
@@ -50,6 +51,7 @@ export default function TransactionForm() {
         onSubmit={methods.handleSubmit(onSubmit)}
         className="space-y-8 mx-auto px-8 lg:container-fluid container lg:max-w-5xl"
       >
+        <FormError />
         <InputField
           control={methods.control}
           name="description"
