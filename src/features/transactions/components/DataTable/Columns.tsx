@@ -1,9 +1,34 @@
 import { Button } from '@/components/ui/button'
-import type { transactionData } from '@/types'
+import { Checkbox } from '@/components/ui/checkbox'
+import type { TransactionData } from '@/types'
 import type { ColumnDef } from '@tanstack/react-table'
+import clsx from 'clsx'
 import { ArrowUpDown } from 'lucide-react'
 
-export const columns: ColumnDef<transactionData>[] = [
+export const columns: ColumnDef<TransactionData>[] = [
+  {
+    id: 'checkBox',
+    meta: { label: 'CheckBox' },
+    header: ({ table }) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && 'indeterminate')
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
   {
     accessorKey: 'date',
     meta: { label: '日付' },
@@ -23,12 +48,15 @@ export const columns: ColumnDef<transactionData>[] = [
     ),
   },
   {
-    accessorKey: 'user',
+    accessorFn: (row) => row.user.name,
+    id: 'UserName',
     meta: { label: 'ユーザー' },
     header: ({ column }) => {
       return <>{column.columnDef.meta?.label}</>
     },
-    cell: ({ row }) => <div className="capitalize">{row.getValue('user')}</div>,
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue('UserName')}</div>
+    ),
   },
   {
     accessorKey: 'description',
@@ -41,7 +69,8 @@ export const columns: ColumnDef<transactionData>[] = [
     ),
   },
   {
-    accessorKey: 'type',
+    accessorFn: (row) => row.category.type,
+    id: 'type',
     meta: { label: 'カテゴリ' },
     header: ({ column }) => {
       return <>{column.columnDef.meta?.label}</>
@@ -99,14 +128,21 @@ export const columns: ColumnDef<transactionData>[] = [
     },
   },
   {
-    id: 'edit',
+    accessorKey: 'editable',
     meta: { label: '編集' },
     header: ({ column }) => {
       return <>{column.columnDef.meta?.label}</>
     },
     cell: ({ row }) => (
       <>
-        <button className="p-2 rounded-lg hover:bg-gray-100 text-blue-500">
+        <button
+          className={clsx(
+            'p-2',
+            'rounded-lg',
+            'hover:bg-gray-100',
+            row.getValue('editable') ? 'text-blue-500' : 'text-gray-500',
+          )}
+        >
           <svg
             className="w-7 h-auto"
             xmlns="http://www.w3.org/2000/svg"

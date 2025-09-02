@@ -17,11 +17,12 @@ export type LineChartData = {
 }
 
 export type Category = {
-  id: number
+  id: string
   name: string
   type: CategoryType
   color: string
-  count: number
+  //backend側にcountが追加されたら?を外す
+  count?: number
 }
 
 export type CategoryRes = {
@@ -33,23 +34,13 @@ interface FetchError extends Error {
   status?: number
 }
 
-export type transactionData = {
+export type TransactionData = {
   id: string
-  date: string
-  user: string
-  description: string
-  type: CategoryType
-  memo: string
-  amount: number
-}
-
-export type Transaction = {
-  id: number
+  user: { id: string; name: string }
   date: string
   description: string
   memo?: string | undefined
   amount: number
-  editable: number
-  createdUser: string
+  editable: boolean
   category: Category
 }

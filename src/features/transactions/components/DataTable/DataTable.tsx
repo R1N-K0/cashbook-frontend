@@ -32,14 +32,13 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { columns } from '@/features/transactions/components/DataTable/Columns'
-import { data } from '@/features/transactions/components/DataTable/DemoData'
-import type { Transaction } from '@/types'
+import type { TransactionData } from '@/types'
 
 type Props = {
-  data: Transaction[]
+  data: TransactionData[]
 }
 
-export function DataTableDemo() {
+export function DataTableDemo({ data }: Props) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],

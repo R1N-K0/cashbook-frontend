@@ -2,7 +2,7 @@ import MainHeader from '@/features/components/MainHeader'
 import MainSidebar from '@/features/components/MainSideBar'
 import type { ReactNode } from 'react'
 
-const SidebarLayout = ({ children }: { children: ReactNode }) => {
+const HomeLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div className="grid grid-rows-[auto_1fr] h-full">
       <MainHeader />
@@ -14,4 +14,4 @@ const SidebarLayout = ({ children }: { children: ReactNode }) => {
   )
 }
 
-export default SidebarLayout
+export default HomeLayout
