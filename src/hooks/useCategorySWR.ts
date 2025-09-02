@@ -1,7 +1,7 @@
-'use client' // クライアントコンポーネントでのみ使用
+'use client'
 
 import { getAllCategory } from '@/features/category/actions/categoryAction'
-import type { CategoryRes, FetchError } from '@/types'
+import type { CategoryRes } from '@/types'
 import { useRouter } from 'next/navigation'
 import useSWR from 'swr'
 
@@ -13,18 +13,7 @@ export default function useCategorySWR({ initialData }: Props) {
   const router = useRouter()
 
   const fetcher = async () => {
-    try {
-      return await getAllCategory()
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        const maybeError = err as FetchError
-        if (maybeError.status === 401) {
-          router.push('/auth')
-        }
-        throw err
-      }
-      throw err
-    }
+    return await getAllCategory()
   }
 
   const { data, error, isLoading, mutate } = useSWR<CategoryRes>(
@@ -33,6 +22,9 @@ export default function useCategorySWR({ initialData }: Props) {
     {
       fallbackData: initialData ?? { income: [], expense: [] },
       revalidateOnMount: false,
+      onErrorRetry: (error) => {
+        if (error.status === 401) router.push('/auth')
+      },
     },
   )
 

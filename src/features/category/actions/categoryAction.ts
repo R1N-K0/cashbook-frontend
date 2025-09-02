@@ -1,9 +1,10 @@
 'use server'
 
 import type { CategoryFormValues } from '@/features/category/lib/schemas/categorySchema'
-import type { CategoryRes, FetchError } from '@/types'
+import type { CategoryRes } from '@/types'
 import { type Category } from '@/types'
 import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 export async function createCategory(data: CategoryFormValues) {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get('access_token')?.value
@@ -43,10 +44,11 @@ export async function getAllCategory() {
     },
   )
   if (!res.ok) {
+    if (res.status === 401) redirect('/auth')
     const errorData = await res.json()
     throw Object.assign(new Error(errorData.message), {
       status: res.status,
-    }) as FetchError
+    })
   }
   const data: Category[] = await res.json()
   const response: CategoryRes = data.reduce(
