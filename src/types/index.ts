@@ -44,3 +44,12 @@ export type TransactionData = {
   editable: boolean
   category: Category
 }
+
+export type TransactionReq = {
+  date: string
+  description: string
+  memo?: string
+  amount: number
+  categoryId: number
+  createdUser: string
+}
