@@ -1,6 +1,6 @@
 'use server'
 
-import type { Transaction, TransactionReq } from '@/types'
+import type { TransactionData, TransactionReq } from '@/types'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
@@ -62,6 +62,6 @@ export async function getAllTransaction() {
       })
     }
   }
-  const response: Transaction[] = await res.json()
+  const response: TransactionData[] = await res.json()
   return response
 }
