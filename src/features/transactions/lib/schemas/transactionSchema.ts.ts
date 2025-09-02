@@ -6,6 +6,10 @@ export const transactionSchema = z.object({
   description: z.string().max(255).nonempty(),
   memo: z.string().nullable(),
   amount: z.number().min(1, { message: '正しい金額を指定してください' }),
+  createdUser: z
+    .string()
+    .nonempty({ message: '担当者を入力してください' })
+    .max(255),
 })
 
 export type TransactionFormValue = z.infer<typeof transactionSchema>
