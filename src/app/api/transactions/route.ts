@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers'
 import { NextResponse, type NextRequest } from 'next/server'
 
-export default async function GET(req: NextRequest) {
+export async function GET(req: NextRequest) {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get('access_token')?.value
 
@@ -15,11 +15,14 @@ export default async function GET(req: NextRequest) {
     })
 
     if (!res.ok) {
-      const errorData = await res.json()
+      const errorData = await res.json().catch(() => ({}))
       return NextResponse.json(errorData, { status: res.status })
     }
+
+    const data = await res.json().catch(() => [])
+    return NextResponse.json(data)
   } catch (error) {
-    console.error('GET /api/categories failed:', error)
+    console.error('GET /api/transactions failed:', error)
     return NextResponse.json(
       { message: (error as Error).message || '不明なエラーが発生しました' },
       { status: 500 },

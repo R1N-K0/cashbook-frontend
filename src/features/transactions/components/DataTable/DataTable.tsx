@@ -33,6 +33,11 @@ import {
 } from '@/components/ui/table'
 import { columns } from '@/features/transactions/components/DataTable/Columns'
 import { data } from '@/features/transactions/components/DataTable/DemoData'
+import type { Transaction } from '@/types'
+
+type Props = {
+  data: Transaction[]
+}
 
 export function DataTableDemo() {
   const [sorting, setSorting] = React.useState<SortingState>([])

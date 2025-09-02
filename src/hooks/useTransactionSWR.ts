@@ -1,6 +1,6 @@
 'use client'
 
-import getAllTransaction from '@/features/transactions/actions/transactionAction'
+import { getAllTransaction } from '@/features/transactions/actions/transactionAction'
 import type { Transaction } from '@/types'
 import { useRouter } from 'next/navigation'
 import useSWR from 'swr'
