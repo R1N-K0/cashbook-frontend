@@ -39,7 +39,7 @@ export default function CategoryCard({ data }: Props) {
           <span className="text-lg font-semibold text-gray-800">
             {data.name}
           </span>
-          <span className="text-sm text-gray-500">90件の取引</span>
+          <span className="text-sm text-gray-500">{data.count}件の取引</span>
         </div>
       </div>
 
