@@ -21,7 +21,6 @@ export type Category = {
   name: string
   type: CategoryType
   color: string
-  //backend側にcountが追加されたら?を外す
   count?: number
 }
 
@@ -36,7 +35,7 @@ interface FetchError extends Error {
 
 export type TransactionData = {
   id: string
-  user: { id: string; name: string }
+  createdUser: string
   date: string
   description: string
   memo?: string | undefined
