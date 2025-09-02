@@ -1,3 +1,4 @@
+import type { Transaction } from '@/types'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
@@ -27,6 +28,6 @@ export default async function getAllTransaction() {
       status: res.status,
     })
   }
-
-  return await res.json()
+  const response: Transaction[] = await res.json()
+  return response
 }

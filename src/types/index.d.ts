@@ -43,3 +43,14 @@ export type transactionData = CategoryType & {
   memo: string
   amount: number
 }
+
+export type Transaction = {
+  id: number
+  date: string
+  description: string
+  memo?: string | undefined
+  amount: number
+  editable: number
+  createdUser: string
+  category: Category
+}
