@@ -2,7 +2,7 @@
 import Calendar22 from '@/features/components/DateOfBirthPicker'
 import FilterBox from '@/features/components/FilterBox'
 import SearchBox from '@/features/components/SearchBox'
-import { DataTableDemo } from '@/features/transactions/components/DataTable'
+import { DataTableDemo } from '@/features/transactions/components/DataTable/DataTable'
 import { useState } from 'react'
 
 const TarnsactionPage = () => {

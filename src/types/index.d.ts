@@ -18,4 +18,11 @@ export type CategoryType = {
   type: 'income' | 'expense'
 }
 
-export type 
+export type transactionData = CategoryType & {
+  id: string
+  date: string
+  user: string
+  description: string
+  memo: string
+  amount: number
+}
