@@ -14,6 +14,23 @@ export type LineChartData = {
   value: number
 }
 
-export type CategoryType = {
-  type: 'income' | 'expense'
+export enum CategoryType {
+  income = 'income',
+  expense = 'expense',
+}
+
+export type Category = {
+  id: number
+  name: string
+  type: CategoryType
+  color: string
+}
+
+export type CategoryRes = {
+  income: Category[]
+  expense: Category[]
+}
+
+interface FetchError extends Error {
+  status?: number
 }
