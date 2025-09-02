@@ -11,10 +11,12 @@ import type { TransactionFormValue } from '@/features/transactions/lib/schemas/t
 import { transactionSchema } from '@/features/transactions/lib/schemas/transactionSchema.ts'
 import type { TransactionReq } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/navigation'
 import type { SubmitHandler } from 'react-hook-form'
 import { FormProvider, useForm } from 'react-hook-form'
 
 export default function TransactionForm() {
+  const route = useRouter()
   const methods = useForm<TransactionFormValue>({
     resolver: zodResolver(transactionSchema),
     defaultValues: {
@@ -34,15 +36,16 @@ export default function TransactionForm() {
       amount: Number(data.amount || 0),
     }
 
-    try {
-      const res = await createTransaction(formattedData)
-      alert('登録が完了しました')
-    } catch (error) {
+    const res = await createTransaction(formattedData)
+
+    if (!res.success) {
       methods.setError('root', {
         type: 'server',
-        message: (error as Error).message,
+        message: JSON.stringify(res.message),
       })
+      return
     }
+    alert('登録が完了しました')
   }
 
   return (

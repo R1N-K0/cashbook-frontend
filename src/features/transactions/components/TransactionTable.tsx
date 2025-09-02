@@ -18,7 +18,6 @@ export default function TransactionTable({ initialData }: Props) {
   const [filte, setFilter] = useState<string>('')
 
   const { data, isLoading, error } = useTransactionSWR({ initialData })
-  console.log(data)
 
   return (
     <div className="grid grid-rows-[auto_1fr] h-full p-8">

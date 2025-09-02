@@ -1,5 +1,4 @@
 import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function POST(req: NextRequest) {
@@ -17,7 +16,6 @@ export async function POST(req: NextRequest) {
     })
 
     if (!res.ok) {
-      if (res.status === 401) redirect('/auth')
       const errorData = await res.json().catch(() => ({}))
 
       return NextResponse.json(errorData.message, { status: res.status })
