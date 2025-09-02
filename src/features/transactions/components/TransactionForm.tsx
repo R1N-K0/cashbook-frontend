@@ -4,9 +4,11 @@ import { Button } from '@/components/ui/button'
 import DateField from '@/features/components/fields/DateField'
 import InputField from '@/features/components/fields/InputFiled'
 import NumberField from '@/features/components/fields/NumberField'
+import { createTransaction } from '@/features/transactions/actions/transactionAction'
 import CategorySelectField from '@/features/transactions/components/fields/CategorySelectField'
 import type { TransactionFormValue } from '@/features/transactions/lib/schemas/transactionSchema.ts'
 import { transactionSchema } from '@/features/transactions/lib/schemas/transactionSchema.ts'
+import type { TransactionReq } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import type { SubmitHandler } from 'react-hook-form'
 import { FormProvider, useForm } from 'react-hook-form'
@@ -23,14 +25,23 @@ export default function TransactionForm() {
     },
   })
 
-  const onSubmit: SubmitHandler<TransactionFormValue> = (data) => {
-    const formattedData = {
+  const onSubmit: SubmitHandler<TransactionFormValue> = async (data) => {
+    const formattedData: TransactionReq = {
       ...data,
-      date: data.date ? data.date.toISOString().split('T')[0] : null,
+      memo: data.memo ?? undefined,
+      date: data.date ? data.date.toISOString().split('T')[0] : '',
       amount: Number(data.amount || 0),
     }
 
-    console.log(JSON.stringify(formattedData))
+    try {
+      const res = await createTransaction(formattedData)
+      alert('登録が完了しました')
+    } catch (error) {
+      methods.setError('root', {
+        type: 'server',
+        message: (error as Error).message,
+      })
+    }
   }
 
   return (

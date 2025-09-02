@@ -1,11 +1,10 @@
 'use server'
 
-import type { TransactionFormValue } from '@/features/transactions/lib/schemas/transactionSchema.ts'
-import type { Transaction } from '@/types'
+import type { Transaction, TransactionReq } from '@/types'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
-export async function createTransaction(data: TransactionFormValue) {
+export async function createTransaction(data: TransactionReq) {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get('access_token')?.value
 
@@ -23,13 +22,16 @@ export async function createTransaction(data: TransactionFormValue) {
       },
     )
     if (!res.ok) {
-      const errorData = await res.json()
-      throw Object.assign(new Error(errorData.message || '不明なデータです'), {
+      const errorData = await res.json().catch(() => ({}))
+      throw Object.assign(new Error(errorData || '不明なデータです'), {
         status: res.status,
       })
     }
   } catch (error) {
-    throw new Error('不明なエラーです')
+    if (error instanceof Error) {
+      throw error
+    }
+    throw new Error('ネットワークエラー、または不明なエラーが発生しました')
   }
 }
 
