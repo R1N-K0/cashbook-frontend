@@ -27,7 +27,7 @@ export default function useTransactionSWR({ initialData }: Props) {
   }
 
   const { data, error, isLoading, mutate } = useSWR<TransactionData[]>(
-    '/api/categories',
+    '/api/transactions',
     fetcher,
     {
       fallbackData: initialData ?? [],
