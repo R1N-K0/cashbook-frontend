@@ -3,7 +3,20 @@ import FinanceCardList from '@/features/finance/components/FinanceCardList'
 import FinancePieChart from '@/features/finance/components/FinancePieChart'
 import type { BarChartData, LineChartData, PieChartData } from '@/types'
 
-export default function Home() {
+const Home = async () => {
+  // const res = await getFinanceData()
+  // if (!res.success)
+  //   if (!res.success) {
+  //     return (
+  //       <div className="container-fluid h-full">
+  //         <Alert variant="destructive">
+  //           <AlertTitle>エラーが発生しました</AlertTitle>
+  //           <AlertDescription>{res.message}</AlertDescription>
+  //         </Alert>
+  //       </div>
+  //     )
+  //   }
+
   const barChartData: BarChartData[] = [
     { name: '5月', value: 13000 },
     { name: '6月', value: 8000 },
@@ -42,3 +55,5 @@ export default function Home() {
     </div>
   )
 }
+
+export default Home

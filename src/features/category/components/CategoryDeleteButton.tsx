@@ -35,7 +35,7 @@ export default function CategoryDeleteButton({ id }: Props) {
     <>
       <AlertDialog>
         <AlertDialogTrigger>
-          <button className="p-2 rounded-lg hover:bg-gray-100 text-gray-500 cursor-pointer">
+          <div className="p-2 rounded-lg hover:bg-gray-100 text-gray-500 cursor-pointer">
             <svg
               className="w-7 h-auto"
               xmlns="http://www.w3.org/2000/svg"
@@ -48,7 +48,7 @@ export default function CategoryDeleteButton({ id }: Props) {
                 clipRule="evenodd"
               />
             </svg>
-          </button>
+          </div>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
