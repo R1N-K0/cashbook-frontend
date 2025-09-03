@@ -22,13 +22,18 @@ export async function createCategory(data: CategoryFormValues) {
   )
 
   if (!res.ok) {
-    const errorData = await res.json()
-    throw new Error(errorData.message || 'Error creating category')
+    if (res.status === 401) redirect('/auth')
+    const errorData = await res.json().catch(() => {})
+    return { message: errorData.message, status: res.status, success: false }
   }
-  return res.json()
+  const response = await res.json()
+  return { data: response, success: false }
 }
 
-export async function getAllCategory() {
+export async function getAllCategory(): Promise<
+  | { data: CategoryRes; success: true }
+  | { message: string; status: number; success: false }
+> {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get('access_token')?.value
   const res = await fetch(
@@ -45,10 +50,12 @@ export async function getAllCategory() {
   )
   if (!res.ok) {
     if (res.status === 401) redirect('/auth')
-    const errorData = await res.json()
-    throw Object.assign(new Error(errorData.message), {
+    const errorData = await res.json().catch(() => {})
+    return {
+      message: errorData.message ?? '不明なエラーが発生しました',
+      success: false,
       status: res.status,
-    })
+    }
   }
   const data: Category[] = await res.json()
   const response: CategoryRes = data.reduce(
@@ -63,5 +70,5 @@ export async function getAllCategory() {
     { income: [] as Category[], expense: [] as Category[] },
   )
 
-  return response
+  return { data: response, success: true }
 }

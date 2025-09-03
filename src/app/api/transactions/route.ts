@@ -1,5 +1,4 @@
 import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function POST(req: NextRequest) {
@@ -17,17 +16,19 @@ export async function POST(req: NextRequest) {
     })
 
     if (!res.ok) {
-      if (res.status === 401) redirect('/auth')
       const errorData = await res.json().catch(() => ({}))
 
-      return NextResponse.json(errorData.message, { status: res.status })
+      return NextResponse.json(
+        { message: errorData.message },
+        { status: res.status },
+      )
     }
-
-    return NextResponse.json(res.json())
+    const response = await res.json()
+    return NextResponse.json(response)
   } catch (error) {
     console.error('createTransaction failed:', (error as Error).message)
     return NextResponse.json(
-      { message: (error as Error).message || '不明なエラーが発生しました' },
+      { message: (error as Error).message ?? '不明なエラーが発生しました' },
       { status: 500 },
     )
   }
@@ -48,16 +49,17 @@ export async function GET(req: NextRequest) {
 
     if (!res.ok) {
       const errorData = await res.json().catch(() => ({}))
-      return NextResponse.json(errorData, { status: res.status })
+      return NextResponse.json(errorData ?? '不明なエラーが発生しました', {
+        status: res.status,
+      })
     }
 
-    const data = await res.json().catch(() => [])
+    const data = await res.json()
     return NextResponse.json(data)
   } catch (error) {
     console.error('createTransaction failed:', (error as Error).message)
-
     return NextResponse.json(
-      { message: (error as Error).message || '不明なエラーが発生しました' },
+      { message: (error as Error).message ?? '不明なエラーが発生しました' },
       { status: 500 },
     )
   }

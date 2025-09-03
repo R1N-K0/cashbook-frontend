@@ -29,7 +29,7 @@ export type CategoryRes = {
   expense: Category[]
 }
 
-interface FetchError extends Error {
+export interface FetchError extends Error {
   status?: number
 }
 
