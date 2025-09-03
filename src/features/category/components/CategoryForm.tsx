@@ -20,6 +20,7 @@ import { createCategory } from '@/features/category/actions/categoryAction'
 import type { CategoryFormValues } from '@/features/category/lib/schemas/categorySchema'
 import { categorySchema } from '@/features/category/lib/schemas/categorySchema'
 import ColorPicker from '@/features/components/ColorPicker'
+import { FormError } from '@/features/components/fields/FormError'
 import useCategorySWR from '@/hooks/useCategorySWR'
 
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -36,21 +37,27 @@ export default function CategoryForm() {
       color: '#33A1E0',
     },
   })
-  const { data, mutate } = useCategorySWR({})
+  const { mutate } = useCategorySWR({})
 
   const onSubmit: SubmitHandler<CategoryFormValues> = async (val) => {
-    try {
-      console.log('フォームデータ:', val)
-      const res = await createCategory(val)
-      mutate()
-    } catch (error) {
-      console.log(error)
+    console.log('フォームデータ:', val)
+    const res = await createCategory(val)
+
+    if (!res.success) {
+      form.setError('root', {
+        type: 'server',
+        message: JSON.stringify(res.message),
+      })
+      return
     }
+    alert('カテゴリーを追加しました')
+    mutate()
   }
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <FormError />
         <FormField
           control={form.control}
           name="name"

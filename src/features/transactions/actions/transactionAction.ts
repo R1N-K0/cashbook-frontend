@@ -24,13 +24,20 @@ export async function createTransaction(data: TransactionReq) {
     if (res.status === 401) redirect('/auth')
     const errorData = await res.json().catch(() => ({}))
     console.log(errorData, res.status)
-    return { message: errorData, status: res.status, success: false }
+    return {
+      message: errorData.message ?? '不明なエラーが発生しました',
+      status: res.status,
+      success: false,
+    }
   }
   const response = await res.json()
   return { data: response, success: true }
 }
 
-export async function getAllTransaction() {
+export async function getAllTransaction(): Promise<
+  | { data: TransactionData[]; success: true }
+  | { message: string; status: number; success: false }
+> {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get('access_token')?.value
 
@@ -48,15 +55,18 @@ export async function getAllTransaction() {
   )
 
   if (!res.ok) {
-    if (res.status === 401) {
-      redirect('/auth')
-    } else {
-      const errorData = await res.json()
-      throw Object.assign(new Error(errorData.message || '不明なデータです'), {
+    if (res.status === 401) redirect('/auth')
+    else {
+      const errorData = await res.json().catch(() => {})
+
+      return {
+        message: errorData.message ?? '不明なエラーが発生しました',
         status: res.status,
-      })
+        success: false,
+      }
     }
   }
   const response: TransactionData[] = await res.json()
-  return response
+
+  return { data: response, success: true }
 }

@@ -2,11 +2,18 @@ import { getAllTransaction } from '@/features/transactions/actions/transactionAc
 import TransactionTable from '@/features/transactions/components/TransactionTable'
 
 const TransactionPage = async () => {
-  const initialData = await getAllTransaction()
+  const initialRes = await getAllTransaction()
+  if (!initialRes.success) {
+    return (
+      <div className="container-fluid h-full">
+        <span>{initialRes.message}</span>
+      </div>
+    )
+  }
 
   return (
     <>
-      <TransactionTable initialData={initialData} />
+      <TransactionTable initialData={initialRes.data} />
     </>
   )
 }

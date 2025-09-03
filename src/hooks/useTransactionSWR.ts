@@ -1,7 +1,7 @@
 'use client'
 
 import { getAllTransaction } from '@/features/transactions/actions/transactionAction'
-import type { TransactionData } from '@/types'
+import type { FetchError, TransactionData } from '@/types'
 import { useRouter } from 'next/navigation'
 import useSWR from 'swr'
 
@@ -12,8 +12,18 @@ type Props = {
 export default function useTransactionSWR({ initialData }: Props) {
   const router = useRouter()
 
-  const fetcher = async () => {
-    return await getAllTransaction()
+  const fetcher = async (): Promise<TransactionData[]> => {
+    const res = await getAllTransaction()
+
+    if (!res.success) {
+      const error = new Error(res.message ?? '不明なエラーです') as Error & {
+        status: number
+      }
+      error.status = res.status
+      throw error
+    }
+
+    return res.data
   }
 
   const { data, error, isLoading, mutate } = useSWR<TransactionData[]>(
@@ -22,7 +32,7 @@ export default function useTransactionSWR({ initialData }: Props) {
     {
       fallbackData: initialData ?? [],
       revalidateOnMount: false,
-      onErrorRetry: (error) => {
+      onErrorRetry: (error: FetchError) => {
         if (error.status === 401) router.push('/auth')
       },
     },

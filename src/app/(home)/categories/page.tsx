@@ -1,12 +1,19 @@
 import { getAllCategory } from '@/features/category/actions/categoryAction'
 import CategoryTable from '@/features/category/components/CategoryTable'
-import type { CategoryRes } from '@/types'
 
 const CategoryPage = async () => {
-  const initialCategories: CategoryRes = await getAllCategory()
+  const initialRes = await getAllCategory()
+  if (!initialRes.success)
+    if (!initialRes.success) {
+      return (
+        <div className="container-fluid h-full">
+          <span>{initialRes.message}</span>
+        </div>
+      )
+    }
   return (
     <>
-      <CategoryTable initialData={initialCategories} />
+      <CategoryTable initialData={initialRes.data} />
     </>
   )
 }

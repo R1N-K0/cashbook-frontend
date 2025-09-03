@@ -1,7 +1,7 @@
 'use client'
 
 import { getAllCategory } from '@/features/category/actions/categoryAction'
-import type { CategoryRes } from '@/types'
+import type { CategoryRes, FetchError } from '@/types'
 import { useRouter } from 'next/navigation'
 import useSWR from 'swr'
 
@@ -13,7 +13,18 @@ export default function useCategorySWR({ initialData }: Props) {
   const router = useRouter()
 
   const fetcher = async () => {
-    return await getAllCategory()
+    const res = await getAllCategory()
+
+    if (!res.success) {
+      const error = new Error(
+        res.message ?? '不明なエラーが発生しました',
+      ) as FetchError
+      error.status = res.status
+
+      throw error
+    }
+
+    return res.data
   }
 
   const { data, error, isLoading, mutate } = useSWR<CategoryRes>(
