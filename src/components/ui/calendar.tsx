@@ -30,12 +30,14 @@ function Calendar({
     const m = format(date, 'MM', { locale: options?.locale })
     return `${y}年${m}月`
   }
+  const maxDate = new Date()
 
   return (
     <DayPicker
       locale={ja}
       weekStartsOn={1}
       showOutsideDays={showOutsideDays}
+      disabled={{ after: maxDate }}
       className={cn(
         'bg-background group/calendar p-3 [--cell-size:--spacing(8)] [[data-slot=card-content]_&]:bg-transparent [[data-slot=popover-content]_&]:bg-transparent',
         String.raw`rtl:**:[.rdp-button\_next>svg]:rotate-180`,

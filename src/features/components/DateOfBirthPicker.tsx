@@ -10,10 +10,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
+import type { DateRange } from 'react-day-picker'
 
 const Calendar22 = () => {
   const [open, setOpen] = React.useState(false)
-  const [date, setDate] = React.useState<Date | undefined>(undefined)
+  const [rangeDate, setRangeDate] = React.useState<DateRange | undefined>(
+    undefined,
+  )
 
   return (
     <div className="flex flex-col gap-3">
@@ -24,18 +27,21 @@ const Calendar22 = () => {
             id="date"
             className="w-48 justify-between font-normal"
           >
-            {date ? date.toLocaleDateString() : '期間'}
+            {rangeDate?.from && rangeDate.to
+              ? `${rangeDate.from.toLocaleDateString()}～${rangeDate.to.toLocaleDateString()}`
+              : '期間'}
             <ChevronDownIcon />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto overflow-hidden p-0" align="start">
           <Calendar
-            mode="single"
-            selected={date}
+            mode="range"
+            selected={rangeDate}
             captionLayout="dropdown"
             onSelect={(date) => {
-              setDate(date)
-              setOpen(false)
+              if (date?.from && date.to) {
+                setRangeDate({ from: date.from, to: date.to })
+              }
             }}
           />
         </PopoverContent>
