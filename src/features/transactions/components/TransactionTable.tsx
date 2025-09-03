@@ -3,11 +3,13 @@
 import Calendar22 from '@/features/components/DateOfBirthPicker'
 import FilterBox from '@/features/components/FilterBox'
 import SearchBox from '@/features/components/SearchBox'
-import { DataTableDemo } from '@/features/transactions/components/DataTable/DataTable'
+import { DataTable } from '@/features/transactions/components/DataTable/DataTable'
+import dateFilter from '@/features/transactions/components/utils/dateFilter'
 import useTransactionSWR from '@/hooks/useTransactionSWR'
 import type { TransactionData } from '@/types'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import type { DateRange } from 'react-day-picker'
 
 type Props = {
   initialData: TransactionData[]
@@ -16,15 +18,20 @@ type Props = {
 export default function TransactionTable({ initialData }: Props) {
   const [keyword, setKeyWord] = useState<string>('')
   const [filte, setFilter] = useState<string>('')
-
+  const [rangeDate, setRangeDate] = useState<DateRange | undefined>(undefined)
   const { data, isLoading, error } = useTransactionSWR({ initialData })
+  const [datas, setDatas] = useState<TransactionData[]>(data)
+
+  useEffect(() => {
+    setDatas(dateFilter(rangeDate, data))
+  }, [data, rangeDate])
 
   return (
     <div className="grid grid-rows-[auto_1fr] h-full p-8">
       <div>
         <div className="text-3xl font-bold text-gray-700">取引一覧</div>
         <div className="flex flex-row items-center gap-5 p-4">
-          <Calendar22 />
+          <Calendar22 rangeDate={rangeDate} setRangeDate={setRangeDate} />
           <FilterBox
             placeholder="カテゴリー"
             values={['収入', '支出']}
@@ -43,7 +50,7 @@ export default function TransactionTable({ initialData }: Props) {
           </Link>
         </div>
       </div>
-      <DataTableDemo data={data} />
+      <DataTable data={datas} />
     </div>
   )
 }
