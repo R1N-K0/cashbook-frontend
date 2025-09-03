@@ -1,11 +1,13 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 export default function Login() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [message, setMessage] = useState('')
+  const route = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -18,7 +20,7 @@ export default function Login() {
       })
 
       const data = await res.json()
-      if (res.ok) setMessage('ログイン成功')
+      if (res.ok) route.push('/')
       else setMessage(data.message || 'ログイン失敗')
     } catch (err) {
       setMessage('エラーが発生しました')
