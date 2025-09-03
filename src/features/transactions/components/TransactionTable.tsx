@@ -26,6 +26,8 @@ export default function TransactionTable({ initialData }: Props) {
     setDatas(dateFilter(rangeDate, data))
   }, [data, rangeDate])
 
+  if (isLoading) return <div>Loading...</div>
+
   return (
     <div className="grid grid-rows-[auto_1fr] h-full p-8">
       <div>
