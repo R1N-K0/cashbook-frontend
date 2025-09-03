@@ -7,6 +7,7 @@ import InputField from '@/features/components/fields/InputFiled'
 import NumberField from '@/features/components/fields/NumberField'
 import { createTransaction } from '@/features/transactions/actions/transactionAction'
 import CategorySelectField from '@/features/transactions/components/fields/CategorySelectField'
+import utsToJst from '@/features/transactions/components/utils/ustToJst'
 import type { TransactionFormValue } from '@/features/transactions/lib/schemas/transactionSchema.ts'
 import { transactionSchema } from '@/features/transactions/lib/schemas/transactionSchema.ts'
 import type { TransactionReq } from '@/types'
@@ -32,7 +33,7 @@ export default function TransactionForm() {
     const formattedData: TransactionReq = {
       ...data,
       memo: data.memo ?? undefined,
-      date: data.date ? data.date.toISOString().split('T')[0] : '',
+      date: data.date ? utsToJst(data.date).toISOString().split('T')[0] : '',
       amount: Number(data.amount || 0),
     }
 

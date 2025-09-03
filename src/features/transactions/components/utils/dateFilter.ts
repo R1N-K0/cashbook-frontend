@@ -1,3 +1,4 @@
+import utsToJst from '@/features/transactions/components/utils/ustToJst'
 import type { TransactionData } from '@/types'
 import type { DateRange } from 'react-day-picker'
 
@@ -8,11 +9,11 @@ const dateFilter = (
   let filteredDate: TransactionData[] = data
 
   if (rangedate && rangedate.from && rangedate.to) {
-    const fromDate = rangedate?.from?.toISOString().split('T')[0]
-    const toDate = rangedate?.to?.toDateString().split('T')[0]
+    const fromDate = utsToJst(rangedate.from).toISOString().split('T')[0]
+    const toDate = utsToJst(rangedate.to).toISOString().split('T')[0]
 
-    filteredDate = data.filter((item) => item.date > fromDate)
-    filteredDate = filteredDate.filter((item) => item.date < toDate)
+    filteredDate = data.filter((item) => item.date >= fromDate)
+    filteredDate = filteredDate.filter((item) => item.date <= toDate)
   }
 
   return filteredDate
