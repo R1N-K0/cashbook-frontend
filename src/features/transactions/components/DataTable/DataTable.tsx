@@ -38,7 +38,7 @@ type Props = {
   data: TransactionData[]
 }
 
-export function DataTableDemo({ data }: Props) {
+export function DataTable({ data }: Props) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
