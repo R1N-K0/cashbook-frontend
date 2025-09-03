@@ -68,21 +68,23 @@ export const columns: ColumnDef<TransactionData>[] = [
     ),
   },
   {
-    accessorFn: (row) => row.category.type,
+    accessorFn: (row) => row.category?.type ?? '不明',
     id: 'type',
     meta: { label: 'カテゴリ' },
     header: ({ column }) => {
       return <>{column.columnDef.meta?.label}</>
     },
-    cell: ({ row }) => (
-      <div className="capitalize">
-        {row.getValue('type') === 'income' ? (
-          <div className="text-green-500">収入</div>
-        ) : (
-          <div className="text-blue-500">支出</div>
-        )}
-      </div>
-    ),
+    cell: ({ row }) => {
+      const value = row.getValue('type') as string
+
+      if (value === 'income') {
+        return <div className="text-green-500">収入</div>
+      } else if (value === 'expense') {
+        return <div className="text-blue-500">支出</div>
+      } else {
+        return <div className="text-gray-400">不明</div>
+      }
+    },
   },
   {
     accessorKey: 'memo',
