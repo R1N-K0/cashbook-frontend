@@ -27,7 +27,7 @@ export async function createCategory(data: CategoryFormValues) {
     return { message: errorData.message, status: res.status, success: false }
   }
   const response = await res.json()
-  return { data: response, success: false }
+  return { data: response, success: true }
 }
 
 export async function getAllCategory(): Promise<
@@ -71,4 +71,28 @@ export async function getAllCategory(): Promise<
   )
 
   return { data: response, success: true }
+}
+
+export async function softDeleteCategory(id: string) {
+  const cookieStore = await cookies()
+  const accessToken = cookieStore.get('access_token')?.value
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/categories/${id}`,
+    {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(accessToken ? { Cookie: `access_token=${accessToken}` } : {}),
+        credentials: 'include',
+      },
+    },
+  )
+
+  if (!res.ok) {
+    if (res.status === 401) redirect('/auth')
+    const errorData = await res.json().catch(() => {})
+    return { message: errorData.message, status: res.status, success: false }
+  }
+  const response = await res.json()
+  return { message: response.message, success: true }
 }

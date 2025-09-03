@@ -3,12 +3,11 @@ import { NextResponse } from 'next/server'
 
 export async function DELETE(
   request: Request,
-  { params }: { params: Promise<{ id: string }> },
+  context: { params: Promise<{ id: string }> },
 ) {
-  const id = Number(params)
   const cookieStore = await cookies()
   const accessToken = cookieStore.get('access_token')?.value
-
+  const { id } = await context.params
   try {
     const res = await fetch(`http://localhost:3001/categories/${id}`, {
       method: 'DELETE',
@@ -20,6 +19,7 @@ export async function DELETE(
 
     if (!res.ok) {
       const errorData = await res.json().catch(() => {})
+      console.error(errorData)
       return NextResponse.json(
         {
           message: errorData.message ?? '不明なエラーが発生しました',
@@ -27,7 +27,6 @@ export async function DELETE(
         { status: res.status },
       )
     }
-    const data = await res.json()
     return NextResponse.json({ message: 'データを削除しました' })
   } catch (error) {
     return NextResponse.json(
