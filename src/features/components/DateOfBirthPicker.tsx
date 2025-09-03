@@ -12,11 +12,13 @@ import {
 } from '@/components/ui/popover'
 import type { DateRange } from 'react-day-picker'
 
-const Calendar22 = () => {
+type props = {
+  rangeDate: DateRange | undefined
+  setRangeDate: React.Dispatch<React.SetStateAction<DateRange | undefined>>
+}
+
+const Calendar22 = ({ rangeDate, setRangeDate }: props) => {
   const [open, setOpen] = React.useState(false)
-  const [rangeDate, setRangeDate] = React.useState<DateRange | undefined>(
-    undefined,
-  )
 
   return (
     <div className="flex flex-col gap-3">
