@@ -70,3 +70,37 @@ export async function getAllTransaction(): Promise<
 
   return { data: response, success: true }
 }
+
+export async function getTransaction(
+  id: string,
+): Promise<
+  | { data: TransactionData; success: true }
+  | { message: string; status: number; success: false }
+> {
+  const cookieStore = await cookies()
+  const accessToken = cookieStore.get('access_token')?.value
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/transactions/${id}`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(accessToken ? { Cookie: `access_token=${accessToken}` } : {}),
+      },
+      credentials: 'include',
+    },
+  )
+  if (!res.ok) {
+    if (res.status === 401) redirect('/auth')
+    const errorData = await res.json().catch(() => {})
+    return {
+      message: errorData.message ?? '不明なエラーが発生しました',
+      success: false,
+      status: res.status,
+    }
+  }
+  const data: TransactionData = await res.json()
+
+  return { data, success: true }
+}

@@ -4,6 +4,7 @@ import type { TransactionData } from '@/types'
 import type { ColumnDef } from '@tanstack/react-table'
 import clsx from 'clsx'
 import { ArrowUpDown } from 'lucide-react'
+import Link from 'next/link'
 
 export const columns: ColumnDef<TransactionData>[] = [
   {
@@ -127,6 +128,31 @@ export const columns: ColumnDef<TransactionData>[] = [
         </div>
       )
     },
+  },
+  {
+    accessorKey: 'id',
+    meta: { label: '詳細' },
+    header: ({ column }) => {
+      return <>{column.columnDef.meta?.label}</>
+    },
+    cell: ({ row }) => (
+      <>
+        <Link href={`/transactions/${row.id}`}>
+          <button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-7 h-auto"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="currentColor"
+                d="m12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+              />
+            </svg>
+          </button>
+        </Link>
+      </>
+    ),
   },
   {
     accessorKey: 'editable',
