@@ -1,16 +1,15 @@
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { getTransaction } from '@/features/transactions/actions/transactionAction'
+import TransactionDetail from '@/features/transactions/components/TransactionDetail'
 
 const TransactionDetailPage = async ({
   params,
 }: {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }) => {
-  //修正したい
-  const { id } = (await params) as { id: string }
-  console.log('params', params, id)
-
+  const { id } = await params
   const initialRes = await getTransaction(id)
+
   if (!initialRes.success) {
     return (
       <div className="container-fluid h-full">
@@ -22,9 +21,7 @@ const TransactionDetailPage = async ({
     )
   }
 
-  console.log('取引詳細', initialRes)
-
-  return <div>取引詳細</div>
+  return <TransactionDetail date={initialRes.data} />
 }
 
 export default TransactionDetailPage
