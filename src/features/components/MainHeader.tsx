@@ -1,9 +1,9 @@
 'use client'
 
-import { useGetPageName } from '@/hooks/useGetPageName'
+import { useHeaderTitle } from '@/hooks/useHeaderTitle'
 
 export default function MainHeader() {
-  const pageName = useGetPageName()
+  const pageName = useHeaderTitle()
 
   return (
     <>

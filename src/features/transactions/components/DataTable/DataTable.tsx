@@ -139,7 +139,7 @@ export function DataTable({ data }: Props) {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  取引はありません...
                 </TableCell>
               </TableRow>
             )}

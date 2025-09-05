@@ -29,9 +29,11 @@ const Calendar22 = ({ rangeDate, setRangeDate }: props) => {
             id="date"
             className="w-48 justify-between font-normal"
           >
-            {rangeDate?.from && rangeDate.to
-              ? `${rangeDate.from.toLocaleDateString()}～${rangeDate.to.toLocaleDateString()}`
-              : '期間'}
+            {rangeDate?.from && rangeDate.to ? (
+              `${rangeDate.from.toLocaleDateString()}～${rangeDate.to.toLocaleDateString()}`
+            ) : (
+              <div className="text-gray-600">期間</div>
+            )}
             <ChevronDownIcon />
           </Button>
         </PopoverTrigger>
