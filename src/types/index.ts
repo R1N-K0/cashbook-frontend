@@ -52,3 +52,24 @@ export type TransactionReq = {
   categoryId: number
   createdUser: string
 }
+
+export type ExpenseByCategory = {
+  name: string
+  sum: number
+}
+
+export type ProfitLossByMonth = {
+  expense: number
+  income: number
+  month: string
+  profitLoss: number
+}
+
+export type FinanceReq = {
+  balance: number
+  expense: number
+  expenseByCategory: ExpenseByCategory[]
+  income: number
+  profitLoss: number
+  profitLossByMonth: ProfitLossByMonth[]
+}
