@@ -4,8 +4,10 @@ import Calendar22 from '@/features/components/DateOfBirthPicker'
 import FilterBox from '@/features/components/FilterBox'
 import SearchBox from '@/features/components/SearchBox'
 import { DataTable } from '@/features/transactions/components/DataTable/DataTable'
-import dateFilter from '@/features/transactions/components/utils/dateFilter'
-import { categoryFilter } from '@/features/transactions/components/utils/filter'
+import {
+  categoryFilter,
+  dateFilter,
+} from '@/features/transactions/components/utils/filteies'
 import useTransactionSWR from '@/hooks/useTransactionSWR'
 import type { TransactionData } from '@/types'
 import Link from 'next/link'
