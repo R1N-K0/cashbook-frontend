@@ -74,3 +74,12 @@ export type FinanceReq = {
   profitLoss: number
   profitLossByMonth: ProfitLossByMonth[]
 }
+
+export type SimpleCardData = {
+  name: string
+  amount: number
+}
+
+export type linerCardData = SimpleCardData & {
+  lineChartData: LineChartData[]
+}

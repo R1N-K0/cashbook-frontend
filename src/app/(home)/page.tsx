@@ -7,7 +7,9 @@ import type {
   BarChartData,
   FinanceReq,
   LineChartData,
+  linerCardData,
   PieChartData,
+  SimpleCardData,
 } from '@/types'
 
 const Home = async () => {
@@ -28,8 +30,21 @@ const Home = async () => {
   const currentExpense = data.expense
   const currentIncome = data.income
 
+  const cardData: SimpleCardData[] = [
+    { name: '総残高', amount: data.balance },
+    {
+      name: '今月の収入',
+      amount: data.income,
+    },
+    {
+      name: '今月の支出',
+      amount: data.expense,
+    },
+    { name: '月間収支', amount: data.profitLoss },
+  ]
+
   const barChartData: BarChartData[] = data.profitLossByMonth.map((val) => ({
-    name: `${val.month.split('-')[1]}月`,
+    name: `${parseInt(val.month.split('-')[1], 10)}月`,
     value: val.profitLoss,
   }))
 
@@ -43,10 +58,16 @@ const Home = async () => {
     { name: 'Day 11', value: 5500 },
     { name: 'Day 12', value: 10400 },
   ]
+
+  const balanceData: linerCardData = {
+    name: '総残高',
+    amount: data.balance,
+    lineChartData,
+  }
   return (
     <div className="container-fluid h-full">
       <div className="container-fluid px-10 mt-3">
-        <FinanceCardList balanceData={lineChartData} />
+        <FinanceCardList simpleCardData={cardData} />
         <div className="grid grid-flow-row gap-8 grid-cols-1 lg:grid-cols-2">
           <FinanceBarChart data={barChartData} />
           <FinancePieChart data={categoryData} />
