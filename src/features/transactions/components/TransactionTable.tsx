@@ -37,7 +37,7 @@ const TransactionTable = ({ initialTransactionData }: Props) => {
     data: categoryData,
     isLoading: categoryIsLoading,
     error: categoryError,
-  } = useCategorySWR({})
+  } = useCategorySWR()
 
   const categoryNames = [
     ...categoryData.expense.map((cat) => cat.name),
