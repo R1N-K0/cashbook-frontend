@@ -33,6 +33,7 @@ export const columns: ColumnDef<TransactionData>[] = [
   {
     accessorKey: 'date',
     meta: { label: '日付' },
+    id: 'date',
     header: ({ column }) => {
       return (
         <Button
