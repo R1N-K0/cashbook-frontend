@@ -2,7 +2,25 @@ import utsToJst from '@/features/transactions/components/utils/ustToJst'
 import type { TransactionData } from '@/types'
 import type { DateRange } from 'react-day-picker'
 
-const dateFilter = (
+type Props = {
+  filte: string
+  data: TransactionData[]
+}
+
+export const incomeExpenseFilter = ({
+  filte,
+  data,
+}: Props): TransactionData[] => {
+  if (filte === '収入') {
+    return data.filter((item) => item?.category?.type == 'income')
+  } else if (filte === '支出') {
+    return data.filter((item) => item?.category?.type == 'expense')
+  }
+
+  return data
+}
+
+export const dateFilter = (
   rangedate: DateRange | undefined,
   data: TransactionData[],
 ): TransactionData[] => {
@@ -19,4 +37,8 @@ const dateFilter = (
   return filteredDate
 }
 
-export default dateFilter
+export const categoryFilter = ({ filte, data }: Props): TransactionData[] => {
+  return filte === ''
+    ? data
+    : data.filter((Item) => Item.category?.name === filte)
+}

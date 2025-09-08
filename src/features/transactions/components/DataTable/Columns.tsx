@@ -45,7 +45,7 @@ export const columns: ColumnDef<TransactionData>[] = [
       )
     },
     cell: ({ row }) => (
-      <div className="lowercase pl-3">{row.getValue('date')}</div>
+      <div className="lowercase pl-3">{row.original?.date || '不明'}</div>
     ),
   },
   {
@@ -55,7 +55,7 @@ export const columns: ColumnDef<TransactionData>[] = [
       return <>{column.columnDef.meta?.label}</>
     },
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue('createdUser')}</div>
+      <div className="capitalize">{row.original?.createdUser || '不明'}</div>
     ),
   },
   {
@@ -65,26 +65,41 @@ export const columns: ColumnDef<TransactionData>[] = [
       return <>{column.columnDef.meta?.label}</>
     },
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue('description')}</div>
+      <div className="capitalize">{row.original?.description || '不明'}</div>
     ),
   },
   {
-    accessorFn: (row) => row.category?.type ?? '不明',
-    id: 'type',
+    id: 'category',
     meta: { label: 'カテゴリ' },
     header: ({ column }) => {
       return <>{column.columnDef.meta?.label}</>
     },
     cell: ({ row }) => {
-      const value = row.getValue('type') as string
-
+      return (
+        <div
+          className="capitalize"
+          style={{ color: row.original.category?.color }}
+        >
+          {row.original.category?.name || '不明'}
+        </div>
+      )
+    },
+  },
+  {
+    id: 'type',
+    meta: { label: '収支' },
+    header: ({ column }) => {
+      return <>{column.columnDef.meta?.label}</>
+    },
+    cell: ({ row }) => {
+      const value = row.original.category?.type
       if (value === 'income') {
         return <div className="text-green-500">収入</div>
       } else if (value === 'expense') {
         return <div className="text-blue-500">支出</div>
-      } else {
-        return <div className="text-gray-400">不明</div>
       }
+
+      return <div className="text-gray-400">不明</div>
     },
   },
   {
@@ -93,7 +108,9 @@ export const columns: ColumnDef<TransactionData>[] = [
     header: ({ column }) => {
       return <>{column.columnDef.meta?.label}</>
     },
-    cell: ({ row }) => <div className="capitalize">{row.getValue('memo')}</div>,
+    cell: ({ row }) => (
+      <div className="capitalize">{row.original?.memo || '_'}</div>
+    ),
   },
   {
     accessorKey: 'amount',
@@ -111,22 +128,24 @@ export const columns: ColumnDef<TransactionData>[] = [
       )
     },
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue('amount'))
+      const amount = parseFloat(row.original?.amount.toString() || '不明')
 
       const formatted = new Intl.NumberFormat('ja-JP', {
         style: 'currency',
         currency: 'JPY',
       }).format(amount)
 
-      return (
-        <div className="font-medium">
-          {row.getValue('type') === 'income' ? (
-            <div className="text-green-500">{`+${formatted}`}</div>
-          ) : (
-            <div className="text-blue-500">{`-${formatted}`}</div>
-          )}
-        </div>
-      )
+      if (row.original.category?.type === 'income') {
+        return (
+          <div className="text-green-500 font-medium">{`+${formatted}`}</div>
+        )
+      } else if (row.original.category?.type === 'expense') {
+        return (
+          <div className="text-blue-500 font-medium">{`-${formatted}`}</div>
+        )
+      }
+
+      return <div className="capitalize">不明</div>
     },
   },
   {
