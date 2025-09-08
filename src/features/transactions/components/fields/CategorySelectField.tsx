@@ -13,6 +13,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import CategoryTag from '@/features/transactions/components/CategoryTag'
+import useCategorySWR from '@/hooks/useCategorySWR'
 
 import type { FieldValues, UseControllerProps } from 'react-hook-form'
 
@@ -29,6 +30,9 @@ export default function CategorySelectField<S extends FieldValues>({
   label,
   ...selectProps
 }: Props<S>) {
+  const { data, isLoading, error } = useCategorySWR({})
+  const datas = [...data?.expense, ...data?.income]
+
   return (
     <FormField
       control={control}
@@ -43,19 +47,15 @@ export default function CategorySelectField<S extends FieldValues>({
           >
             <FormControl>
               <SelectTrigger>
-                <SelectValue placeholder="1" />
+                <SelectValue placeholder={datas[0]?.id} />
               </SelectTrigger>
             </FormControl>
             <SelectContent>
-              <SelectItem value="1">
-                <CategoryTag />
-              </SelectItem>
-              <SelectItem value="2">
-                <CategoryTag />
-              </SelectItem>
-              <SelectItem value="3">
-                <CategoryTag />
-              </SelectItem>
+              {datas.map((cat) => (
+                <SelectItem key={cat.id} value={cat.id.toString()}>
+                  <CategoryTag category={cat} />
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
           <FormMessage />

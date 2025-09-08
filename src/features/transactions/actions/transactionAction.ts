@@ -30,7 +30,7 @@ export async function createTransaction(data: TransactionReq) {
       success: false,
     }
   }
-  const response = await res.json()
+  const response = await res.json().catch(() => ({}))
   return { data: response, success: true }
 }
 
@@ -100,7 +100,7 @@ export async function getTransaction(
       status: res.status,
     }
   }
-  const data: TransactionData = await res.json()
+  const data: TransactionData = await res.json().catch(() => ({}))
 
   return { data, success: true }
 }

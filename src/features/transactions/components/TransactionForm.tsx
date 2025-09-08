@@ -37,6 +37,8 @@ export default function TransactionForm() {
       amount: Number(data.amount || 0),
     }
 
+    console.log('submitData', formattedData)
+
     const res = await createTransaction(formattedData)
 
     if (!res.success) {
