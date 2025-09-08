@@ -55,7 +55,8 @@ export type TransactionReq = {
 
 export type ExpenseByCategory = {
   name: string
-  sum: number
+  value: number
+  color: string
 }
 
 export type ProfitLossByMonth = {
