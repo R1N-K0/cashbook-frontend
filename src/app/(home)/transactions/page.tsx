@@ -6,6 +6,7 @@ import TransactionTable from '@/features/transactions/components/TransactionTabl
 const TransactionPage = async () => {
   const initialTransactionRes = await getAllTransaction()
   const initialCategoryRes = await getAllCategory()
+
   if (!initialTransactionRes.success) {
     return (
       <div className="container-fluid h-full">
