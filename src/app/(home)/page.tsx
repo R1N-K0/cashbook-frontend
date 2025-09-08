@@ -18,6 +18,10 @@ const Home = async () => {
   //   }
 
   const barChartData: BarChartData[] = [
+    { name: '1月', value: 13000 },
+    { name: '2月', value: 13000 },
+    { name: '3月', value: 13000 },
+    { name: '4月', value: 13000 },
     { name: '5月', value: 13000 },
     { name: '6月', value: 8000 },
     { name: '7月', value: 14000 },
