@@ -17,7 +17,7 @@ const fetcher = async () => {
   return await getAllCategory()
 }
 
-export default function CategoryTable({ initialData }: Props) {
+export default function CategoryTable() {
   const [keyword, setKeyword] = useState<string>('')
   const [filter, setFilter] = useState<string>('')
 
@@ -25,9 +25,7 @@ export default function CategoryTable({ initialData }: Props) {
     data = { income: [], expense: [] },
     error,
     isLoading,
-  } = useCategorySWR({
-    initialData,
-  })
+  } = useCategorySWR()
 
   return (
     <>

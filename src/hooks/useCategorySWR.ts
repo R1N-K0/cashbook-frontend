@@ -5,11 +5,7 @@ import type { CategoryRes, FetchError } from '@/types'
 import { useRouter } from 'next/navigation'
 import useSWR from 'swr'
 
-type Props = {
-  initialData?: CategoryRes
-}
-
-export default function useCategorySWR({ initialData }: Props) {
+export default function useCategorySWR() {
   const router = useRouter()
 
   const fetcher = async () => {
@@ -31,7 +27,6 @@ export default function useCategorySWR({ initialData }: Props) {
     '/api/categories',
     fetcher,
     {
-      fallbackData: initialData ?? { income: [], expense: [] },
       revalidateOnMount: false,
       onErrorRetry: (error) => {
         if (error.status === 401) router.push('/auth')
