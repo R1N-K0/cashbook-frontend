@@ -39,5 +39,5 @@ export default function useCategorySWR({ initialData }: Props) {
     },
   )
 
-  return { data, error, isLoading, mutate }
+  return { data: data ?? { income: [], expense: [] }, error, isLoading, mutate }
 }

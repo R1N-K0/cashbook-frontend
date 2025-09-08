@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
         { status: res.status },
       )
     }
-    const response = await res.json()
+    const response = await res.json().catch(() => ({}))
     return NextResponse.json(response)
   } catch (error) {
     console.error('createTransaction failed:', (error as Error).message)
