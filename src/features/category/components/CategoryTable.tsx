@@ -29,8 +29,6 @@ export default function CategoryTable({ initialData }: Props) {
     initialData,
   })
 
-  console.log('初期値', data)
-
   return (
     <>
       <div className="w-full container-fluid px-8 py-8 flex flex-col space-y-5">

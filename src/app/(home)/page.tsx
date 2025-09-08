@@ -1,26 +1,54 @@
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { getFinanceData } from '@/features/finance/action/financeAction'
 import FinanceBarChart from '@/features/finance/components/FinanceBarChart'
 import FinanceCardList from '@/features/finance/components/FinanceCardList'
 import FinancePieChart from '@/features/finance/components/FinancePieChart'
-import type { BarChartData, LineChartData, PieChartData } from '@/types'
+import type {
+  BarChartData,
+  FinanceReq,
+  LineChartData,
+  linerCardData,
+  PieChartData,
+  SimpleCardData,
+} from '@/types'
 
-export default function Home() {
-  const barChartData: BarChartData[] = [
-    { name: '5月', value: 13000 },
-    { name: '6月', value: 8000 },
-    { name: '7月', value: 14000 },
-    { name: '8月', value: 11000 },
-    { name: '9月', value: 16000 },
-    { name: '10月', value: 17000 },
-    { name: '11月', value: 9000 },
-    { name: '12月', value: 20000 },
+const Home = async () => {
+  const res = await getFinanceData()
+  if (!res.success)
+    if (!res.success) {
+      return (
+        <div className="container-fluid h-full">
+          <Alert variant="destructive">
+            <AlertTitle>エラーが発生しました</AlertTitle>
+            <AlertDescription>{res.message}</AlertDescription>
+          </Alert>
+        </div>
+      )
+    }
+  const data: FinanceReq = res.data
+  const balance = data.balance
+  const currentExpense = data.expense
+  const currentIncome = data.income
+
+  const cardData: SimpleCardData[] = [
+    { name: '総残高', amount: data.balance },
+    {
+      name: '今月の収入',
+      amount: data.income,
+    },
+    {
+      name: '今月の支出',
+      amount: data.expense,
+    },
+    { name: '月間収支', amount: data.profitLoss },
   ]
 
-  const categoryData: PieChartData[] = [
-    { name: 'Group A', value: 400, color: '#D1E9F6' },
-    { name: 'Group B', value: 300, color: '#F6EACB' },
-    { name: 'Group C', value: 300, color: '#F1D3CE' },
-    { name: 'Group D', value: 200, color: '#EECAD5' },
-  ]
+  const barChartData: BarChartData[] = data.profitLossByMonth.map((val) => ({
+    name: `${parseInt(val.month.split('-')[1], 10)}月`,
+    value: val.profitLoss,
+  }))
+
+  const categoryData: PieChartData[] = data.expenseByCategory
 
   const lineChartData: LineChartData[] = [
     { name: 'Day 7', value: 5000 },
@@ -30,10 +58,16 @@ export default function Home() {
     { name: 'Day 11', value: 5500 },
     { name: 'Day 12', value: 10400 },
   ]
+
+  const balanceData: linerCardData = {
+    name: '総残高',
+    amount: data.balance,
+    lineChartData,
+  }
   return (
     <div className="container-fluid h-full">
       <div className="container-fluid px-10 mt-3">
-        <FinanceCardList balanceData={lineChartData} />
+        <FinanceCardList simpleCardData={cardData} />
         <div className="grid grid-flow-row gap-8 grid-cols-1 lg:grid-cols-2">
           <FinanceBarChart data={barChartData} />
           <FinancePieChart data={categoryData} />
@@ -42,3 +76,5 @@ export default function Home() {
     </div>
   )
 }
+
+export default Home

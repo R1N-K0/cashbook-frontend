@@ -1,22 +1,24 @@
 'use client'
 
 import SimpleLineChart from '@/features/components/SimpleLineChart'
-import type { LineChartData } from '@/types'
+import type { LineChartData, linerCardData } from '@/types'
 
 type Props = {
-  amount: number
+  cardData: Omit<linerCardData, 'lineChartData'>
   data: LineChartData[]
 }
 
 export default function TotalBalanceCard(props: Props) {
-  const { amount, data } = props
+  const { cardData, data } = props
   return (
     <div className="container bg-white w-full border border-gray-200 py-4 shadow-sm rounded-lg px-4">
-      <div className="text-lg font-semibold text-gray-400 mb-2">総残高</div>
+      <div className="text-lg font-semibold text-gray-400 mb-2">
+        {cardData.name}
+      </div>
       <div className="grid grid-cols-2 gap-0">
         <div className="flex flex-col justify-center items-start space-y-2">
           <div className="text-4xl font-bold mt-4">
-            {amount.toLocaleString()}
+            {cardData.amount.toLocaleString()}
           </div>
           <div className="text-lg text-green-400 flex items-center">
             <svg
