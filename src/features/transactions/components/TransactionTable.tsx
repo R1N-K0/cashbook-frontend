@@ -5,6 +5,7 @@ import FilterBox from '@/features/components/FilterBox'
 import SearchBox from '@/features/components/SearchBox'
 import { DataTable } from '@/features/transactions/components/DataTable/DataTable'
 import dateFilter from '@/features/transactions/components/utils/dateFilter'
+import { categoryFilter } from '@/features/transactions/components/utils/filter'
 import useTransactionSWR from '@/hooks/useTransactionSWR'
 import type { TransactionData } from '@/types'
 import Link from 'next/link'
@@ -23,10 +24,11 @@ export default function TransactionTable({ initialData }: Props) {
   const [datas, setDatas] = useState<TransactionData[]>(data)
 
   useEffect(() => {
-    setDatas(dateFilter(rangeDate, data))
-  }, [data, rangeDate])
+    let result = dateFilter(rangeDate, data)
+    result = categoryFilter({ filte, data: result })
 
-  if (isLoading) return <div>Loading...</div>
+    setDatas(result)
+  }, [rangeDate, filte, data])
 
   return (
     <div className="grid grid-rows-[auto_1fr] h-full p-8">
