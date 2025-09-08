@@ -7,7 +7,10 @@ type Props = {
   data: TransactionData[]
 }
 
-export const categoryFilter = ({ filte, data }: Props): TransactionData[] => {
+export const incomeExpenseFilter = ({
+  filte,
+  data,
+}: Props): TransactionData[] => {
   if (filte === '収入') {
     return data.filter((item) => item?.category?.type == 'income')
   } else if (filte === '支出') {
@@ -32,4 +35,10 @@ export const dateFilter = (
   }
 
   return filteredDate
+}
+
+export const categoryFilter = ({ filte, data }: Props): TransactionData[] => {
+  return filte === ''
+    ? data
+    : data.filter((Item) => Item.category?.name === filte)
 }

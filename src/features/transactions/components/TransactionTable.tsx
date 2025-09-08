@@ -7,30 +7,47 @@ import { DataTable } from '@/features/transactions/components/DataTable/DataTabl
 import {
   categoryFilter,
   dateFilter,
+  incomeExpenseFilter,
 } from '@/features/transactions/components/utils/filteies'
 import useTransactionSWR from '@/hooks/useTransactionSWR'
-import type { TransactionData } from '@/types'
+import type { CategoryRes, TransactionData } from '@/types'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import type { DateRange } from 'react-day-picker'
 
 type Props = {
-  initialData: TransactionData[]
+  initialTransactionData: TransactionData[]
+  initialCategoryData: CategoryRes
 }
 
-export default function TransactionTable({ initialData }: Props) {
+const TransactionTable = ({
+  initialTransactionData,
+  initialCategoryData,
+}: Props) => {
   const [keyword, setKeyWord] = useState<string>('')
-  const [filte, setFilter] = useState<string>('')
+  const [incomeExpenseFilte, setIncomeExpenseFilte] = useState<string>('')
+  const [categoryFilte, setCategoryFilter] = useState<string>('')
   const [rangeDate, setRangeDate] = useState<DateRange | undefined>(undefined)
-  const { data, isLoading, error } = useTransactionSWR({ initialData })
+  const { data, isLoading, error } = useTransactionSWR({
+    initialData: initialTransactionData,
+  })
   const [datas, setDatas] = useState<TransactionData[]>(data)
+
+  const categoryNames = [
+    ...initialCategoryData.expense.map((cat) => cat.name),
+    ...initialCategoryData.income.map((cat) => cat.name),
+  ]
 
   useEffect(() => {
     let result = dateFilter(rangeDate, data)
-    result = categoryFilter({ filte, data: result })
+    result = incomeExpenseFilter({
+      filte: incomeExpenseFilte,
+      data: result,
+    })
+    result = categoryFilter({ filte: categoryFilte, data: result })
 
     setDatas(result)
-  }, [rangeDate, filte, data])
+  }, [rangeDate, incomeExpenseFilte, data, categoryFilte])
 
   return (
     <div className="grid grid-rows-[auto_1fr] h-full p-8">
@@ -39,14 +56,14 @@ export default function TransactionTable({ initialData }: Props) {
         <div className="flex flex-row items-center gap-5 p-4">
           <Calendar22 rangeDate={rangeDate} setRangeDate={setRangeDate} />
           <FilterBox
-            placeholder="カテゴリー"
+            placeholder="収支"
             values={['収入', '支出']}
-            setFilter={setFilter}
+            setFilter={setIncomeExpenseFilte}
           />
           <FilterBox
-            placeholder="フィルター"
-            values={['食費', '学費', '治療費']}
-            setFilter={setFilter}
+            placeholder="カテゴリ"
+            values={categoryNames}
+            setFilter={setCategoryFilter}
           />
           <SearchBox setState={setKeyWord} placeholder="検索" />
           <Link href="/transactions/create">
@@ -60,3 +77,5 @@ export default function TransactionTable({ initialData }: Props) {
     </div>
   )
 }
+
+export default TransactionTable
