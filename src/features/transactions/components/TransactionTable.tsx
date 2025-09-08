@@ -9,37 +9,43 @@ import {
   dateFilter,
   incomeExpenseFilter,
 } from '@/features/transactions/components/utils/filteies'
+import useCategorySWR from '@/hooks/useCategorySWR'
 import useTransactionSWR from '@/hooks/useTransactionSWR'
-import type { CategoryRes, TransactionData } from '@/types'
+import type { TransactionData } from '@/types'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import type { DateRange } from 'react-day-picker'
 
 type Props = {
   initialTransactionData: TransactionData[]
-  initialCategoryData: CategoryRes
 }
 
-const TransactionTable = ({
-  initialTransactionData,
-  initialCategoryData,
-}: Props) => {
+const TransactionTable = ({ initialTransactionData }: Props) => {
   const [keyword, setKeyWord] = useState<string>('')
   const [incomeExpenseFilte, setIncomeExpenseFilte] = useState<string>('')
   const [categoryFilte, setCategoryFilter] = useState<string>('')
   const [rangeDate, setRangeDate] = useState<DateRange | undefined>(undefined)
-  const { data, isLoading, error } = useTransactionSWR({
+  const {
+    data: transactionData,
+    isLoading: transactionIsLoading,
+    error: transactionError,
+  } = useTransactionSWR({
     initialData: initialTransactionData,
   })
-  const [datas, setDatas] = useState<TransactionData[]>(data)
+  const [datas, setDatas] = useState<TransactionData[]>(transactionData)
+  const {
+    data: categoryData,
+    isLoading: categoryIsLoading,
+    error: categoryError,
+  } = useCategorySWR({})
 
   const categoryNames = [
-    ...initialCategoryData.expense.map((cat) => cat.name),
-    ...initialCategoryData.income.map((cat) => cat.name),
+    ...categoryData.expense.map((cat) => cat.name),
+    ...categoryData.income.map((cat) => cat.name),
   ]
 
   useEffect(() => {
-    let result = dateFilter(rangeDate, data)
+    let result = dateFilter(rangeDate, transactionData)
     result = incomeExpenseFilter({
       filte: incomeExpenseFilte,
       data: result,
@@ -47,7 +53,7 @@ const TransactionTable = ({
     result = categoryFilter({ filte: categoryFilte, data: result })
 
     setDatas(result)
-  }, [rangeDate, incomeExpenseFilte, data, categoryFilte])
+  }, [rangeDate, incomeExpenseFilte, transactionData, categoryFilte])
 
   return (
     <div className="grid grid-rows-[auto_1fr] h-full p-8">

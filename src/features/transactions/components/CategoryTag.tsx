@@ -1,9 +1,15 @@
-export default function CategoryTag() {
+import type { Category } from '@/types'
+
+type props = {
+  category: Category
+}
+
+export default function CategoryTag({ category }: props) {
   return (
     <>
       <div className="flex flex-row items-center justify-start space-x-3">
         <div>
-          <div className="p-1 rounded-xl bg-blue-50 text-blue-600">
+          <div className="p-1 rounded-xl bg-gray-100">
             <svg
               className="w-5 h-5"
               xmlns="http://www.w3.org/2000/svg"
@@ -11,7 +17,7 @@ export default function CategoryTag() {
             >
               <g
                 fill="none"
-                stroke="currentColor"
+                stroke={category.color}
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="4"
@@ -27,7 +33,7 @@ export default function CategoryTag() {
             </svg>
           </div>
         </div>
-        <div>カテゴリー名</div>
+        <div style={{ color: category.color }}>{category.name}</div>
       </div>
     </>
   )
