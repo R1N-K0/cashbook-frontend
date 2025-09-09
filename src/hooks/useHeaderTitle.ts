@@ -7,7 +7,8 @@ const routes: { pattern: RegExp; label: string }[] = [
   { pattern: /^\/reports$/, label: '取引レポート' },
   { pattern: /^\/transactions$/, label: '取引' },
   { pattern: /^\/transactions\/create$/, label: '取引作成' },
-  { pattern: /^\/transactions\/[a-zA-Z0-9-]+$/, label: '取引詳細' },
+  { pattern: /^\/transactions\/detail\/[a-zA-Z0-9-]+$/, label: '取引詳細' },
+  { pattern: /^\/transactions\/edit\/[a-zA-Z0-9-]+$/, label: '取引編集' },
 ]
 
 export const useHeaderTitle = () => {
