@@ -5,11 +5,12 @@ type props = {
   date: TransactionData
 }
 
-const TransactionDetail = ({ date }: props) => {
+const TransactionEdit = ({ date }: props) => {
   return (
     <div className="h-full w-full p-8">
       <EditTable data={date} />
     </div>
   )
 }
-export default TransactionDetail
+
+export default TransactionEdit

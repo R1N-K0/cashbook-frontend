@@ -3,7 +3,7 @@
 import Calendar22 from '@/features/components/DateOfBirthPicker'
 import FilterBox from '@/features/components/FilterBox'
 import SearchBox from '@/features/components/SearchBox'
-import { DataTable } from '@/features/transactions/components/DataTable/DataTable'
+import { DataTable } from '@/features/transactions/components/listTable/ListTable'
 import {
   categoryFilter,
   dateFilter,
