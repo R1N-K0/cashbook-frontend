@@ -146,7 +146,7 @@ export const columns: ColumnDef<TransactionData>[] = [
         )
       }
 
-      return <div className="capitalize">不明</div>
+      return <div className="capitalize">{formatted}</div>
     },
   },
   {
