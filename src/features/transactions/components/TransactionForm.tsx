@@ -51,6 +51,7 @@ export default function TransactionForm() {
       })
       return
     }
+    route.push('/transactions')
     alert('登録が完了しました')
   }
 
