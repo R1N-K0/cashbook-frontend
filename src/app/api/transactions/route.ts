@@ -28,7 +28,10 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.error('createTransaction failed:', (error as Error).message)
     return NextResponse.json(
-      { message: (error as Error).message ?? '不明なエラーが発生しました' },
+      {
+        message:
+          'サーバーに接続できませんでした。しばらくしてから再度お試しください',
+      },
       { status: 500 },
     )
   }
@@ -49,9 +52,12 @@ export async function GET(req: NextRequest) {
 
     if (!res.ok) {
       const errorData = await res.json().catch(() => ({}))
-      return NextResponse.json(errorData ?? '不明なエラーが発生しました', {
-        status: res.status,
-      })
+      return NextResponse.json(
+        'サーバーに接続できませんでした。しばらくしてから再度お試しください',
+        {
+          status: res.status,
+        },
+      )
     }
 
     const data = await res.json()
@@ -59,7 +65,10 @@ export async function GET(req: NextRequest) {
   } catch (error) {
     console.error('createTransaction failed:', (error as Error).message)
     return NextResponse.json(
-      { message: (error as Error).message ?? '不明なエラーが発生しました' },
+      {
+        message:
+          'サーバーに接続できませんでした。しばらくしてから再度お試しください',
+      },
       { status: 500 },
     )
   }
