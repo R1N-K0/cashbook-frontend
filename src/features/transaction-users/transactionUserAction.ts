@@ -12,7 +12,7 @@ export async function getTransactionUsers(): Promise<
   const accessToken = cookieStore.get('access_token')?.value
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/transactions`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/transaction-users`,
       {
         method: 'GET',
         headers: {

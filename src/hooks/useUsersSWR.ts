@@ -1,6 +1,6 @@
 import { getTransactionUsers } from '@/features/transaction-users/transactionUserAction'
 import type { FetchError } from '@/types'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import useSWR from 'swr'
 
 export default function useUsersSWR() {
@@ -37,4 +37,6 @@ export default function useUsersSWR() {
       },
     },
   )
+
+  return { data: data ?? [], error, isLoading, mutate, isValidating }
 }

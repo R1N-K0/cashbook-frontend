@@ -6,8 +6,8 @@ export async function GET(req: NextRequest) {
   const accessToken = cookieStore.get('access_token')?.value
 
   try {
-    const res = await fetch('http://localhost:3001/transactions', {
-      method: '',
+    const res = await fetch('http://localhost:3001/transaction-user', {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         ...(accessToken ? { Cookie: `access_token=${accessToken}` } : {}),

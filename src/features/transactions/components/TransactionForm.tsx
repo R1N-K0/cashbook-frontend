@@ -7,9 +7,12 @@ import InputField from '@/features/components/fields/InputFiled'
 import NumberField from '@/features/components/fields/NumberField'
 import { createTransaction } from '@/features/transactions/actions/transactionAction'
 import CategorySelectField from '@/features/transactions/components/fields/CategorySelectField'
+import UserSelectField from '@/features/transactions/components/fields/UserSelectField'
 import utsToJst from '@/features/transactions/components/utils/ustToJst'
 import type { TransactionFormValue } from '@/features/transactions/lib/schemas/transactionSchema.ts'
 import { transactionSchema } from '@/features/transactions/lib/schemas/transactionSchema.ts'
+import useCategorySWR from '@/hooks/useCategorySWR'
+import useUsersSWR from '@/hooks/useUsersSWR'
 import type { TransactionReq } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
@@ -17,6 +20,8 @@ import type { SubmitHandler } from 'react-hook-form'
 import { FormProvider, useForm } from 'react-hook-form'
 
 export default function TransactionForm() {
+  const { data: categoryData } = useCategorySWR()
+  const { data: userData } = useUsersSWR()
   const route = useRouter()
   const methods = useForm<TransactionFormValue>({
     resolver: zodResolver(transactionSchema),
@@ -24,8 +29,8 @@ export default function TransactionForm() {
       description: '',
       memo: null,
       amount: 0,
-      categoryId: 1,
-      createdUser: '',
+      categoryId: Number(categoryData?.expense[0]?.id) ?? 1,
+      createdUserId: Number(userData[0]?.id) ?? 1,
     },
   })
 
@@ -36,8 +41,6 @@ export default function TransactionForm() {
       date: data.date ? utsToJst(data.date).toISOString().split('T')[0] : '',
       amount: Number(data.amount || 0),
     }
-
-    console.log('submitData', formattedData)
 
     const res = await createTransaction(formattedData)
 
@@ -82,12 +85,16 @@ export default function TransactionForm() {
         <div className="flex flex-row justify-start items-center space-x-7">
           <DateField name="date" label="取引日" />
 
-          <CategorySelectField name="categoryId" label="カテゴリー" />
+          <CategorySelectField
+            name="categoryId"
+            label="カテゴリー"
+            data={categoryData}
+          />
 
-          <InputField
-            name="createdUser"
+          <UserSelectField
+            name="createdUserId"
             label="担当者"
-            placeholder="担当者の名前を入力"
+            data={userData}
           />
         </div>
 

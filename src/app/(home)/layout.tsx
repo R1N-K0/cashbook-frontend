@@ -30,24 +30,9 @@ const HomeLayout = async ({ children }: { children: ReactNode }) => {
       )
     }
 
-  if (!UsersRes.success)
-    if (!UsersRes.success) {
-      return (
-        <div className="grid grid-rows-[auto_1fr] h-full">
-          <MainHeader />
-          <div className="flex gird-cols-[auto_1fr] ">
-            <MainSidebar />
-            <Toaster richColors position="top-center" />
-            <div className="container-fluid h-full">
-              <Alert variant="destructive">
-                <AlertTitle>エラーが発生しました</AlertTitle>
-                <AlertDescription>{UsersRes.message}</AlertDescription>
-              </Alert>
-            </div>
-          </div>
-        </div>
-      )
-    }
+  if (!UsersRes.success) {
+    return
+  }
 
   return (
     <div className="grid grid-rows-[auto_1fr] h-full">

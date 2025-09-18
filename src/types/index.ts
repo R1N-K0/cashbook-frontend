@@ -50,7 +50,7 @@ export type TransactionReq = {
   memo?: string
   amount: number
   categoryId: number
-  createdUser: string
+  createdUserId: number
 }
 
 export type ExpenseByCategory = {
