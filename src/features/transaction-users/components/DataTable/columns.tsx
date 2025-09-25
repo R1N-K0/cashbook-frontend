@@ -22,7 +22,7 @@ export const columns: ColumnDef<TransactionUsers>[] = [
       )
     },
     cell: ({ row }) => {
-      return <div className="pl-3">{row.original?.id || '不明'}</div>
+      return <div className="pl-3">{'# ' + (row.original?.id || '不明')}</div>
     },
   },
 
@@ -47,7 +47,7 @@ export const columns: ColumnDef<TransactionUsers>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          今月の利用上限
+          利用上限
           <ArrowUpDown />
         </Button>
       )
