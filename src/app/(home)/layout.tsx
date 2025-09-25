@@ -3,14 +3,16 @@ import { getAllCategory } from '@/features/category/actions/categoryAction'
 import ConfigWrapper from '@/features/components/ConfigWrapper'
 import MainHeader from '@/features/components/MainHeader'
 import MainSidebar from '@/features/components/MainSideBar'
+import { getTransactionUsers } from '@/features/transaction-users/transactionUserAction'
 import type { ReactNode } from 'react'
 import { Toaster } from 'sonner'
 
 const HomeLayout = async ({ children }: { children: ReactNode }) => {
-  const initialRes = await getAllCategory()
+  const CategoriesRes = await getAllCategory()
+  const UsersRes = await getTransactionUsers()
 
-  if (!initialRes.success)
-    if (!initialRes.success) {
+  if (!CategoriesRes.success)
+    if (!CategoriesRes.success) {
       return (
         <div className="grid grid-rows-[auto_1fr] h-full">
           <MainHeader />
@@ -20,7 +22,7 @@ const HomeLayout = async ({ children }: { children: ReactNode }) => {
             <div className="container-fluid h-full">
               <Alert variant="destructive">
                 <AlertTitle>エラーが発生しました</AlertTitle>
-                <AlertDescription>{initialRes.message}</AlertDescription>
+                <AlertDescription>{CategoriesRes.message}</AlertDescription>
               </Alert>
             </div>
           </div>
@@ -28,13 +30,20 @@ const HomeLayout = async ({ children }: { children: ReactNode }) => {
       )
     }
 
+  if (!UsersRes.success) {
+    return
+  }
+
   return (
     <div className="grid grid-rows-[auto_1fr] h-full">
       <MainHeader />
       <div className="flex gird-cols-[auto_1fr] ">
         <MainSidebar />
         <Toaster richColors position="top-center" />
-        <ConfigWrapper initialData={initialRes.data}>
+        <ConfigWrapper
+          initialCategoriesData={CategoriesRes.data}
+          initialUsersData={UsersRes.data}
+        >
           <div className="w-full">{children}</div>
         </ConfigWrapper>
       </div>

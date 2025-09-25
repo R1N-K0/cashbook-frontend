@@ -19,7 +19,10 @@ export async function POST(req: NextRequest): Promise<Response> {
 
     if (!res.ok) {
       const errorData = await res.json().catch(() => ({}))
-      return NextResponse.json(errorData.message, { status: res.status })
+      return NextResponse.json({
+        message: errorData.message ?? '不明なエラーが発生しました',
+        status: res.status,
+      })
     }
 
     const response = NextResponse.json({ message: 'create category' })
@@ -27,7 +30,10 @@ export async function POST(req: NextRequest): Promise<Response> {
   } catch (error) {
     console.error('createTransaction failed:', (error as Error).message)
     return NextResponse.json(
-      { message: (error as Error).message ?? '不明なエラーが発生しました' },
+      {
+        message:
+          'サーバーに接続できませんでした。しばらくしてから再度お試しください',
+      },
       { status: 500 },
     )
   }
@@ -57,7 +63,10 @@ export async function GET(req: NextRequest) {
   } catch (error) {
     console.error('GET /api/categories failed:', error)
     return NextResponse.json(
-      { message: (error as Error).message ?? '不明なエラーが発生しました' },
+      {
+        message:
+          'サーバーに接続できませんでした。しばらくしてから再度お試しください',
+      },
       { status: 500 },
     )
   }

@@ -66,8 +66,8 @@ export async function getAllTransaction(): Promise<
       }
     }
   }
-  const response: TransactionData[] = await res.json()
-
+  const response: TransactionData[] = await res.json().catch(() => [])
+  // ここだけ担当ユーザーのフォーマットはバック側で対応した
   return { data: response, success: true }
 }
 
@@ -100,7 +100,11 @@ export async function getTransaction(
       status: res.status,
     }
   }
-  const data: TransactionData = await res.json().catch(() => ({}))
+  const data = await res.json().catch(() => ({}))
+  const resData: TransactionData = {
+    ...data,
+    createdUser: `${data.createdUser.lastName} ${data.createdUser.firstName}`,
+  }
 
-  return { data, success: true }
+  return { data: resData, success: true }
 }

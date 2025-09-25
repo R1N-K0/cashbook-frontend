@@ -50,7 +50,7 @@ export type TransactionReq = {
   memo?: string
   amount: number
   categoryId: number
-  createdUser: string
+  createdUserId: number
 }
 
 export type ExpenseByCategory = {
@@ -82,4 +82,13 @@ export type SimpleCardData = {
 
 export type linerCardData = SimpleCardData & {
   lineChartData: LineChartData[]
+}
+
+export type TransactionUsers = {
+  id: string
+  firstName: string
+  lastName: string
+  limitAmount: number
+  remainingAmount: number
+  created_at: string
 }

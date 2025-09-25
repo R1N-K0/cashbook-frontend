@@ -20,7 +20,7 @@ type Props = {
 }
 
 export default function CategoryDeleteButton({ id }: Props) {
-  const { mutate } = useCategorySWR({})
+  const { mutate } = useCategorySWR()
   const onClick = async (id: string) => {
     const res = await softDeleteCategory(id)
 
