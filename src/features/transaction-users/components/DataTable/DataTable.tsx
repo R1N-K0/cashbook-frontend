@@ -10,6 +10,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { DataTablePagination } from '@/features/transaction-users/components/DataTable/pagination'
+import ModalForm from '@/features/transaction-users/components/ModalForm'
 import type { ColumnFiltersState, SortingState } from '@tanstack/react-table'
 import {
   flexRender,
@@ -50,8 +51,9 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center py-4">
+      <div className="flex items-center justify-items-start py-4">
         <Input
+          type="search"
           placeholder="スタッフを検索"
           value={
             (table.getColumn('fullName')?.getFilterValue() as string) ?? ''
@@ -59,8 +61,11 @@ export function DataTable<TData, TValue>({
           onChange={(event) =>
             table.getColumn('fullName')?.setFilterValue(event.target.value)
           }
-          className="max-w-sm"
+          className="max-w-xs"
         />
+        <div className="flex-grow text-right">
+          <ModalForm />
+        </div>
       </div>
       <div className="overflow-hidden rounded-md border text-gray-500 font-bold">
         <Table>
