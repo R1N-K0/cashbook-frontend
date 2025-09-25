@@ -5,61 +5,20 @@ import DateField from '@/features/components/fields/DateField'
 import { FormError } from '@/features/components/fields/FormError'
 import InputField from '@/features/components/fields/InputFiled'
 import NumberField from '@/features/components/fields/NumberField'
-import { createTransaction } from '@/features/transactions/actions/transactionAction'
 import CategorySelectField from '@/features/transactions/components/fields/CategorySelectField'
 import UserSelectField from '@/features/transactions/components/fields/UserSelectField'
-import utsToJst from '@/features/transactions/components/utils/ustToJst'
-import type { TransactionFormValue } from '@/features/transactions/lib/schemas/transactionSchema.ts'
-import { transactionSchema } from '@/features/transactions/lib/schemas/transactionSchema.ts'
+import { useTransactionForm } from '@/features/transactions/hooks/useTransactionForm'
 import useCategorySWR from '@/hooks/useCategorySWR'
 import useUsersSWR from '@/hooks/useUsersSWR'
-import type { TransactionReq } from '@/types'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useRouter } from 'next/navigation'
-import type { SubmitHandler } from 'react-hook-form'
-import { FormProvider, useForm } from 'react-hook-form'
+import { FormProvider } from 'react-hook-form'
 
 export default function TransactionForm() {
   const { data: categoryData } = useCategorySWR()
   const { data: userData } = useUsersSWR()
-  const route = useRouter()
-  const methods = useForm<TransactionFormValue>({
-    resolver: zodResolver(transactionSchema),
-    defaultValues: {
-      description: '',
-      memo: null,
-      amount: 0,
-      categoryId: Number(categoryData?.expense[0]?.id) ?? 1,
-      createdUserId: Number(userData[0]?.id) ?? 1,
-    },
+  const { methods, onSubmit, selectedUser } = useTransactionForm({
+    userData,
+    categoryData,
   })
-
-  const createdUserId = methods.watch('createdUserId')
-
-  const selectedUser = userData.find(
-    (user) => Number(user.id) === createdUserId,
-  )
-
-  const onSubmit: SubmitHandler<TransactionFormValue> = async (data) => {
-    const formattedData: TransactionReq = {
-      ...data,
-      memo: data.memo ?? undefined,
-      date: data.date ? utsToJst(data.date).toISOString().split('T')[0] : '',
-      amount: Number(data.amount || 0),
-    }
-
-    const res = await createTransaction(formattedData)
-
-    if (!res.success) {
-      methods.setError('root', {
-        type: 'server',
-        message: JSON.stringify(res.message),
-      })
-      return
-    }
-    route.push('/transactions')
-    alert('登録が完了しました')
-  }
 
   return (
     <FormProvider {...methods}>
