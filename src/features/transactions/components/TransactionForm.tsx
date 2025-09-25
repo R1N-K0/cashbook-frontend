@@ -34,6 +34,12 @@ export default function TransactionForm() {
     },
   })
 
+  const createdUserId = methods.watch('createdUserId')
+
+  const selectedUser = userData.find(
+    (user) => Number(user.id) === createdUserId,
+  )
+
   const onSubmit: SubmitHandler<TransactionFormValue> = async (data) => {
     const formattedData: TransactionReq = {
       ...data,
@@ -82,6 +88,10 @@ export default function TransactionForm() {
           placeholder="取引金額を入力"
           label="取引金額"
         />
+
+        <p className="text-sm text-gray-500 mt-0">
+          残り上限: {selectedUser?.remainingAmount}円
+        </p>
 
         <div className="flex flex-row justify-start items-center space-x-7">
           <DateField name="date" label="取引日" />
