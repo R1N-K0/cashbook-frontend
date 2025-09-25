@@ -1,5 +1,6 @@
 'use client'
 
+import { Input } from '@/components/ui/input'
 import {
   Table,
   TableBody,
@@ -9,10 +10,11 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { DataTablePagination } from '@/features/transaction-users/components/DataTable/pagination'
-import type { SortingState } from '@tanstack/react-table'
+import type { ColumnFiltersState, SortingState } from '@tanstack/react-table'
 import {
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
@@ -29,9 +31,8 @@ export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
-  const [sorting, setSorting] = useState<SortingState>([
-    { id: 'date', desc: true },
-  ])
+  const [sorting, setSorting] = useState<SortingState>([])
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const table = useReactTable({
     data,
     columns,
@@ -39,52 +40,75 @@ export function DataTable<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
     state: {
       sorting,
+      columnFilters,
     },
   })
 
   return (
-    <div className="overflow-hidden rounded-md border text-gray-500 font-bold">
-      <Table>
-        <TableHeader className="font-bold">
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <TableHead key={header.id}>
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext(),
-                      )}
-                </TableHead>
-              ))}
-            </TableRow>
-          ))}
-        </TableHeader>
-
-        <TableBody>
-          {table.getRowModel().rows.length ? (
-            table.getRowModel().rows.map((row) => (
-              <TableRow key={row.id}>
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
+    <div>
+      <div className="flex items-center py-4">
+        <Input
+          placeholder="スタッフを検索"
+          value={
+            (table.getColumn('fullName')?.getFilterValue() as string) ?? ''
+          }
+          onChange={(event) =>
+            table.getColumn('fullName')?.setFilterValue(event.target.value)
+          }
+          className="max-w-sm"
+        />
+      </div>
+      <div className="overflow-hidden rounded-md border text-gray-500 font-bold">
+        <Table>
+          <TableHeader className="font-bold">
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <TableHead key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
+                  </TableHead>
                 ))}
               </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
-                スタッフデータがありません.
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
-      <DataTablePagination table={table} />
+            ))}
+          </TableHeader>
+
+          <TableBody>
+            {table.getRowModel().rows.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow key={row.id}>
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
+                  該当データが存在しません.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+        <DataTablePagination table={table} />
+      </div>
     </div>
   )
 }

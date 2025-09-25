@@ -27,16 +27,18 @@ export const columns: ColumnDef<TransactionUsers>[] = [
   },
 
   {
-    accessorKey: 'name',
+    id: 'fullName',
+    accessorFn: (row) => `${row.lastName} ${row.firstName}`,
     meta: { label: '名前' },
     header: ({ column }) => {
       return <>{column.columnDef.meta?.label}</>
     },
     cell: ({ row }) => (
       <div className="capitalize ">
-        {row.original?.lastName + ' ' + row.original?.firstName || '不明'}
+        {row.original?.lastName + ' ' + (row.original?.firstName || '')}
       </div>
     ),
+    filterFn: 'includesString',
   },
 
   {
