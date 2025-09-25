@@ -66,7 +66,7 @@ export const columns: ColumnDef<TransactionUsers>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          今月の残り上限
+          今月の残高
           <ArrowUpDown />
         </Button>
       )
@@ -76,6 +76,31 @@ export const columns: ColumnDef<TransactionUsers>[] = [
       return (
         <div className={Number(remaining) === 0 ? 'text-red-500 pl-3' : 'pl-3'}>
           {remaining.toLocaleString()}
+        </div>
+      )
+    },
+  },
+
+  {
+    accessorKey: 'status',
+    meta: { label: 'ステータス' },
+    header: ({ column }) => {
+      return <>{column.columnDef.meta?.label}</>
+    },
+    cell: ({ row }) => {
+      const remaining = Number(row.original?.remainingAmount) || 0
+      const isLimit = remaining <= 0
+
+      return (
+        <div className="flex justify-start">
+          <span
+            className={`
+            px-2 py-1 rounded-xs text-xs font-semibold
+            ${isLimit ? 'bg-red-200 text-red-800' : 'bg-green-200 text-green-800'}
+          `}
+          >
+            {isLimit ? '上限到達' : '利用可能'}
+          </span>
         </div>
       )
     },
