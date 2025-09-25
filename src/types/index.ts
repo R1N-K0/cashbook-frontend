@@ -89,6 +89,13 @@ export type TransactionUsers = {
   firstName: string
   lastName: string
   limitAmount: number
+  transactionCount: number
   remainingAmount: number
   created_at: string
+}
+
+export type TransactionUsersReq = {
+  firstName: string
+  lastName: string
+  limitAmount: number
 }
