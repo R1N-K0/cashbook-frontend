@@ -2,7 +2,6 @@ import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -28,7 +27,11 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import type { SubmitHandler } from 'react-hook-form'
 import { useForm } from 'react-hook-form'
 
-export default function CategoryForm() {
+type Props = {
+  closeDialog: () => void
+}
+
+export default function CategoryForm({ closeDialog }: Props) {
   const form = useForm<CategoryFormValues>({
     resolver: zodResolver(categorySchema),
     defaultValues: {
@@ -37,10 +40,9 @@ export default function CategoryForm() {
       color: '#33A1E0',
     },
   })
-  const { mutate } = useCategorySWR({})
+  const { mutate } = useCategorySWR()
 
   const onSubmit: SubmitHandler<CategoryFormValues> = async (val) => {
-    console.log('フォームデータ:', val)
     const res = await createCategory(val)
 
     if (!res.success) {
@@ -51,6 +53,7 @@ export default function CategoryForm() {
       return
     }
     alert('カテゴリーを追加しました')
+    closeDialog()
     mutate()
   }
 
@@ -110,9 +113,7 @@ export default function CategoryForm() {
                   default_value="#33A1E0"
                 />
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
+
               <FormMessage />
             </FormItem>
           )}

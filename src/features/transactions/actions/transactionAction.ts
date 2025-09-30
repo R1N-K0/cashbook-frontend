@@ -1,10 +1,6 @@
 'use server'
 
-import type {
-  TransactionData,
-  TransactionReq,
-  UpdateTransactionRes,
-} from '@/types'
+import type { TransactionData, TransactionReq } from '@/types'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
@@ -39,9 +35,9 @@ export async function createTransaction(data: TransactionReq) {
 }
 
 export async function updateTransaction(
-  data: TransactionData,
+  data: TransactionReq,
 ): Promise<
-  | { data: UpdateTransactionRes; success: true }
+  | { data: TransactionReq; success: true }
   | { message: string; status: number; success: false }
 > {
   const cookieStore = await cookies()
@@ -102,8 +98,8 @@ export async function getAllTransaction(): Promise<
       }
     }
   }
-  const response: TransactionData[] = await res.json()
-
+  const response: TransactionData[] = await res.json().catch(() => [])
+  // ここだけ担当ユーザーのフォーマットはバック側で対応した
   return { data: response, success: true }
 }
 
@@ -136,7 +132,11 @@ export async function getTransaction(
       status: res.status,
     }
   }
-  const data: TransactionData = await res.json().catch(() => ({}))
+  const data = await res.json().catch(() => ({}))
+  const resData: TransactionData = {
+    ...data,
+    createdUser: `${data.createdUser.lastName} ${data.createdUser.firstName}`,
+  }
 
-  return { data, success: true }
+  return { data: resData, success: true }
 }

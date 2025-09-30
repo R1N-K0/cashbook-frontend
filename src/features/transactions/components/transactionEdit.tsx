@@ -5,7 +5,6 @@ import DateField from '@/features/components/fields/DateField'
 import { FormError } from '@/features/components/fields/FormError'
 import InputField from '@/features/components/fields/InputFiled'
 import NumberField from '@/features/components/fields/NumberField'
-import CategorySelectField from '@/features/transactions/components/fields/CategorySelectField'
 import utsToJst from '@/features/transactions/components/utils/ustToJst'
 import type { TransactionFormValue } from '@/features/transactions/lib/schemas/transactionSchema.ts'
 import { updateTransactionSchema } from '@/features/transactions/lib/schemas/transactionSchema.ts'
@@ -60,7 +59,7 @@ const TransactionEdit = ({ data }: props) => {
             name="amount"
             label="取引金額"
           />
-          <CategorySelectField name="categoryId" label="カテゴリー" />
+
           <div className="grid grid-cols-2 w-full gap-5 ">
             <Button
               type="button"

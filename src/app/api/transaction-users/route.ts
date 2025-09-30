@@ -1,32 +1,29 @@
-import type { CategoryFormValues } from '@/features/category/lib/schemas/categorySchema'
 import { cookies } from 'next/headers'
-import type { NextRequest } from 'next/server'
-import { NextResponse } from 'next/server'
+import { NextResponse, type NextRequest } from 'next/server'
 
-export async function POST(req: NextRequest): Promise<Response> {
-  const cookie = req.headers.get('cookie')
-  const body: CategoryFormValues = await req.json()
-
+export async function POST(req: NextRequest) {
+  const cookieStore = await cookies()
+  const accessToken = cookieStore.get('access_token')?.value
+  const body = await req.json()
   try {
-    const res = await fetch('http://localhost:3001/categories', {
+    const res = await fetch('http://localhost:3001/transaction-user', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        cookie: cookie || '',
+        ...(accessToken ? { Cookie: `access_token=${accessToken}` } : {}),
       },
       body: JSON.stringify(body),
     })
-
     if (!res.ok) {
       const errorData = await res.json().catch(() => ({}))
-      return NextResponse.json({
-        message: errorData.message ?? '不明なエラーが発生しました',
-        status: res.status,
-      })
+      return NextResponse.json(
+        {
+          message: errorData.message ?? '不明なエラーが発生しました',
+        },
+        { status: res.status },
+      )
     }
-
-    const response = NextResponse.json({ message: 'create category' })
-    return response
+    return NextResponse.json(await res.json())
   } catch (error) {
     console.error('createTransaction failed:', (error as Error).message)
     return NextResponse.json(
@@ -42,8 +39,9 @@ export async function POST(req: NextRequest): Promise<Response> {
 export async function GET(req: NextRequest) {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get('access_token')?.value
+
   try {
-    const res = await fetch('http://localhost:3001/categories', {
+    const res = await fetch('http://localhost:3001/transaction-user', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -52,16 +50,16 @@ export async function GET(req: NextRequest) {
     })
 
     if (!res.ok) {
-      const errorData = await res.json().catch(() => {})
+      const errorData = await res.json().catch(() => ({}))
       return NextResponse.json(
-        { message: errorData.message ?? '不明なエラーが発生しました' },
+        { message: errorData ?? '不明なエラーが発生しました' },
         { status: res.status },
       )
     }
     const data = await res.json()
     return NextResponse.json(data)
   } catch (error) {
-    console.error('GET /api/categories failed:', error)
+    console.error('createTransaction failed:', (error as Error).message)
     return NextResponse.json(
       {
         message:

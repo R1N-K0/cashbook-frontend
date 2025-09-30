@@ -5,51 +5,46 @@ import DateField from '@/features/components/fields/DateField'
 import { FormError } from '@/features/components/fields/FormError'
 import InputField from '@/features/components/fields/InputFiled'
 import NumberField from '@/features/components/fields/NumberField'
-import { createTransaction } from '@/features/transactions/actions/transactionAction'
 import CategorySelectField from '@/features/transactions/components/fields/CategorySelectField'
-import utsToJst from '@/features/transactions/components/utils/ustToJst'
-import type { TransactionFormValue } from '@/features/transactions/lib/schemas/transactionSchema.ts'
-import { transactionSchema } from '@/features/transactions/lib/schemas/transactionSchema.ts'
-import type { TransactionReq } from '@/types'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useRouter } from 'next/navigation'
-import type { SubmitHandler } from 'react-hook-form'
-import { FormProvider, useForm } from 'react-hook-form'
+import UserSelectField from '@/features/transactions/components/fields/UserSelectField'
+import { useTransactionForm } from '@/features/transactions/hooks/useTransactionForm'
+import useCategorySWR from '@/hooks/useCategorySWR'
+import useTransactionSWR from '@/hooks/useTransactionSWR'
+import useUsersSWR from '@/hooks/useUsersSWR'
+import { useEffect } from 'react'
+import { FormProvider } from 'react-hook-form'
 
-export default function TransactionForm() {
-  const route = useRouter()
-  const methods = useForm<TransactionFormValue>({
-    resolver: zodResolver(transactionSchema),
-    defaultValues: {
-      description: '',
-      memo: null,
-      amount: 0,
-      categoryId: 1,
-      createdUser: '',
-    },
+type props = {
+  formPageType: 'create' | 'edit' | 'detail'
+  transactionId?: string
+}
+
+export default function TransactionForm({
+  formPageType,
+  transactionId,
+}: props) {
+  const { data: categoryData } = useCategorySWR()
+  const { data: userData } = useUsersSWR()
+  const { data: transactionDatas } = useTransactionSWR({})
+
+  const { methods, onSubmit, selectedUser } = useTransactionForm({
+    userData,
+    categoryData,
   })
 
-  const onSubmit: SubmitHandler<TransactionFormValue> = async (data) => {
-    const formattedData: TransactionReq = {
-      ...data,
-      memo: data.memo ?? undefined,
-      date: data.date ? utsToJst(data.date).toISOString().split('T')[0] : '',
-      amount: Number(data.amount || 0),
+  useEffect(() => {
+    if (transactionDatas && transactionId && formPageType !== 'create') {
+      const transaction = transactionDatas.find(
+        (data) => data.id === transactionId,
+      )
+      if (transaction) {
+        methods.setValue('description', transaction.description)
+        methods.setValue('memo', transaction.memo ?? '')
+        methods.setValue('amount', transaction.amount)
+        console.log('set')
+      }
     }
-
-    console.log('submitData', formattedData)
-
-    const res = await createTransaction(formattedData)
-
-    if (!res.success) {
-      methods.setError('root', {
-        type: 'server',
-        message: JSON.stringify(res.message),
-      })
-      return
-    }
-    alert('登録が完了しました')
-  }
+  }, [transactionDatas, transactionId, formPageType, methods])
 
   return (
     <FormProvider {...methods}>
@@ -63,6 +58,7 @@ export default function TransactionForm() {
           name="description"
           label="取引内容"
           placeholder="取引内容を入力"
+          readOnly={formPageType === 'detail'}
         />
 
         <InputField
@@ -70,6 +66,7 @@ export default function TransactionForm() {
           name="memo"
           placeholder="取引理由を入力"
           label="取引理由"
+          readOnly={formPageType === 'detail'}
         />
 
         <NumberField
@@ -77,34 +74,47 @@ export default function TransactionForm() {
           name="amount"
           placeholder="取引金額を入力"
           label="取引金額"
+          readOnly={formPageType === 'detail'}
         />
+
+        <p className="text-sm text-gray-500 mt-0">
+          残り上限: {selectedUser?.remainingAmount}円
+        </p>
 
         <div className="flex flex-row justify-start items-center space-x-7">
           <DateField name="date" label="取引日" />
 
-          <CategorySelectField name="categoryId" label="カテゴリー" />
+          <CategorySelectField
+            name="categoryId"
+            label="カテゴリー"
+            data={categoryData}
+            style={formPageType === 'detail' ? { pointerEvents: 'none' } : {}}
+          />
 
-          <InputField
-            name="createdUser"
+          <UserSelectField
+            name="createdUserId"
             label="担当者"
-            placeholder="担当者の名前を入力"
+            data={userData}
+            style={formPageType === 'detail' ? { pointerEvents: 'none' } : {}}
           />
         </div>
 
-        <div className="grid grid-cols-2 w-full gap-5">
-          <Button
-            type="button"
-            variant="outline"
-            className="w-full"
-            onClick={() => methods.reset()}
-          >
-            キャンセル
-          </Button>
+        {formPageType !== 'detail' && (
+          <div className="grid grid-cols-2 w-full gap-5">
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full"
+              onClick={() => methods.reset()}
+            >
+              キャンセル
+            </Button>
 
-          <Button type="submit" className="w-full">
-            取引を登録する
-          </Button>
-        </div>
+            <Button type="submit" className="w-full">
+              {formPageType === 'create' ? '取引を登録する' : '取引を更新する'}
+            </Button>
+          </div>
+        )}
       </form>
     </FormProvider>
   )

@@ -12,8 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import CategoryTag from '@/features/transactions/components/CategoryTag'
-import type { CategoryRes } from '@/types'
+import type { TransactionUsers } from '@/types'
 
 import type { FieldValues, UseControllerProps } from 'react-hook-form'
 
@@ -22,21 +21,18 @@ type SelectProps = React.ComponentProps<typeof Select>
 export type Props<T extends FieldValues> = SelectProps &
   UseControllerProps<T> & {
     label: string
-    data: CategoryRes
+    data: TransactionUsers[]
     style?: React.CSSProperties
   }
 
-export default function CategorySelectField<S extends FieldValues>({
+export default function UserSelectField<S extends FieldValues>({
   name,
   control,
   label,
   data,
   style,
-
   ...selectProps
 }: Props<S>) {
-  const datas = [...data?.expense, ...data?.income]
-
   return (
     <FormField
       control={control}
@@ -51,13 +47,13 @@ export default function CategorySelectField<S extends FieldValues>({
           >
             <FormControl>
               <SelectTrigger style={style}>
-                <SelectValue placeholder={datas[0]?.id} />
+                <SelectValue placeholder={data[0]?.id} />
               </SelectTrigger>
             </FormControl>
             <SelectContent>
-              {datas.map((cat) => (
-                <SelectItem key={cat.id} value={cat.id.toString()}>
-                  <CategoryTag category={cat} />
+              {data.map((user) => (
+                <SelectItem key={user.id} value={user.id.toString()}>
+                  {user.lastName} {user.firstName}
                 </SelectItem>
               ))}
             </SelectContent>
