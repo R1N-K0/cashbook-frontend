@@ -83,3 +83,9 @@ export type SimpleCardData = {
 export type linerCardData = SimpleCardData & {
   lineChartData: LineChartData[]
 }
+
+export type UpdateTransactionRes = TransactionData & {
+  updatedUser: string
+  created_at: string
+  updated_at: string
+}

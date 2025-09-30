@@ -12,6 +12,5 @@ export const toKVRows = (data: TransactionData) => {
     },
     { label: 'メモ', value: data.memo ?? '' },
     { label: '金額', value: `${data?.amount?.toLocaleString()} 円` },
-    { label: '締め', value: data.editable ? '締め前' : '締め後' },
   ]
 }

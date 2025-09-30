@@ -21,7 +21,7 @@ const TransactionEditPage = async ({
     )
   }
 
-  return <TransactionEdit date={initialRes.data} />
+  return <TransactionEdit data={initialRes.data} />
 }
 
 export default TransactionEditPage
