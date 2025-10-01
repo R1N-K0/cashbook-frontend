@@ -11,11 +11,12 @@ import { useTransactionForm } from '@/features/transactions/hooks/useTransaction
 import useCategorySWR from '@/hooks/useCategorySWR'
 import useTransactionSWR from '@/hooks/useTransactionSWR'
 import useUsersSWR from '@/hooks/useUsersSWR'
+import type { formPageType } from '@/types'
 import { useEffect } from 'react'
 import { FormProvider } from 'react-hook-form'
 
 type props = {
-  formPageType: 'create' | 'edit' | 'detail'
+  formPageType: formPageType
   transactionId?: string
 }
 
@@ -30,6 +31,8 @@ export default function TransactionForm({
   const { methods, onSubmit, selectedUser } = useTransactionForm({
     userData,
     categoryData,
+    formPageType,
+    transactionId,
   })
 
   useEffect(() => {

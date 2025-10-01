@@ -7,7 +7,13 @@ import {
   transactionSchema,
   type TransactionFormValue,
 } from '@/features/transactions/lib/schemas/transactionSchema.ts'
-import type { CategoryRes, TransactionReq, TransactionUsers } from '@/types'
+import type {
+  CategoryRes,
+  formPageType,
+  TransactionReq,
+  TransactionUpdateReq,
+  TransactionUsers,
+} from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import type { SubmitHandler } from 'react-hook-form'
@@ -17,9 +23,16 @@ import { toast } from 'sonner'
 type Props = {
   userData: TransactionUsers[]
   categoryData: CategoryRes
+  formPageType: formPageType
+  transactionId?: string
 }
 
-export const useTransactionForm = ({ userData, categoryData }: Props) => {
+export const useTransactionForm = ({
+  userData,
+  categoryData,
+  formPageType,
+  transactionId,
+}: Props) => {
   const router = useRouter()
   const methods = useForm<TransactionFormValue>({
     resolver: zodResolver(transactionSchema),
@@ -38,55 +51,50 @@ export const useTransactionForm = ({ userData, categoryData }: Props) => {
   )
 
   const onSubmit: SubmitHandler<TransactionFormValue> = async (data) => {
-    const formattedData: TransactionReq = {
+    const createFormattedData: TransactionReq = {
       ...data,
       memo: data.memo ?? undefined,
       date: data.date ? utsToJst(data.date).toISOString().split('T')[0] : '',
       amount: Number(data.amount || 0),
     }
 
-    if (formattedData.amount > (selectedUser?.remainingAmount ?? 0)) {
+    if (createFormattedData.amount > (selectedUser?.remainingAmount ?? 0)) {
       toast.error('取引金額が担当者の残り上限を超えています')
       return
     }
-    const res = await createTransaction(formattedData)
 
-    if (!res.success) {
-      methods.setError('root', {
-        type: 'server',
-        message: JSON.stringify(res.message),
-      })
-      return
-    }
-    toast.success('登録が完了しました')
-    methods.reset()
-    router.push('/transactions')
-  }
-
-  const onUpdate: SubmitHandler<TransactionFormValue> = async (data) => {
-    const formattedData: TransactionReq = {
-      ...data,
-      memo: data.memo ?? undefined,
-      date: data.date ? utsToJst(data.date).toISOString().split('T')[0] : '',
-      amount: Number(data.amount || 0),
+    if (formPageType === 'create') {
+      const res = await createTransaction(createFormattedData)
+      if (!res.success) {
+        methods.setError('root', {
+          type: 'server',
+          message: JSON.stringify(res.message),
+        })
+        return
+      }
+      toast.success('登録が完了しました')
+      methods.reset()
+      router.push('/transactions')
     }
 
-    if (formattedData.amount > (selectedUser?.remainingAmount ?? 0)) {
-      toast.error('取引金額が担当者の残り上限を超えています')
-      return
+    if (formPageType === 'edit' && transactionId) {
+      const updateformattedData: TransactionUpdateReq = {
+        ...createFormattedData,
+        updatedUserId: '1',
+        id: transactionId,
+      }
+      console.log(updateformattedData.id)
+      const res = await updateTransaction(updateformattedData)
+      if (!res.success) {
+        methods.setError('root', {
+          type: 'server',
+          message: JSON.stringify(res.message),
+        })
+      }
+      toast.success('更新が完了しました')
+      methods.reset()
+      router.push('/transactions')
     }
-    const res = await updateTransaction(formattedData)
-
-    if (!res.success) {
-      methods.setError('root', {
-        type: 'server',
-        message: JSON.stringify(res.message),
-      })
-      return
-    }
-    toast.success('更新が完了しました')
-    methods.reset()
-    router.push('/transactions')
   }
 
   return { methods, onSubmit, selectedUser }

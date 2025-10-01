@@ -1,6 +1,10 @@
 'use server'
 
-import type { TransactionData, TransactionReq } from '@/types'
+import type {
+  TransactionData,
+  TransactionReq,
+  TransactionUpdateReq,
+} from '@/types'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
@@ -35,18 +39,18 @@ export async function createTransaction(data: TransactionReq) {
 }
 
 export async function updateTransaction(
-  data: TransactionReq,
+  data: TransactionUpdateReq,
 ): Promise<
-  | { data: TransactionReq; success: true }
+  | { data: TransactionUpdateReq; success: true }
   | { message: string; status: number; success: false }
 > {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get('access_token')?.value
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/transactions/:id`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/transactions/${data.id}`,
     {
-      method: 'PUT',
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
         ...(accessToken ? { Cookie: `access_token=${accessToken}` } : {}),
