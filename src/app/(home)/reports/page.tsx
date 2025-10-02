@@ -1,5 +1,14 @@
+import ReportBox from '@/features/finance/components/ReportBox'
+
 const ReportPage = () => {
-  return <div>取引レポート</div>
+  const now = new Date()
+  const year = now.getFullYear()
+  const month = now.getMonth() + 1
+  return (
+    <div className="container w-full px-8 py-4">
+      <ReportBox />
+    </div>
+  )
 }
 
 export default ReportPage
