@@ -5,11 +5,7 @@ import type { FetchError, TransactionData } from '@/types'
 import { useRouter } from 'next/navigation'
 import useSWR from 'swr'
 
-type Props = {
-  initialData?: TransactionData[]
-}
-
-export default function useTransactionSWR({ initialData }: Props) {
+export default function useTransactionSWR() {
   const router = useRouter()
 
   const fetcher = async (): Promise<TransactionData[]> => {
@@ -30,7 +26,6 @@ export default function useTransactionSWR({ initialData }: Props) {
     '/api/transactions',
     fetcher,
     {
-      fallbackData: initialData ?? [],
       revalidateOnMount: false,
       revalidateOnFocus: false,
       revalidateIfStale: false,

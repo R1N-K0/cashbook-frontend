@@ -16,11 +16,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import type { DateRange } from 'react-day-picker'
 
-type Props = {
-  initialTransactionData: TransactionData[]
-}
-
-const TransactionTable = ({ initialTransactionData }: Props) => {
+const TransactionTable = () => {
   const [keyword, setKeyWord] = useState<string>('')
   const [incomeExpenseFilte, setIncomeExpenseFilte] = useState<string>('')
   const [categoryFilte, setCategoryFilter] = useState<string>('')
@@ -29,9 +25,7 @@ const TransactionTable = ({ initialTransactionData }: Props) => {
     data: transactionData,
     isLoading: transactionIsLoading,
     error: transactionError,
-  } = useTransactionSWR({
-    initialData: initialTransactionData,
-  })
+  } = useTransactionSWR()
   const [datas, setDatas] = useState<TransactionData[]>(transactionData)
   const {
     data: categoryData,
