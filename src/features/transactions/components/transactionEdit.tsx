@@ -47,18 +47,19 @@ const TransactionEdit = ({ data }: props) => {
           <FormError />
           <InputField control={method.control} name="id" label="取引ID" />
           <DateField name="date" label="作成日" />
-          <InputField name="createdUser" label="担当者" />
+          <InputField name="createdUser" label="申請者" />
           <InputField
             control={method.control}
             name="description"
             label="取引内容"
           />
-          <InputField control={method.control} name="memo" label="取引理由" />
           <NumberField
             control={method.control}
             name="amount"
             label="取引金額"
           />
+
+          <InputField control={method.control} name="memo" label="取引理由" />
 
           <div className="grid grid-cols-2 w-full gap-5 ">
             <Button
