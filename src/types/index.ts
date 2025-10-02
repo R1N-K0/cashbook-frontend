@@ -37,9 +37,11 @@ export type TransactionData = {
   id: string
   createdUser: string
   date: string
+  title: string
   description: string
-  memo?: string | undefined
   amount: number
+  memo?: string // 後で消す
+  status: boolean
   editable: boolean
   category: Category
 }
