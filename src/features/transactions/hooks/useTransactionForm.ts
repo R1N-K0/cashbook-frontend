@@ -40,12 +40,14 @@ export const useTransactionForm = ({
       description: '',
       memo: null,
       amount: 0,
+      status: false,
       categoryId: Number(categoryData?.expense[0]?.id) ?? 1,
       createdUserId: Number(userData[0]?.id) ?? 1,
     },
   })
 
   const createdUserId = methods.watch('createdUserId')
+  const status = methods.watch('status')
   const selectedUser = userData.find(
     (user) => Number(user.id) === createdUserId,
   )
@@ -98,5 +100,5 @@ export const useTransactionForm = ({
     }
   }
 
-  return { methods, onSubmit, selectedUser }
+  return { methods, onSubmit, selectedUser, status }
 }

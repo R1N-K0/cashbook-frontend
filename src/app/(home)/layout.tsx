@@ -4,12 +4,14 @@ import ConfigWrapper from '@/features/components/ConfigWrapper'
 import MainHeader from '@/features/components/MainHeader'
 import MainSidebar from '@/features/components/MainSideBar'
 import { getTransactionUsers } from '@/features/transaction-users/transactionUserAction'
+import { getAllTransaction } from '@/features/transactions/actions/transactionAction'
 import type { ReactNode } from 'react'
 import { Toaster } from 'sonner'
 
 const HomeLayout = async ({ children }: { children: ReactNode }) => {
   const CategoriesRes = await getAllCategory()
   const UsersRes = await getTransactionUsers()
+  const TransactionsRes = await getAllTransaction()
 
   if (!CategoriesRes.success)
     if (!CategoriesRes.success) {
@@ -34,6 +36,10 @@ const HomeLayout = async ({ children }: { children: ReactNode }) => {
     return
   }
 
+  if (!TransactionsRes.success) {
+    return
+  }
+
   return (
     <div className="grid grid-rows-[auto_1fr] h-full">
       <MainHeader />
@@ -43,6 +49,7 @@ const HomeLayout = async ({ children }: { children: ReactNode }) => {
         <ConfigWrapper
           initialCategoriesData={CategoriesRes.data}
           initialUsersData={UsersRes.data}
+          initialTransactionsData={TransactionsRes.data}
         >
           <div className="w-full">{children}</div>
         </ConfigWrapper>
