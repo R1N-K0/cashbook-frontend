@@ -32,6 +32,8 @@ export default function useTransactionSWR({ initialData }: Props) {
     {
       fallbackData: initialData ?? [],
       revalidateOnMount: false,
+      revalidateOnFocus: false,
+      revalidateIfStale: false,
       onErrorRetry: (error: FetchError) => {
         if (error.status === 401) router.push('/auth')
       },
