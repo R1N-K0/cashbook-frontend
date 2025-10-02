@@ -31,8 +31,8 @@ export default function FilterBox(props: Props) {
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="__all__">全て</SelectItem>
-          {values.map((value) => (
-            <SelectItem key={value} value={value}>
+          {values.map((value, key) => (
+            <SelectItem key={key} value={value}>
               {value}
             </SelectItem>
           ))}

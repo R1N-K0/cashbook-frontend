@@ -27,6 +27,7 @@ export async function GET(
         { status: res.status },
       )
     }
+
     return NextResponse.json(await res.json())
   } catch (error) {
     return NextResponse.json(
