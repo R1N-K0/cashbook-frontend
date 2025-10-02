@@ -26,7 +26,7 @@ export default function TransactionForm({
 }: props) {
   const { data: categoryData } = useCategorySWR()
   const { data: userData } = useUsersSWR()
-  const { data: transactionDatas } = useTransactionSWR({})
+  const { data: transactionDatas } = useTransactionSWR()
 
   const { methods, onSubmit, selectedUser } = useTransactionForm({
     userData,
