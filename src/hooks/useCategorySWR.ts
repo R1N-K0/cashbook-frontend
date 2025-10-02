@@ -23,11 +23,13 @@ export default function useCategorySWR() {
     return res.data
   }
 
-  const { data, error, isLoading, mutate } = useSWR<CategoryRes>(
+  const { data, error, isLoading, isValidating, mutate } = useSWR<CategoryRes>(
     '/api/categories',
     fetcher,
     {
       revalidateOnMount: false,
+      revalidateOnFocus: false,
+      revalidateIfStale: false,
       onErrorRetry: (error) => {
         if (error.status === 401) router.push('/auth')
       },
