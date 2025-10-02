@@ -51,7 +51,7 @@ export const listColumns: ColumnDef<TransactionData>[] = [
   },
   {
     accessorKey: 'createdUser',
-    meta: { label: '作成者' },
+    meta: { label: '申請者' },
     header: ({ column }) => {
       return <>{column.columnDef.meta?.label}</>
     },
@@ -60,8 +60,18 @@ export const listColumns: ColumnDef<TransactionData>[] = [
     ),
   },
   {
+    accessorKey: 'title',
+    meta: { label: '取引内容' },
+    header: ({ column }) => {
+      return <>{column.columnDef.meta?.label}</>
+    },
+    cell: ({ row }) => (
+      <div className="capitalize">{row.original?.title || '不明'}</div>
+    ),
+  },
+  {
     accessorKey: 'description',
-    meta: { label: '説明' },
+    meta: { label: '取引理由' },
     header: ({ column }) => {
       return <>{column.columnDef.meta?.label}</>
     },
@@ -97,21 +107,11 @@ export const listColumns: ColumnDef<TransactionData>[] = [
       if (value === 'income') {
         return <div className="text-green-500">収入</div>
       } else if (value === 'expense') {
-        return <div className="text-blue-500">支出</div>
+        return <div className="text-gray-500">支出</div>
       }
 
       return <div className="text-gray-400">不明</div>
     },
-  },
-  {
-    accessorKey: 'memo',
-    meta: { label: 'メモ' },
-    header: ({ column }) => {
-      return <>{column.columnDef.meta?.label}</>
-    },
-    cell: ({ row }) => (
-      <div className="capitalize">{row.original?.memo || '_'}</div>
-    ),
   },
   {
     accessorKey: 'amount',
@@ -142,13 +142,35 @@ export const listColumns: ColumnDef<TransactionData>[] = [
         )
       } else if (row.original.category?.type === 'expense') {
         return (
-          <div className="text-blue-500 font-medium">{`-${formatted}`}</div>
+          <div className="text-gray-600 font-medium">{`-${formatted}`}</div>
         )
       }
 
       return <div className="capitalize">{formatted}</div>
     },
   },
+  {
+    accessorKey: 'status',
+    meta: { label: '申請許可' },
+    header: ({ column }) => {
+      return <>{column.columnDef.meta?.label}</>
+    },
+    cell: ({ row }) => {
+      return (
+        <div className="flex justify-start">
+          <span
+            className={`
+            px-2 py-1 rounded-xs text-xs font-semibold 
+            ${row.original.status ? 'bg-gray-200 text-gray-800' : 'bg-orange-200 text-orange-800'}
+          `}
+          >
+            {row.original.status ? '許可' : '却下'}
+          </span>
+        </div>
+      )
+    },
+  },
+
   {
     accessorKey: 'id',
     meta: { label: '詳細' },
@@ -174,6 +196,7 @@ export const listColumns: ColumnDef<TransactionData>[] = [
       </>
     ),
   },
+
   {
     accessorKey: 'editable',
     meta: { label: '編集' },
@@ -187,7 +210,9 @@ export const listColumns: ColumnDef<TransactionData>[] = [
             className={clsx(
               'rounded-lg',
               'hover:bg-gray-100',
-              row.getValue('editable') ? 'text-blue-500' : 'text-gray-500',
+              row.getValue('editable')
+                ? 'text-blue-500 hover:cursor-pointer'
+                : 'text-gray-500 bg-gray-200 cursor-not-allowed',
             )}
           >
             <svg
