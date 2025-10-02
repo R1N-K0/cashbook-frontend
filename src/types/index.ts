@@ -53,9 +53,8 @@ export type TransactionReq = {
   createdUserId: number
 }
 
-export type TransactionUpdateReq = TransactionReq & {
-  updatedUserId: string
-  id: string
+export type TransactionUpdateReq = Omit<TransactionReq, 'createdUserId'> & {
+  updatedUserId: number
 }
 
 export type ExpenseByCategory = {

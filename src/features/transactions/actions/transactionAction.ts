@@ -48,7 +48,8 @@ export async function updateTransaction(
   const accessToken = cookieStore.get('access_token')?.value
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/transactions/${data.id}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/transactions/${1}`,
+
     {
       method: 'PATCH',
       headers: {
@@ -56,6 +57,7 @@ export async function updateTransaction(
         ...(accessToken ? { Cookie: `access_token=${accessToken}` } : {}),
         credentials: 'include',
       },
+
       body: JSON.stringify(data),
     },
   )
@@ -63,6 +65,7 @@ export async function updateTransaction(
   if (!res.ok) {
     if (res.status === 401) redirect('/auth')
     const errorData = await res.json().catch(() => ({}))
+    console.log(errorData, res.status)
     return { message: errorData.message, status: res.status, success: false }
   }
 

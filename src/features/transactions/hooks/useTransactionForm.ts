@@ -78,12 +78,13 @@ export const useTransactionForm = ({
     }
 
     if (formPageType === 'edit' && transactionId) {
+      const { createdUserId, ...rest } = createFormattedData
       const updateformattedData: TransactionUpdateReq = {
-        ...createFormattedData,
-        updatedUserId: '1',
-        id: transactionId,
+        ...rest,
+        updatedUserId: 1,
       }
-      console.log('Update data:', updateformattedData)
+      console.log(updateformattedData)
+
       const res = await updateTransaction(updateformattedData)
       if (!res.success) {
         methods.setError('root', {

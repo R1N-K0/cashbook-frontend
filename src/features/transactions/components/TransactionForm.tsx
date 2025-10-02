@@ -44,7 +44,6 @@ export default function TransactionForm({
         methods.setValue('description', transaction.description)
         methods.setValue('memo', transaction.memo ?? '')
         methods.setValue('amount', transaction.amount)
-        console.log('set')
       }
     }
   }, [transactionDatas, transactionId, formPageType, methods])
