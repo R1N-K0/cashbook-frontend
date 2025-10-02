@@ -11,7 +11,7 @@ const TransactionCreatePage = async () => {
             <Link href="/transactions">← 取引一覧に戻る</Link>
           </div>
         </div>
-        <TransactionForm />
+        <TransactionForm formPageType="create" />
       </div>
     </>
   )

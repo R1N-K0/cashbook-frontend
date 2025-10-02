@@ -12,7 +12,7 @@ type InputProps = React.ComponentProps<typeof Input>
 
 export type Props<T extends FieldValues> = InputProps &
   UseControllerProps<T> & {
-    label: string
+    label?: string
   }
 
 export default function InputField<S extends FieldValues>({

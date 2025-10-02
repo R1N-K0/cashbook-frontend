@@ -53,6 +53,11 @@ export type TransactionReq = {
   createdUserId: number
 }
 
+export type TransactionUpdateReq = TransactionReq & {
+  updatedUserId: string
+  id: string
+}
+
 export type ExpenseByCategory = {
   name: string
   value: number
@@ -99,3 +104,5 @@ export type TransactionUsersReq = {
   lastName: string
   limitAmount: number
 }
+
+export type formPageType = 'create' | 'edit' | 'detail'

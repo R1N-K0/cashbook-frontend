@@ -31,7 +31,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { columns } from '@/features/transactions/components/DataTable/Columns'
+import { listColumns } from '@/features/transactions/components/listTable/ListColumns'
 import type { TransactionData } from '@/types'
 
 type Props = {
@@ -51,7 +51,7 @@ export function DataTable({ data }: Props) {
 
   const table = useReactTable({
     data,
-    columns,
+    columns: listColumns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -138,7 +138,7 @@ export function DataTable({ data }: Props) {
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={columns.length}
+                  colSpan={listColumns.length}
                   className="h-24 text-center"
                 >
                   取引はありません...

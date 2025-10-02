@@ -17,3 +17,9 @@ export const transactionSchema = z.object({
 })
 
 export type TransactionFormValue = z.infer<typeof transactionSchema>
+
+export const updateTransactionSchema = transactionSchema.extend({
+  id: z.string({ message: 'IDを指定してください' }),
+})
+
+export type UpdateTransactionValue = z.infer<typeof updateTransactionSchema>
