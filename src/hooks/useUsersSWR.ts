@@ -18,11 +18,13 @@ export default function useUsersSWR() {
     return res.data
   }
 
-  const { data, error, isLoading, mutate, isValidating } = useSWR(
+  const { data, error, isLoading, isValidating, mutate } = useSWR(
     '/api/transaction-users',
     fetcher,
     {
       revalidateOnMount: false,
+      revalidateOnFocus: false,
+      revalidateIfStale: false,
       onErrorRetry: (
         error: FetchError,
         key,
