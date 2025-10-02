@@ -12,7 +12,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
-import { softDeleteCategory } from '@/features/category/actions/categoryAction'
+import { executeClosing } from '@/features/closing/action/closingAction'
 import useTransactionSWR from '@/hooks/useTransactionSWR'
 import { toast } from 'sonner'
 
@@ -20,13 +20,13 @@ type Props = {
   id: string
 }
 
-export default function CategoryDeleteButton({ id }: Props) {
+export default function ClosingButton() {
   const { mutate } = useTransactionSWR()
   const now = new Date()
   const month = now.getMonth() + 1
   const year = now.getFullYear()
-  const onClick = async (id: string) => {
-    const res = await softDeleteCategory(id)
+  const onClick = async () => {
+    const res = await executeClosing({ year, month })
 
     if (!res.success) toast.error(res.message ?? '不明なエラーが発生しました')
     else {
@@ -46,11 +46,11 @@ export default function CategoryDeleteButton({ id }: Props) {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>月末締め</AlertDialogTitle>
-            <AlertDialogDescription className="text-normal">{`${year}年${month}月の月末締めを実行します。よろしいですか？`}</AlertDialogDescription>
+            <AlertDialogDescription className="text-normal">{`${year}年${month}月の締め処理を実行します。よろしいですか？`}</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>キャンセル</AlertDialogCancel>
-            <AlertDialogAction onClick={() => onClick(id)}>
+            <AlertDialogAction onClick={() => onClick()}>
               実行
             </AlertDialogAction>
           </AlertDialogFooter>
