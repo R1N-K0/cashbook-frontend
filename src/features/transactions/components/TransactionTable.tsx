@@ -1,5 +1,6 @@
 'use client'
 
+import ClosingButton from '@/features/closing/components/ClosingButton'
 import Calendar22 from '@/features/components/DateOfBirthPicker'
 import FilterBox from '@/features/components/FilterBox'
 import SearchBox from '@/features/components/SearchBox'
@@ -50,10 +51,9 @@ const TransactionTable = () => {
   }, [rangeDate, incomeExpenseFilte, transactionData, categoryFilte])
 
   return (
-    <div className="grid grid-rows-[auto_1fr] h-full p-8">
+    <div className="grid grid-rows-[auto_1fr] h-full px-8">
       <div>
-        <div className="text-3xl font-bold text-gray-700">取引一覧</div>
-        <div className="flex flex-row items-center gap-5 p-4">
+        <div className="flex flex-row items-center gap-5 pt-3">
           <Calendar22 rangeDate={rangeDate} setRangeDate={setRangeDate} />
           <FilterBox
             placeholder="収支"
@@ -68,9 +68,12 @@ const TransactionTable = () => {
           <SearchBox setState={setKeyWord} placeholder="検索" />
           <Link href="/transactions/create">
             <button className="bg-gray-900 text-white font-bold rounded-md text-sm px-5 py-2 hover:bg-gray-700 focus:outline-none focus:ring-4">
-              + 新規取引作成
+              + 取引作成
             </button>
           </Link>
+          <div className="me-auto">
+            <ClosingButton />
+          </div>
         </div>
       </div>
       <DataTable data={datas} />
