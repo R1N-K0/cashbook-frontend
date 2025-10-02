@@ -83,7 +83,7 @@ export const useTransactionForm = ({
         updatedUserId: '1',
         id: transactionId,
       }
-      console.log(updateformattedData.id)
+      console.log('Update data:', updateformattedData)
       const res = await updateTransaction(updateformattedData)
       if (!res.success) {
         methods.setError('root', {
