@@ -63,34 +63,37 @@ const TransactionTable = () => {
   return (
     <div className="grid grid-rows-[auto_1fr] h-full px-8 pt-5">
       <div>
-        <div className="flex flex-row items-center gap-5 pt-3">
-          <Calendar22 rangeDate={rangeDate} setRangeDate={setRangeDate} />
-          <FilterBox
-            placeholder="収支"
-            values={['収入', '支出']}
-            setFilter={setIncomeExpenseFilte}
-          />
-          <FilterBox
-            placeholder="カテゴリ"
-            values={categoryNames}
-            setFilter={setCategoryFilter}
-          />
+        <div className="flex justify-between items-center">
+          <div className="flex flex-row items-center gap-5 pt-3">
+            <Calendar22 rangeDate={rangeDate} setRangeDate={setRangeDate} />
+            <FilterBox
+              placeholder="収支"
+              values={['収入', '支出']}
+              setFilter={setIncomeExpenseFilte}
+            />
+            <FilterBox
+              placeholder="カテゴリ"
+              values={categoryNames}
+              setFilter={setCategoryFilter}
+            />
 
-          <FilterBox
-            placeholder="申請者"
-            values={
-              staffData?.map((user) => user.lastName + ' ' + user.firstName) ||
-              []
-            }
-            setFilter={setStaffFilter}
-          />
+            <FilterBox
+              placeholder="申請者"
+              values={
+                staffData?.map(
+                  (user) => user.lastName + ' ' + user.firstName,
+                ) || []
+              }
+              setFilter={setStaffFilter}
+            />
+          </div>
+          <div className="flex flex-row items-center gap-3">
+            <Link href="/transactions/create">
+              <button className="bg-gray-900 text-white font-bold rounded-md text-sm px-5 py-2 hover:bg-gray-700 focus:outline-none focus:ring-4">
+                + 取引作成
+              </button>
+            </Link>
 
-          <Link href="/transactions/create">
-            <button className="bg-gray-900 text-white font-bold rounded-md text-sm px-5 py-2 hover:bg-gray-700 focus:outline-none focus:ring-4">
-              + 取引作成
-            </button>
-          </Link>
-          <div className="me-auto">
             <ClosingButton />
           </div>
         </div>
