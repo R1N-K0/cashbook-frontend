@@ -42,3 +42,7 @@ export const categoryFilter = ({ filte, data }: Props): TransactionData[] => {
     ? data
     : data.filter((Item) => Item.category?.name === filte)
 }
+
+export const staffFilter = ({ filte, data }: Props): TransactionData[] => {
+  return filte === '' ? data : data.filter((Item) => Item.createdUser === filte)
+}
