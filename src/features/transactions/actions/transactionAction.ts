@@ -48,7 +48,7 @@ export async function updateTransaction(
   const accessToken = cookieStore.get('access_token')?.value
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/transactions/${1}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/transactions/${6}`,
 
     {
       method: 'PATCH',

@@ -85,7 +85,6 @@ export const useTransactionForm = ({
         ...rest,
         updatedUserId: 1,
       }
-      console.log(updateformattedData)
 
       const res = await updateTransaction(updateformattedData)
       if (!res.success) {
