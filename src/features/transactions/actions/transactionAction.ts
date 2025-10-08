@@ -40,6 +40,7 @@ export async function createTransaction(data: TransactionReq) {
 
 export async function updateTransaction(
   data: TransactionUpdateReq,
+  id: string,
 ): Promise<
   | { data: TransactionUpdateReq; success: true }
   | { message: string; status: number; success: false }
@@ -48,7 +49,7 @@ export async function updateTransaction(
   const accessToken = cookieStore.get('access_token')?.value
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/transactions/${6}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/transactions/${id}`,
 
     {
       method: 'PATCH',

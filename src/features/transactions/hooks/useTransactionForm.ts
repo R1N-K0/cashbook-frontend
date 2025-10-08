@@ -86,7 +86,7 @@ export const useTransactionForm = ({
         updatedUserId: 1,
       }
 
-      const res = await updateTransaction(updateformattedData)
+      const res = await updateTransaction(updateformattedData, transactionId)
       if (!res.success) {
         methods.setError('root', {
           type: 'server',
