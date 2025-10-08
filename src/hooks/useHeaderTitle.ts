@@ -3,7 +3,6 @@ import { usePathname } from 'next/navigation'
 const routes: { pattern: RegExp; label: string }[] = [
   { pattern: /^\/$/, label: 'ホーム' },
   { pattern: /^\/categories$/, label: 'カテゴリ' },
-  { pattern: /^\/logs$/, label: '取引ログ' },
   { pattern: /^\/reports$/, label: '取引レポート' },
   { pattern: /^\/transactions/, label: '取引' },
   { pattern: /^\/staff$/, label: 'スタッフ' },

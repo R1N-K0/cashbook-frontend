@@ -1,0 +1,41 @@
+import { cookies } from 'next/headers'
+import { NextResponse, type NextRequest } from 'next/server'
+
+export async function GET(req: NextRequest) {
+  const cookieStore = await cookies()
+  const accessToken = cookieStore.get('access_token')?.value
+
+  const { searchParams } = new URL(req.url)
+  const year = searchParams.get('year')
+  const month = searchParams.get('month')
+
+  try {
+    const res = await fetch(
+      `http://localhost:3001/finance/report?year=${year}&month=${month}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(accessToken ? { Cookie: `access_token=${accessToken}` } : {}),
+        },
+        next: { revalidate: 30 },
+      },
+    )
+
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => ({}))
+      return NextResponse.json(errorData ?? '不明なエラーが発生しました', {
+        status: res.status,
+      })
+    }
+
+    const data = await res.json()
+    return NextResponse.json(data)
+  } catch (error) {
+    console.error('createTransaction failed:', (error as Error).message)
+    return NextResponse.json(
+      { message: (error as Error).message ?? '不明なエラーが発生しました' },
+      { status: 500 },
+    )
+  }
+}

@@ -107,3 +107,21 @@ export type TransactionUsersReq = {
 }
 
 export type formPageType = 'create' | 'edit' | 'detail'
+
+export type AmountByUser = {
+  name: string
+  value: number
+}
+
+export type ReportRes = {
+  balance: number
+  count: number
+  expense: number
+  expenseByCategory: ExpenseByCategory[]
+  incomeByCategory: ExpenseByCategory[]
+  income: number
+  profitLoss: number
+  incomeByUser: AmountByUser[]
+  expenseByUser: AmountByUser[]
+  transactions: TransactionData[]
+}
