@@ -12,29 +12,35 @@ type Props = {
 
 export default function ReportDataTable({ data, year, month }: Props) {
   return (
-    <div className="w-full container pt-5">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-        <div>
-          <FinanceCard title="収入" amount={data.income} />
-        </div>
-        <div>
-          <FinanceCard title="支出" amount={data.expense} />
-        </div>
-        <div>
+    <div className="w-full pt-5">
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-4">
+        <div className="w-full">
           <FinanceCard title="収支" amount={data.balance} />
         </div>
-        <div>
+        <div className="w-full">
+          <FinanceCard title="収入" amount={data.income} />
+        </div>
+        <div className="w-full">
+          <FinanceCard title="支出" amount={data.expense} />
+        </div>
+        <div className="w-full">
           <FinanceCard title="取引件数" amount={data.count} />
         </div>
 
-        <div>
+        <div className="w-full">
           <FinanceCard title="却下" amount={data.cancelCount} />
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
-        <FinancePieChart data={data.incomeByCategory} />
-        <FinancePieChart data={data.expenseByCategory} />
+        <FinancePieChart
+          data={data.incomeByCategory}
+          title="カテゴリー別収入(月間)"
+        />
+        <FinancePieChart
+          data={data.expenseByCategory}
+          title="カテゴリー別支出(月間)"
+        />
       </div>
 
       <div className="">

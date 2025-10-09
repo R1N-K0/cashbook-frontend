@@ -96,7 +96,7 @@ type Props = {
 export default function SimplePieChart(props: Props) {
   const { data } = props
   const renderLegend = () => (
-    <ul className="flex flex-wrap md:flex-col justify-center gap-4">
+    <ul className="flex flex-wrap lg:flex-col justify-center gap-4">
       {data.map((entry, index) => (
         <li key={index} className="flex items-center space-x-2">
           <span
@@ -111,27 +111,35 @@ export default function SimplePieChart(props: Props) {
     </ul>
   )
   return (
-    <div className="flex flex-col md:flex-row  justify-center items-center gap-4">
-      <div className="w-full max-w-md min-w-sm  lg:h-53 md:h-43 h-60">
-        <ResponsiveContainer width="100%" height="100%">
-          <PieChart>
-            <Pie
-              activeShape={renderActiveShape}
-              data={data}
-              cx="50%"
-              cy="50%"
-              innerRadius="65%"
-              outerRadius="90%"
-              dataKey="value"
-            >
-              {data.map((entry, index) => (
-                <Cell key={index} fill={entry.color} />
-              ))}
-            </Pie>
-          </PieChart>
-        </ResponsiveContainer>
-      </div>
-      {renderLegend()}
+    <div className="flex flex-col lg:flex-row  justify-center items-center gap-4">
+      {data.length === 0 ? (
+        <div className="text-gray-500  lg:h-53 md:h-43 h-60 flex justify-center items-center">
+          データがありません
+        </div>
+      ) : (
+        <>
+          <div className="w-full max-w-md min-w-sm  lg:h-53 md:h-43 h-60">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  activeShape={renderActiveShape}
+                  data={data}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius="65%"
+                  outerRadius="90%"
+                  dataKey="value"
+                >
+                  {data.map((entry, index) => (
+                    <Cell key={index} fill={entry.color} />
+                  ))}
+                </Pie>
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+          {renderLegend()}
+        </>
+      )}
     </div>
   )
 }

@@ -41,7 +41,7 @@ export type TransactionData = {
   title: string
   description: string
   amount: number
-  memo?: string // 後で消す
+  memo?: string
   status: boolean
   editable: boolean
   category: Category

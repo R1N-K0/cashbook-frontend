@@ -1,8 +1,9 @@
 'use client'
 
+import { Spinner } from '@/components/ui/shadcn-io/spinner'
 import { getFinanceReportData } from '@/features/finance/action/financeAction'
 import MonthYearPicker from '@/features/finance/components/MonthYearPicker'
-import ReportDataTable from '@/features/finance/components/Re[prtDataTable'
+import ReportDataTable from '@/features/finance/components/ReportDataTable'
 import useReportSWR from '@/hooks/useReportSWR'
 import type { ReportRes } from '@/types'
 import { useState } from 'react'
@@ -26,7 +27,7 @@ export default function ReportBox() {
   }
 
   return (
-    <div>
+    <div className="w-full">
       <div className="flex flex-row items-center justify-start space-x-2">
         <MonthYearPicker
           year={year}
@@ -39,7 +40,12 @@ export default function ReportBox() {
       </div>
       {error && <div>Failed to load</div>}
       {isValidating ? (
-        <div>Loading...</div>
+        <div className="flex flex-col justify-center items-center space-y-2 h-150 font-size-2xl">
+          <Spinner variant="bars" />
+          <div>
+            <span>取得中です...</span>
+          </div>
+        </div>
       ) : (
         <ReportDataTable
           data={data ?? ({} as ReportRes)}
