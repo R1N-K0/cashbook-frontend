@@ -23,6 +23,7 @@ export type Props<T extends FieldValues> = SelectProps &
     label: string
     data: TransactionUsers[]
     style?: React.CSSProperties
+    managerId?: string
   }
 
 export default function UserSelectField<S extends FieldValues>({
@@ -31,6 +32,7 @@ export default function UserSelectField<S extends FieldValues>({
   label,
   data,
   style,
+  managerId,
   ...selectProps
 }: Props<S>) {
   return (
@@ -43,11 +45,14 @@ export default function UserSelectField<S extends FieldValues>({
           <Select
             {...selectProps}
             onValueChange={(val: string) => field.onChange(Number(val))}
-            defaultValue={field.value?.toString()}
+            defaultValue={managerId ? managerId : undefined}
           >
             <FormControl>
               <SelectTrigger style={style}>
-                <SelectValue placeholder={data[0]?.id} />
+                <SelectValue
+                  placeholder="担当者を選択
+                "
+                />
               </SelectTrigger>
             </FormControl>
             <SelectContent>

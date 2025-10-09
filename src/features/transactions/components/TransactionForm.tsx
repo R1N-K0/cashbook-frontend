@@ -9,6 +9,7 @@ import TextField from '@/features/components/fields/TextField'
 import BoolSelectField from '@/features/transactions/components/fields/BoolField'
 import CategorySelectField from '@/features/transactions/components/fields/CategorySelectField'
 import UserSelectField from '@/features/transactions/components/fields/UserSelectField'
+import { useManager } from '@/features/transactions/hooks/useManager'
 import { useTransactionForm } from '@/features/transactions/hooks/useTransactionForm'
 import useCategorySWR from '@/hooks/useCategorySWR'
 import useTransactionSWR from '@/hooks/useTransactionSWR'
@@ -37,18 +38,19 @@ export default function TransactionForm({
     transactionId,
   })
 
+  const transaction = transactionDatas.find((data) => data.id === transactionId)
+  const managerId = useManager(transaction, userData)
+
   useEffect(() => {
     if (transactionDatas && transactionId && formPageType !== 'create') {
-      const transaction = transactionDatas.find(
-        (data) => data.id === transactionId,
-      )
       if (transaction) {
+        methods.setValue('title', transaction.title)
         methods.setValue('description', transaction.description)
         methods.setValue('memo', transaction.memo ?? '')
         methods.setValue('amount', transaction.amount)
       }
     }
-  }, [transactionDatas, transactionId, formPageType, methods])
+  }, [transactionDatas, transactionId, formPageType, methods, transaction])
 
   return (
     <FormProvider {...methods}>
@@ -65,6 +67,7 @@ export default function TransactionForm({
               label="申請者"
               data={userData}
               style={formPageType === 'detail' ? { pointerEvents: 'none' } : {}}
+              managerId={managerId}
             />
             <p className="text-sm text-gray-500 mt-0">
               残り上限: {selectedUser?.remainingAmount}円
