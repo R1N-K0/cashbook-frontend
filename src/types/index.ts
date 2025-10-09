@@ -71,12 +71,16 @@ export type ProfitLossByMonth = {
   income: number
   month: string
   profitLoss: number
+  cumulativeBalance: number
 }
 
 export type FinanceReq = {
   balance: number
   expense: number
-  expenseByCategory: ExpenseByCategory[]
+  count: number
+  cancelCount: number
+  expenseByCategory: PieChartData[]
+  incomeByCategory: PieChartData[]
   income: number
   profitLoss: number
   profitLossByMonth: ProfitLossByMonth[]
@@ -117,6 +121,7 @@ export type AmountByUser = {
 export type ReportRes = {
   balance: number
   count: number
+  cancelCount: number
   expense: number
   expenseByCategory: PieChartData[]
   incomeByCategory: PieChartData[]
