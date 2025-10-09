@@ -61,7 +61,13 @@ export const useTransactionForm = ({
       amount: Number(data.amount || 0),
     }
 
-    if (createFormattedData.amount > (selectedUser?.remainingAmount ?? 0)) {
+    const selectedCategory = categoryData.expense.find(
+      (category) => Number(category.id) === Number(data.categoryId),
+    )
+    if (
+      createFormattedData.amount > (selectedUser?.remainingAmount ?? 0) &&
+      selectedCategory
+    ) {
       toast.error('取引金額が担当者の残り上限を超えています')
       return
     }

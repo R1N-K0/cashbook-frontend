@@ -9,8 +9,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { DataTablePagination } from '@/features/transaction-users/components/DataTable/pagination'
 import ModalForm from '@/features/transaction-users/components/ModalForm'
+import { DataTablePagination } from '@/features/transactions/components/listTable/Pagination'
 import type { ColumnFiltersState, SortingState } from '@tanstack/react-table'
 import {
   flexRender,
