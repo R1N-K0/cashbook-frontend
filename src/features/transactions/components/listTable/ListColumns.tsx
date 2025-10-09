@@ -243,6 +243,11 @@ export const listColumns: ColumnDef<TransactionData>[] = [
     header: ({ column }) => {
       return <>{column.columnDef.meta?.label}</>
     },
-    cell: ({ row }) => <TransactionDeleteButton id={row.getValue('id')} />,
+    cell: ({ row }) => (
+      <TransactionDeleteButton
+        id={row.getValue('id')}
+        editable={row.getValue('editable')}
+      />
+    ),
   },
 ]
