@@ -46,11 +46,12 @@ export const useTransactionForm = ({
     },
   })
 
-  const createdUserId = methods.watch('createdUserId')
   const status = methods.watch('status')
+  const createdUserId = methods.watch('createdUserId')
   const selectedUser = userData.find(
     (user) => Number(user.id) === createdUserId,
   )
+  console.log('selectedUser', selectedUser)
 
   const onSubmit: SubmitHandler<TransactionFormValue> = async (data) => {
     const createFormattedData: TransactionReq = {
@@ -79,14 +80,14 @@ export const useTransactionForm = ({
       router.push('/transactions')
     }
 
-    if (formPageType === 'edit' && transactionId) {
+    if (formPageType === 'edit' && transactionId && selectedUser) {
+      const { createdUserId, ...rest } = createFormattedData
       const updateformattedData: TransactionUpdateReq = {
-        ...createFormattedData,
-        updatedUserId: '1',
-        id: transactionId,
+        ...rest,
+        updatedUserId: Number(selectedUser?.id),
       }
-      console.log(updateformattedData.id)
-      const res = await updateTransaction(updateformattedData)
+
+      const res = await updateTransaction(updateformattedData, transactionId)
       if (!res.success) {
         methods.setError('root', {
           type: 'server',

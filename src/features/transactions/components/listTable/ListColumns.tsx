@@ -56,7 +56,13 @@ export const listColumns: ColumnDef<TransactionData>[] = [
       return <>{column.columnDef.meta?.label}</>
     },
     cell: ({ row }) => (
-      <div className="capitalize">{row.original?.createdUser || '不明'}</div>
+      <div className="capitalize">
+        {row.original.updatedUser !== ' ' ? (
+          <div>{row.original?.updatedUser}</div>
+        ) : (
+          <div>{row.original?.createdUser ?? '不明'}</div>
+        )}
+      </div>
     ),
   },
   {

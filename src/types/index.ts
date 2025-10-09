@@ -36,6 +36,7 @@ export interface FetchError extends Error {
 export type TransactionData = {
   id: string
   createdUser: string
+  updatedUser: string
   date: string
   title: string
   description: string
@@ -55,9 +56,8 @@ export type TransactionReq = {
   createdUserId: number
 }
 
-export type TransactionUpdateReq = TransactionReq & {
-  updatedUserId: string
-  id: string
+export type TransactionUpdateReq = Omit<TransactionReq, 'createdUserId'> & {
+  updatedUserId: number
 }
 
 export type ExpenseByCategory = {
