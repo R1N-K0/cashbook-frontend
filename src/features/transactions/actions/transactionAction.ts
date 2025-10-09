@@ -40,6 +40,7 @@ export async function createTransaction(data: TransactionReq) {
 
 export async function updateTransaction(
   data: TransactionUpdateReq,
+  id: string,
 ): Promise<
   | { data: TransactionUpdateReq; success: true }
   | { message: string; status: number; success: false }
@@ -48,7 +49,8 @@ export async function updateTransaction(
   const accessToken = cookieStore.get('access_token')?.value
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/transactions/${data.id}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/transactions/${id}`,
+
     {
       method: 'PATCH',
       headers: {
@@ -56,6 +58,7 @@ export async function updateTransaction(
         ...(accessToken ? { Cookie: `access_token=${accessToken}` } : {}),
         credentials: 'include',
       },
+
       body: JSON.stringify(data),
     },
   )
@@ -63,6 +66,7 @@ export async function updateTransaction(
   if (!res.ok) {
     if (res.status === 401) redirect('/auth')
     const errorData = await res.json().catch(() => ({}))
+    console.log(errorData, res.status)
     return { message: errorData.message, status: res.status, success: false }
   }
 
@@ -104,6 +108,7 @@ export async function getAllTransaction(): Promise<
   }
   const response: TransactionData[] = await res.json().catch(() => [])
   // ここだけ担当ユーザーのフォーマットはバック側で対応した
+  console.log('getData', response)
   return { data: response, success: true }
 }
 
