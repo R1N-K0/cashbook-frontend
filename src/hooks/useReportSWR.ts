@@ -34,6 +34,12 @@ export default function useReportSWR({ year, month }: Props) {
       onErrorRetry: (error: FetchError) => {
         if (error.status === 401) router.push('/auth')
       },
+      revalidateOnMount: true,
+      revalidateIfStale: true,
+      dedupingInterval: 0,
+      keepPreviousData: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
     },
   )
 
