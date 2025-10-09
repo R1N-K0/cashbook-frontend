@@ -149,3 +149,27 @@ export async function getTransaction(
 
   return { data: resData, success: true }
 }
+
+export async function softDeleteTransaction(id: string) {
+  const cookieStore = await cookies()
+  const accessToken = cookieStore.get('access_token')?.value
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/transactions/${id}`,
+    {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(accessToken ? { Cookie: `access_token=${accessToken}` } : {}),
+        credentials: 'include',
+      },
+    },
+  )
+
+  if (!res.ok) {
+    if (res.status === 401) redirect('/auth')
+    const errorData = await res.json().catch(() => {})
+    return { message: errorData.message, status: res.status, success: false }
+  }
+  const response = await res.json()
+  return { message: response.message, success: true }
+}

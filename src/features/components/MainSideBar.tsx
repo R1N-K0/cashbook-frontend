@@ -4,10 +4,9 @@ const MainSidebar = () => {
   const items = [
     { title: 'ホーム', url: '/' },
     { title: '取引一覧', url: '/transactions' },
-    { title: '取引レポート', url: '/reports' },
-    { title: '取引ログ', url: '/logs' },
-    { title: 'スタッフ一覧', url: '/staff' },
     { title: 'カテゴリ一覧', url: '/categories' },
+    { title: '取引レポート', url: '/reports' },
+    { title: 'スタッフ一覧', url: '/staff' },
   ]
 
   return (

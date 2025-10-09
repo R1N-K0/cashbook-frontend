@@ -22,18 +22,16 @@ export default function useTransactionSWR() {
     return res.data
   }
 
-  const { data, error, isLoading, mutate } = useSWR<TransactionData[]>(
-    '/api/transactions',
-    fetcher,
-    {
-      revalidateOnMount: false,
-      revalidateOnFocus: false,
-      revalidateIfStale: false,
-      onErrorRetry: (error: FetchError) => {
-        if (error.status === 401) router.push('/auth')
-      },
+  const { data, error, isLoading, isValidating, mutate } = useSWR<
+    TransactionData[]
+  >('/api/transactions', fetcher, {
+    revalidateOnMount: false,
+    revalidateOnFocus: false,
+    revalidateIfStale: false,
+    onErrorRetry: (error: FetchError) => {
+      if (error.status === 401) router.push('/auth')
     },
-  )
+  })
 
-  return { data: data ?? [], error, isLoading, mutate }
+  return { data: data ?? [], error, isLoading, isValidating, mutate }
 }

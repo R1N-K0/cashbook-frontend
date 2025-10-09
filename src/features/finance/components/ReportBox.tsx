@@ -1,6 +1,6 @@
 'use client'
 
-import { Spinner } from '@/components/ui/shadcn-io/spinner'
+import Loading from '@/features/components/Loading'
 import { getFinanceReportData } from '@/features/finance/action/financeAction'
 import MonthYearPicker from '@/features/finance/components/MonthYearPicker'
 import ReportDataTable from '@/features/finance/components/ReportDataTable'
@@ -40,12 +40,7 @@ export default function ReportBox() {
       </div>
       {error && <div>Failed to load</div>}
       {isValidating ? (
-        <div className="flex flex-col justify-center items-center space-y-2 h-150 font-size-2xl">
-          <Spinner variant="bars" />
-          <div>
-            <span>取得中です...</span>
-          </div>
-        </div>
+        <Loading />
       ) : (
         <ReportDataTable
           data={data ?? ({} as ReportRes)}
