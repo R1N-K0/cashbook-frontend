@@ -48,6 +48,7 @@ export async function PATCH(
   const { id } = await context.params
   try {
     const body = await request.json()
+    console.log('UpUserId', body)
     const res = await fetch(`http://localhost:3001/transactions/${id}`, {
       method: 'PATCH',
       headers: {

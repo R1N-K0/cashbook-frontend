@@ -36,6 +36,7 @@ export interface FetchError extends Error {
 export type TransactionData = {
   id: string
   createdUser: string
+  updatedUser: string
   date: string
   title: string
   description: string
