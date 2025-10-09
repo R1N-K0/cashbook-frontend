@@ -84,6 +84,8 @@ export type FinanceReq = {
   income: number
   profitLoss: number
   profitLossByMonth: ProfitLossByMonth[]
+  monthExpenseChange: number
+  monthIncomeChange: number
 }
 
 export type SimpleCardData = {
