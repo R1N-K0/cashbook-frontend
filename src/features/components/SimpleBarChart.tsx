@@ -38,6 +38,7 @@ export default function SimpleBarChart(props: Props) {
         <Tooltip />
         <Legend />
         <Bar
+          barSize={40}
           dataKey="value"
           fill="#CAE7EE"
           stroke="CAE7EE"
