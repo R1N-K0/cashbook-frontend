@@ -1,9 +1,41 @@
+import FinanceBarChart from '@/features/finance/components/FinanceBarChart'
+import FinanceCard from '@/features/finance/components/FinanceCard'
+import FinancePieChart from '@/features/finance/components/FinancePieChart'
 import type { ReportRes } from '@/types'
 
 type Props = {
   data: ReportRes
+  year: number
+  month: number
 }
 
-export default function ReportDataTable({ data }: Props) {
-  return <div className="w-full container"></div>
+export default function ReportDataTable({ data, year, month }: Props) {
+  return (
+    <div className="w-full container pt-5">
+      <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-4">
+        <div>
+          <FinanceCard title="収入" amount={data.income} />
+        </div>
+        <div>
+          <FinanceCard title="支出" amount={data.expense} />
+        </div>
+        <div>
+          <FinanceCard title="収支" amount={data.balance} />
+        </div>
+        <div>
+          <FinanceCard title="取引件数" amount={data.count} />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
+        <FinancePieChart data={data.incomeByCategory} />
+        <FinancePieChart data={data.expenseByCategory} />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
+        <FinanceBarChart data={data.incomeByUser} />
+        <FinanceBarChart data={data.expenseByUser} />
+      </div>
+    </div>
+  )
 }

@@ -118,11 +118,11 @@ export type ReportRes = {
   balance: number
   count: number
   expense: number
-  expenseByCategory: ExpenseByCategory[]
-  incomeByCategory: ExpenseByCategory[]
+  expenseByCategory: PieChartData[]
+  incomeByCategory: PieChartData[]
   income: number
   profitLoss: number
-  incomeByUser: AmountByUser[]
-  expenseByUser: AmountByUser[]
+  incomeByUser: BarChartData[]
+  expenseByUser: BarChartData[]
   transactions: TransactionData[]
 }

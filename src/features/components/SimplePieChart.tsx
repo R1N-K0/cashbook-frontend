@@ -97,7 +97,7 @@ export default function SimplePieChart(props: Props) {
   const { data } = props
   return (
     <ResponsiveContainer width="100%" height={400}>
-      <PieChart width={600} height={600}>
+      <PieChart width={400} height={400}>
         <Pie
           activeShape={renderActiveShape}
           data={data}

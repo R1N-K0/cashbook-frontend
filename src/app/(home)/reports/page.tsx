@@ -5,7 +5,7 @@ const ReportPage = () => {
   const year = now.getFullYear()
   const month = now.getMonth() + 1
   return (
-    <div className="container w-full px-8 py-4">
+    <div className="container w-full px-8 lg:px-12 py-4">
       <ReportBox />
     </div>
   )
