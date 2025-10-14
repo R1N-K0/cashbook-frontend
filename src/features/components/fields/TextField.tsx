@@ -11,6 +11,7 @@ import type { FieldValues, UseControllerProps } from 'react-hook-form'
 export type TextFieldProps<T extends FieldValues> = {
   label: string
   placeholder?: string
+  defaultValue?: string
   style?: React.CSSProperties
 } & UseControllerProps<T>
 
@@ -19,12 +20,14 @@ export default function TextField<T extends FieldValues>({
   control,
   label,
   placeholder,
+  defaultValue,
   style,
 }: TextFieldProps<T>) {
   return (
     <FormField
       control={control}
       name={name}
+      defaultValue={defaultValue}
       render={({ field }) => (
         <FormItem>
           <FormLabel>{label}</FormLabel>

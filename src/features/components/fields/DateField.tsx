@@ -20,12 +20,14 @@ import type { FieldValues, UseControllerProps } from 'react-hook-form'
 
 export type Props<T extends FieldValues> = UseControllerProps<T> & {
   label: string
+  date?: Date
 }
 
 export default function DateField<S extends FieldValues>({
   name,
   control,
   label,
+  date,
 }: Props<S>) {
   return (
     <FormField

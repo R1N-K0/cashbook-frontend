@@ -40,6 +40,7 @@ export default function TransactionForm({
 
   const transaction = transactionDatas.find((data) => data.id === transactionId)
   const managerId = useManager(transaction, userData)
+  console.log(transaction?.memo)
 
   useEffect(() => {
     if (transactionDatas && transactionId && formPageType !== 'create') {
@@ -127,6 +128,7 @@ export default function TransactionForm({
             placeholder="却下理由を入力"
             label="却下理由"
             disabled={formPageType === 'detail'}
+            defaultValue={transaction?.memo ?? ''}
           />
         )}
 
