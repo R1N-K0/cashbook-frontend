@@ -18,7 +18,6 @@ export async function GET(req: NextRequest) {
           'Content-Type': 'application/json',
           ...(accessToken ? { Cookie: `access_token=${accessToken}` } : {}),
         },
-        next: { revalidate: 30 },
       },
     )
 

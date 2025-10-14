@@ -76,3 +76,40 @@ export async function PATCH(
     )
   }
 }
+
+export async function DELETE(
+  request: Request,
+  context: { params: Promise<{ id: string }> },
+) {
+  const cookieStore = await cookies()
+  const accessToken = cookieStore.get('access_token')?.value
+  const { id } = await context.params
+  try {
+    const res = await fetch(`http://localhost:3001/transactions/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(accessToken ? { Cookie: `access_token=${accessToken}` } : {}),
+      },
+    })
+
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => {})
+      console.error(errorData)
+      return NextResponse.json(
+        {
+          message: errorData.message ?? '不明なエラーが発生しました',
+        },
+        { status: res.status },
+      )
+    }
+    return NextResponse.json({ message: 'データを削除しました' })
+  } catch (error) {
+    return NextResponse.json(
+      {
+        message: (error as Error).message ?? '不明なエラーが発生しました',
+      },
+      { status: 500 },
+    )
+  }
+}

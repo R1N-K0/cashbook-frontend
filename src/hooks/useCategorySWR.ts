@@ -36,5 +36,11 @@ export default function useCategorySWR() {
     },
   )
 
-  return { data: data ?? { income: [], expense: [] }, error, isLoading, mutate }
+  return {
+    data: data ?? { income: [], expense: [] },
+    error,
+    isLoading,
+    isValidating,
+    mutate,
+  }
 }

@@ -23,6 +23,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { DataTablePagination } from '@/features/transaction-users/components/DataTable/pagination'
 import { listColumns } from '@/features/transactions/components/listTable/ListColumns'
 import type { TransactionData } from '@/types'
 
@@ -61,7 +62,7 @@ export function DataTable({ data }: Props) {
   })
 
   return (
-    <div className="w-full font-bold text-gray-500">
+    <div className=" font-bold text-gray-500">
       <div className="flex items-center py-4"></div>
       <div className="overflow-hidden rounded-md border">
         <Table>
@@ -112,6 +113,7 @@ export function DataTable({ data }: Props) {
             )}
           </TableBody>
         </Table>
+        <DataTablePagination table={table} />
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="text-muted-foreground flex-1 text-sm">

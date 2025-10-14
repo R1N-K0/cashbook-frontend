@@ -41,7 +41,7 @@ export type TransactionData = {
   title: string
   description: string
   amount: number
-  memo?: string // 後で消す
+  memo?: string
   status: boolean
   editable: boolean
   category: Category
@@ -71,15 +71,21 @@ export type ProfitLossByMonth = {
   income: number
   month: string
   profitLoss: number
+  cumulativeBalance: number
 }
 
 export type FinanceReq = {
   balance: number
   expense: number
-  expenseByCategory: ExpenseByCategory[]
+  count: number
+  cancelCount: number
+  expenseByCategory: PieChartData[]
+  incomeByCategory: PieChartData[]
   income: number
   profitLoss: number
   profitLossByMonth: ProfitLossByMonth[]
+  monthExpenseChange: number
+  monthIncomeChange: number
 }
 
 export type SimpleCardData = {
@@ -117,12 +123,13 @@ export type AmountByUser = {
 export type ReportRes = {
   balance: number
   count: number
+  cancelCount: number
   expense: number
-  expenseByCategory: ExpenseByCategory[]
-  incomeByCategory: ExpenseByCategory[]
+  expenseByCategory: PieChartData[]
+  incomeByCategory: PieChartData[]
   income: number
   profitLoss: number
-  incomeByUser: AmountByUser[]
-  expenseByUser: AmountByUser[]
+  incomeByUser: BarChartData[]
+  expenseByUser: BarChartData[]
   transactions: TransactionData[]
 }
