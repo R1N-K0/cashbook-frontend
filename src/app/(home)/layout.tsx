@@ -45,6 +45,7 @@ const HomeLayout = async ({ children }: { children: ReactNode }) => {
       <MainHeader />
       <div className="flex gird-cols-[auto_1fr] ">
         <MainSidebar />
+
         <Toaster richColors position="top-center" />
         <ConfigWrapper
           initialCategoriesData={CategoriesRes.data}
