@@ -11,21 +11,26 @@ const Detail = ({ transactionId }: Props) => {
 
   const transaction = transactionDatas.find((data) => data.id === transactionId)
   return (
-    <div className="rounded-md shadow-xl p-8  font-semibold border-2">
-      <div className="grid grid-cols-3  p-4 border-b-2 ">
-        <div className="flex justify-self-center  gap-3 ">
-          <div>取引ID</div>
-          <div>{transaction?.id}</div>
+    <div className="rounded-md shadow-xl  w-120">
+      <div className="grid grid-cols-3  p-4  ">
+        <div>
+          <div className="justify-self-center font-semibold">取引ID</div>
+          <div className="justify-self-center border-2 rounded-md px-4">
+            {transaction?.id}
+          </div>
         </div>
-        <div className="flex justify-self-center  gap-3">
-          <div>カテゴリー</div>
-          <div style={{ color: transaction?.category.color }}>
+        <div>
+          <div className="justify-self-center font-semibold">カテゴリー</div>
+          <div
+            className="border-2 rounded-md px-4 justify-self-center"
+            style={{ color: transaction?.category.color }}
+          >
             {transaction?.category.name}
           </div>
         </div>
-        <div className="flex justify-self-center gap-3">
-          <div>申請許可</div>
-          <div>
+        <div>
+          <div className="justify-self-center font-semibold">申請許可</div>
+          <div className="justify-self-center">
             {transaction?.status ? (
               <div className="bg-orange-200 text-orange-800 px-1">許可</div>
             ) : (
@@ -34,26 +39,34 @@ const Detail = ({ transactionId }: Props) => {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-2 p-4 border-b-2">
-        <div className="flex justify-self-center gap-3">
-          <div>申請者</div>
-          <div>{transaction?.createdUser}</div>
+      <div className="grid grid-cols-2 p-4">
+        <div>
+          <div className="justify-self-center font-semibold">申請者</div>
+          <div className="border-2 rounded-md px-4 justify-self-center">
+            {transaction?.createdUser}
+          </div>
         </div>
-        <div className="flex justify-self-center gap-3">
-          <div>編集者</div>
-          <div>{transaction?.updatedUser}</div>
+        <div>
+          <div className="justify-self-center font-semibold">編集者</div>
+          <div className="border-2 rounded-md px-4 justify-self-center">
+            {transaction?.updatedUser === ' '
+              ? 'なし'
+              : transaction?.updatedUser}
+          </div>
         </div>
       </div>
-      <div className=" p-4 border-b-2">
-        <div className="flex justify-self-center gap-3">
-          <div>金額</div>
-          <div>{transaction?.amount}</div>
+      <div className="p-4">
+        <div>
+          <div className="justify-self-center font-semibold">金額</div>
+          <div className="border-2 rounded-md px-4 justify-self-center">
+            {transaction?.amount}
+          </div>
         </div>
       </div>
 
-      <div className="border-b-2">
+      <div>
         <div className="flex justify-self-center p-4 gap-3">
-          <div>取引理由</div>
+          <div className="font-semibold">取引理由</div>
           <input
             value={transaction?.description}
             disabled
@@ -62,9 +75,9 @@ const Detail = ({ transactionId }: Props) => {
         </div>
       </div>
 
-      <div className="border-b-2">
+      <div>
         <div className="flex justify-self-center p-4 gap-3">
-          <div>却下理由</div>
+          <div className="font-semibold">却下理由</div>
           <textarea
             value={transaction?.memo}
             disabled

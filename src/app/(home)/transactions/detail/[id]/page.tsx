@@ -31,7 +31,9 @@ const TransactionDetailPage = async ({
             <Link href="/transactions">← 取引一覧に戻る</Link>
           </div>
         </div>
-        <Detail transactionId={id} />
+        <div className="flex justify-center">
+          <Detail transactionId={id} />
+        </div>
       </div>
     </>
   )
