@@ -1,5 +1,6 @@
 'use client'
 
+import { Textarea } from '@/components/ui/textarea'
 import useTransactionSWR from '@/hooks/useTransactionSWR'
 
 type Props = {
@@ -11,8 +12,8 @@ const Detail = ({ transactionId }: Props) => {
 
   const transaction = transactionDatas.find((data) => data.id === transactionId)
   return (
-    <div className="rounded-md shadow-xl  w-120">
-      <div className="grid grid-cols-3  p-4  ">
+    <div className="rounded-md shadow-xl p-4 w-200">
+      <div className="grid grid-cols-3 gap-4 p-4">
         <div>
           <div className="justify-self-center font-semibold">取引ID</div>
           <div className="justify-self-center border-2 rounded-md px-4">
@@ -22,8 +23,8 @@ const Detail = ({ transactionId }: Props) => {
         <div>
           <div className="justify-self-center font-semibold">カテゴリー</div>
           <div
-            className="border-2 rounded-md px-4 justify-self-center"
-            style={{ color: transaction?.category.color }}
+            className="px-4 justify-self-center"
+            style={{ backgroundColor: transaction?.category.color }}
           >
             {transaction?.category.name}
           </div>
@@ -38,8 +39,7 @@ const Detail = ({ transactionId }: Props) => {
             )}
           </div>
         </div>
-      </div>
-      <div className="grid grid-cols-2 p-4">
+
         <div>
           <div className="justify-self-center font-semibold">申請者</div>
           <div className="border-2 rounded-md px-4 justify-self-center">
@@ -54,18 +54,27 @@ const Detail = ({ transactionId }: Props) => {
               : transaction?.updatedUser}
           </div>
         </div>
-      </div>
-      <div className="p-4">
         <div>
-          <div className="justify-self-center font-semibold">金額</div>
-          <div className="border-2 rounded-md px-4 justify-self-center">
-            {transaction?.amount}
+          <div className="justify-self-center font-semibold">締め</div>
+          <div className="px-4 justify-self-center">
+            {transaction?.editable ? (
+              <div className="bg-orange-200 text-orange-800 px-1">済み</div>
+            ) : (
+              <div className="bg-gray-200 text-gray-800 px-1 ">未処理</div>
+            )}
           </div>
         </div>
       </div>
 
+      <div className="flex p-4 gap-3 ">
+        <div className="justify-self-center font-semibold">金額</div>
+        <div className="border-2 rounded-md px-4 justify-self-center">
+          {transaction?.amount}
+        </div>
+      </div>
+
       <div>
-        <div className="flex justify-self-center p-4 gap-3">
+        <div className="flex p-4 gap-3">
           <div className="font-semibold">取引理由</div>
           <input
             value={transaction?.description}
@@ -76,13 +85,13 @@ const Detail = ({ transactionId }: Props) => {
       </div>
 
       <div>
-        <div className="flex justify-self-center p-4 gap-3">
-          <div className="font-semibold">却下理由</div>
-          <textarea
+        <div className="flex p-4 gap-3">
+          <div className="font-semibold whitespace-nowrap">却下理由</div>
+          <Textarea
             value={transaction?.memo}
             disabled
-            className="px-1 border rounded-md cursor-not-allowed"
-          ></textarea>
+            className="px-1 border rounded-md cursor-not-allowed min-w-40 max-w-150"
+          />
         </div>
       </div>
     </div>

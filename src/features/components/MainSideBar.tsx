@@ -16,7 +16,7 @@ const MainSidebar = () => {
   return (
     <div className="flex">
       {isOpen && (
-        <div className="flex flex-col p-8 gap-6 border-r-4 h-full">
+        <div className="flex flex-col p-8 gap-6 border-r-4 h-full ">
           {items.map((item) => (
             <div key={item.title}>
               <Link href={item.url}>
