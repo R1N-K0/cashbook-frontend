@@ -1,10 +1,11 @@
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { getAllCategory } from '@/features/category/actions/categoryAction'
 import ConfigWrapper from '@/features/components/ConfigWrapper'
-import MainHeader from '@/features/components/MainHeader'
-import MainSidebar from '@/features/components/MainSideBar'
+import MainHeader from '@/features/header/MainHeader'
+import MainSidebar from '@/features/sidebar/MainSideBar'
 import { getTransactionUsers } from '@/features/transaction-users/transactionUserAction'
 import { getAllTransaction } from '@/features/transactions/actions/transactionAction'
+import { SidebarProvider } from '@/provider/SideBarProvider'
 import type { ReactNode } from 'react'
 import { Toaster } from 'sonner'
 
@@ -42,19 +43,21 @@ const HomeLayout = async ({ children }: { children: ReactNode }) => {
 
   return (
     <div className="grid grid-rows-[auto_1fr] h-full">
-      <MainHeader />
-      <div className="flex gird-cols-[auto_1fr] ">
-        <MainSidebar />
+      <SidebarProvider>
+        <MainHeader />
+        <div className="flex gird-cols-[auto_1fr] ">
+          <MainSidebar />
 
-        <Toaster richColors position="top-center" />
-        <ConfigWrapper
-          initialCategoriesData={CategoriesRes.data}
-          initialUsersData={UsersRes.data}
-          initialTransactionsData={TransactionsRes.data}
-        >
-          <div className="w-full">{children}</div>
-        </ConfigWrapper>
-      </div>
+          <Toaster richColors position="top-center" />
+          <ConfigWrapper
+            initialCategoriesData={CategoriesRes.data}
+            initialUsersData={UsersRes.data}
+            initialTransactionsData={TransactionsRes.data}
+          >
+            <div className="w-full">{children}</div>
+          </ConfigWrapper>
+        </div>
+      </SidebarProvider>
     </div>
   )
 }
