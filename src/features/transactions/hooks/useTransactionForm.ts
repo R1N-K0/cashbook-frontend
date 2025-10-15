@@ -51,7 +51,6 @@ export const useTransactionForm = ({
   const selectedUser = userData.find(
     (user) => Number(user.id) === createdUserId,
   )
-  console.log('selectedUser', selectedUser)
 
   const onSubmit: SubmitHandler<TransactionFormValue> = async (data) => {
     const createFormattedData: TransactionReq = {

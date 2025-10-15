@@ -1,18 +1,35 @@
 'use client'
 
 import { useHeaderTitle } from '@/hooks/useHeaderTitle'
+import {
+  useSidebarDispatch,
+  useSidebarIsOpen,
+} from '@/provider/SideBarProvider'
+
+import { TiThMenu } from 'react-icons/ti'
 
 export default function MainHeader() {
   const pageName = useHeaderTitle()
+  const setIsOpen = useSidebarDispatch()
+  const IsOpen = useSidebarIsOpen()
 
   return (
     <>
       <nav className="py-6 px-10 border-b-4">
-        <div className="w-full flex flex-row items-center justify-between">
-          <div className="text-3xl font-extrabold text-gray-700">
-            {pageName}
+        <div className="w-full flex flex-row items-center">
+          <div className="flex mr-auto gap-15">
+            <TiThMenu
+              onClick={() => setIsOpen(!IsOpen)}
+              size={40}
+              color="#364153"
+            />
+
+            <div className="text-3xl font-extrabold text-gray-700">
+              {pageName}
+            </div>
           </div>
-          <div className="flex flex-row items-center justify-center space-x-7">
+
+          <div className="flex ml-auto gap-10">
             <div className="text-gray-700">
               <svg
                 className="w-10 h-10"

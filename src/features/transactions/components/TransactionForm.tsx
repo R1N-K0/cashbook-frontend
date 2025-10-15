@@ -9,6 +9,8 @@ import TextField from '@/features/components/fields/TextField'
 import BoolSelectField from '@/features/transactions/components/fields/BoolField'
 import CategorySelectField from '@/features/transactions/components/fields/CategorySelectField'
 import UserSelectField from '@/features/transactions/components/fields/UserSelectField'
+import utsToJst from '@/features/transactions/components/utils/ustToJst'
+import { useManager } from '@/features/transactions/hooks/useManager'
 import { useTransactionForm } from '@/features/transactions/hooks/useTransactionForm'
 import useCategorySWR from '@/hooks/useCategorySWR'
 import useTransactionSWR from '@/hooks/useTransactionSWR'
@@ -37,18 +39,20 @@ export default function TransactionForm({
     transactionId,
   })
 
+  const transaction = transactionDatas.find((data) => data.id === transactionId)
+  const managerId = useManager(transaction, userData)
+  console.log('date', transaction?.date)
+
   useEffect(() => {
     if (transactionDatas && transactionId && formPageType !== 'create') {
-      const transaction = transactionDatas.find(
-        (data) => data.id === transactionId,
-      )
       if (transaction) {
+        methods.setValue('title', transaction.title)
         methods.setValue('description', transaction.description)
         methods.setValue('memo', transaction.memo ?? '')
         methods.setValue('amount', transaction.amount)
       }
     }
-  }, [transactionDatas, transactionId, formPageType, methods])
+  }, [transactionDatas, transactionId, formPageType, methods, transaction])
 
   return (
     <FormProvider {...methods}>
@@ -58,13 +62,22 @@ export default function TransactionForm({
       >
         <FormError />
         <div className="flex flex-row justify-start items-center space-x-3">
-          <DateField name="date" label="取引日" />
+          <DateField
+            name="date"
+            label="取引日"
+            date={
+              transaction?.date
+                ? utsToJst(new Date(transaction?.date))
+                : undefined
+            }
+          />
           <div className="flex flex-row items-end space-x-2">
             <UserSelectField
               name="createdUserId"
               label="申請者"
               data={userData}
               style={formPageType === 'detail' ? { pointerEvents: 'none' } : {}}
+              managerId={managerId}
             />
             <p className="text-sm text-gray-500 mt-0">
               残り上限: {selectedUser?.remainingAmount}円
@@ -124,6 +137,7 @@ export default function TransactionForm({
             placeholder="却下理由を入力"
             label="却下理由"
             disabled={formPageType === 'detail'}
+            defaultValue={transaction?.memo ?? ''}
           />
         )}
 

@@ -108,7 +108,6 @@ export async function getAllTransaction(): Promise<
   }
   const response: TransactionData[] = await res.json().catch(() => [])
   // ここだけ担当ユーザーのフォーマットはバック側で対応した
-  console.log('getData', response)
   return { data: response, success: true }
 }
 

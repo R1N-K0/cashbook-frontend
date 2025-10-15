@@ -1,6 +1,6 @@
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { getTransaction } from '@/features/transactions/actions/transactionAction'
-import TransactionForm from '@/features/transactions/components/TransactionForm'
+import Detail from '@/features/transactions/components/listTable/Detail'
 import Link from 'next/link'
 
 const TransactionDetailPage = async ({
@@ -31,7 +31,9 @@ const TransactionDetailPage = async ({
             <Link href="/transactions">← 取引一覧に戻る</Link>
           </div>
         </div>
-        <TransactionForm formPageType="detail" transactionId={id} />
+        <div className="flex justify-center">
+          <Detail transactionId={id} />
+        </div>
       </div>
     </>
   )
