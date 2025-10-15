@@ -19,7 +19,7 @@ const MainSidebar = () => {
           {items.map((item) => (
             <div key={item.title}>
               <Link href={item.url}>
-                <span>{item.title}</span>
+                <span className="whitespace-nowrap">{item.title}</span>
               </Link>
             </div>
           ))}
