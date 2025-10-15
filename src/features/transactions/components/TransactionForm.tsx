@@ -9,6 +9,7 @@ import TextField from '@/features/components/fields/TextField'
 import BoolSelectField from '@/features/transactions/components/fields/BoolField'
 import CategorySelectField from '@/features/transactions/components/fields/CategorySelectField'
 import UserSelectField from '@/features/transactions/components/fields/UserSelectField'
+import utsToJst from '@/features/transactions/components/utils/ustToJst'
 import { useManager } from '@/features/transactions/hooks/useManager'
 import { useTransactionForm } from '@/features/transactions/hooks/useTransactionForm'
 import useCategorySWR from '@/hooks/useCategorySWR'
@@ -40,7 +41,7 @@ export default function TransactionForm({
 
   const transaction = transactionDatas.find((data) => data.id === transactionId)
   const managerId = useManager(transaction, userData)
-  console.log(transaction?.memo)
+  console.log('date', transaction?.date)
 
   useEffect(() => {
     if (transactionDatas && transactionId && formPageType !== 'create') {
@@ -61,7 +62,15 @@ export default function TransactionForm({
       >
         <FormError />
         <div className="flex flex-row justify-start items-center space-x-3">
-          <DateField name="date" label="取引日" />
+          <DateField
+            name="date"
+            label="取引日"
+            date={
+              transaction?.date
+                ? utsToJst(new Date(transaction?.date))
+                : undefined
+            }
+          />
           <div className="flex flex-row items-end space-x-2">
             <UserSelectField
               name="createdUserId"

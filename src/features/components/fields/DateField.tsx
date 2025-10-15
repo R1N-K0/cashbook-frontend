@@ -48,7 +48,10 @@ export default function DateField<S extends FieldValues>({
                 >
                   {field.value
                     ? format(field.value, 'PPP', { locale: ja })
-                    : '日付を入力してください'}
+                    : date
+                      ? format(date, 'PPP', { locale: ja })
+                      : '日付を入力してください'}
+
                   <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                 </Button>
               </FormControl>
