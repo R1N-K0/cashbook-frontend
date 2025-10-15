@@ -74,7 +74,7 @@ const renderActiveShape = (props: unknown) => {
         textAnchor={textAnchor}
         fill="#333"
       >
-        {`PV ${value}`}
+        {`${value}`}
       </text>
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
@@ -95,23 +95,51 @@ type Props = {
 
 export default function SimplePieChart(props: Props) {
   const { data } = props
+  const renderLegend = () => (
+    <ul className="flex flex-wrap lg:flex-col justify-center gap-4">
+      {data.map((entry, index) => (
+        <li key={index} className="flex items-center space-x-2">
+          <span
+            className="w-3 h-3 rounded-full"
+            style={{ backgroundColor: entry.color }}
+          ></span>
+          <span className="text-sm text-gray-700 font-medium">
+            {entry.name}
+          </span>
+        </li>
+      ))}
+    </ul>
+  )
   return (
-    <ResponsiveContainer width="100%" height={400}>
-      <PieChart width={600} height={600}>
-        <Pie
-          activeShape={renderActiveShape}
-          data={data}
-          cx="50%"
-          cy="50%"
-          innerRadius={100}
-          outerRadius={150}
-          dataKey="value"
-        >
-          {data.map((entry, index) => (
-            <Cell key={index} fill={entry.color} />
-          ))}
-        </Pie>
-      </PieChart>
-    </ResponsiveContainer>
+    <div className="flex flex-col lg:flex-row  justify-center items-center gap-4">
+      {data.length === 0 ? (
+        <div className="text-gray-500  lg:h-53 md:h-43 h-60 flex justify-center items-center">
+          データがありません
+        </div>
+      ) : (
+        <>
+          <div className="w-full max-w-md min-w-sm  lg:h-53 md:h-43 h-60">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  activeShape={renderActiveShape}
+                  data={data}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius="65%"
+                  outerRadius="90%"
+                  dataKey="value"
+                >
+                  {data.map((entry, index) => (
+                    <Cell key={index} fill={entry.color} />
+                  ))}
+                </Pie>
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+          {renderLegend()}
+        </>
+      )}
+    </div>
   )
 }

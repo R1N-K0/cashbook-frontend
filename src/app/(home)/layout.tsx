@@ -1,0 +1,65 @@
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { getAllCategory } from '@/features/category/actions/categoryAction'
+import ConfigWrapper from '@/features/components/ConfigWrapper'
+import MainHeader from '@/features/header/MainHeader'
+import MainSidebar from '@/features/sidebar/MainSideBar'
+import { getTransactionUsers } from '@/features/transaction-users/transactionUserAction'
+import { getAllTransaction } from '@/features/transactions/actions/transactionAction'
+import { SidebarProvider } from '@/provider/SideBarProvider'
+import type { ReactNode } from 'react'
+import { Toaster } from 'sonner'
+
+const HomeLayout = async ({ children }: { children: ReactNode }) => {
+  const CategoriesRes = await getAllCategory()
+  const UsersRes = await getTransactionUsers()
+  const TransactionsRes = await getAllTransaction()
+
+  if (!CategoriesRes.success)
+    if (!CategoriesRes.success) {
+      return (
+        <div className="grid grid-rows-[auto_1fr] h-full">
+          <MainHeader />
+          <div className="flex gird-cols-[auto_1fr] ">
+            <MainSidebar />
+            <Toaster richColors position="top-center" />
+            <div className="container-fluid h-full">
+              <Alert variant="destructive">
+                <AlertTitle>エラーが発生しました</AlertTitle>
+                <AlertDescription>{CategoriesRes.message}</AlertDescription>
+              </Alert>
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+  if (!UsersRes.success) {
+    return
+  }
+
+  if (!TransactionsRes.success) {
+    return
+  }
+
+  return (
+    <div className="grid grid-rows-[auto_1fr] h-full">
+      <SidebarProvider>
+        <MainHeader />
+        <div className="flex gird-cols-[auto_1fr] ">
+          <MainSidebar />
+
+          <Toaster richColors position="top-center" />
+          <ConfigWrapper
+            initialCategoriesData={CategoriesRes.data}
+            initialUsersData={UsersRes.data}
+            initialTransactionsData={TransactionsRes.data}
+          >
+            <div className="w-full">{children}</div>
+          </ConfigWrapper>
+        </div>
+      </SidebarProvider>
+    </div>
+  )
+}
+
+export default HomeLayout
