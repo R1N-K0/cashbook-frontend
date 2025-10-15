@@ -58,11 +58,7 @@ export const listColumns: ColumnDef<TransactionData>[] = [
     },
     cell: ({ row }) => (
       <div className="capitalize">
-        {row.original.updatedUser !== ' ' ? (
-          <div>{row.original?.updatedUser}</div>
-        ) : (
-          <div>{row.original?.createdUser ?? '不明'}</div>
-        )}
+        <div>{row.original?.createdUser ?? '不明'}</div>
       </div>
     ),
   },
@@ -212,7 +208,13 @@ export const listColumns: ColumnDef<TransactionData>[] = [
     },
     cell: ({ row }) => (
       <>
-        <Link href={`/transactions/edit/${row.getValue('id')}`}>
+        <Link
+          href={
+            row.getValue('editable')
+              ? `/transactions/edit/${row.getValue('id')}`
+              : '#'
+          }
+        >
           <button
             className={clsx(
               'rounded-lg',

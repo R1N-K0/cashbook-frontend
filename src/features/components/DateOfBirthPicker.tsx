@@ -11,6 +11,7 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover'
 import type { DateRange } from 'react-day-picker'
+import { RiArrowGoBackFill } from 'react-icons/ri'
 
 type props = {
   rangeDate: DateRange | undefined
@@ -21,20 +22,27 @@ const Calendar22 = ({ rangeDate, setRangeDate }: props) => {
   const [open, setOpen] = React.useState(false)
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 ">
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
-          <Button
-            variant="outline"
-            id="date"
-            className="w-48 justify-between font-normal"
-          >
+          <Button variant="outline" id="date" className="font-normal">
             {rangeDate?.from && rangeDate.to ? (
               `${rangeDate.from.toLocaleDateString()}～${rangeDate.to.toLocaleDateString()}`
             ) : (
               <div className="text-gray-600">期間</div>
             )}
-            <ChevronDownIcon />
+
+            {rangeDate?.from && rangeDate?.to ? (
+              <button
+                onClick={() => {
+                  setRangeDate(undefined)
+                }}
+              >
+                <RiArrowGoBackFill />
+              </button>
+            ) : (
+              <ChevronDownIcon />
+            )}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto overflow-hidden p-0" align="start">
