@@ -21,18 +21,20 @@ import type { FieldValues, UseControllerProps } from 'react-hook-form'
 export type Props<T extends FieldValues> = UseControllerProps<T> & {
   label: string
   date?: Date
+  defaultValue?: Date | null
 }
 
 export default function DateField<S extends FieldValues>({
   name,
   control,
   label,
-  date,
+  defaultValue,
 }: Props<S>) {
   return (
     <FormField
       control={control}
       name={name}
+      defaultValue={defaultValue}
       render={({ field }) => (
         <FormItem className="flex flex-col">
           <FormLabel>{label}</FormLabel>
@@ -48,9 +50,7 @@ export default function DateField<S extends FieldValues>({
                 >
                   {field.value
                     ? format(field.value, 'PPP', { locale: ja })
-                    : date
-                      ? format(date, 'PPP', { locale: ja })
-                      : '日付を入力してください'}
+                    : '日付を選択'}
 
                   <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                 </Button>
