@@ -41,7 +41,6 @@ export default function TransactionForm({
 
   const transaction = transactionDatas.find((data) => data.id === transactionId)
   const managerId = useManager(transaction, userData)
-  console.log('date', transaction?.date)
 
   useEffect(() => {
     if (transactionDatas && transactionId && formPageType !== 'create') {
