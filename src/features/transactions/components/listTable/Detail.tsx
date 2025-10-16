@@ -88,9 +88,9 @@ const Detail = ({ transactionId }: Props) => {
         <div className="flex p-4 gap-3">
           <div className="font-semibold whitespace-nowrap">却下理由</div>
           <Textarea
-            value={transaction?.memo}
             disabled
             className="px-1 border rounded-md cursor-not-allowed min-w-40 max-w-150"
+            value={transaction?.memo ?? ''}
           />
         </div>
       </div>

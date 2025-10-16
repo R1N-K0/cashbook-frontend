@@ -41,7 +41,6 @@ export default function TransactionForm({
 
   const transaction = transactionDatas.find((data) => data.id === transactionId)
   const managerId = useManager(transaction, userData)
-  console.log('date', transaction?.date)
 
   useEffect(() => {
     if (transactionDatas && transactionId && formPageType !== 'create') {
@@ -65,7 +64,7 @@ export default function TransactionForm({
           <DateField
             name="date"
             label="取引日"
-            date={
+            defaultValue={
               transaction?.date
                 ? utsToJst(new Date(transaction?.date))
                 : undefined
@@ -128,6 +127,7 @@ export default function TransactionForm({
           name="status"
           label="申請許可"
           disabled={formPageType === 'detail'}
+          defaultValue={transaction?.status?.toString() ?? undefined}
         />
 
         {status === false && (
