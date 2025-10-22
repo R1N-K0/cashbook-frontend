@@ -40,7 +40,7 @@ export default function ClosingButton() {
   return (
     <>
       <AlertDialog>
-        <AlertDialogTrigger>
+        <AlertDialogTrigger asChild>
           <Button variant="outline" className="text-gray-500">
             月末締めを行う
           </Button>
