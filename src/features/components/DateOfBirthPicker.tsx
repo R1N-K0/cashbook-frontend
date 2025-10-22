@@ -33,13 +33,13 @@ const Calendar22 = ({ rangeDate, setRangeDate }: props) => {
             )}
 
             {rangeDate?.from && rangeDate?.to ? (
-              <button
+              <div
                 onClick={() => {
                   setRangeDate(undefined)
                 }}
               >
                 <RiArrowGoBackFill />
-              </button>
+              </div>
             ) : (
               <ChevronDownIcon />
             )}

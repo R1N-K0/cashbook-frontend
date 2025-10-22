@@ -261,6 +261,8 @@ const ColorPicker = ({
   handleChange,
   inputRef,
 }: ColorPickerProps) => {
+  const latestHandleChange = useRef(handleChange)
+
   // Initialize from controlled prop or a default
   const [color, setColor] = useState<Color>(() => {
     const hex = sanitizeHex(default_value)
@@ -277,6 +279,16 @@ const ColorPicker = ({
       setColor((prev) => ({ ...prev, hex }))
     }
   }
+
+  useEffect(() => {
+    latestHandleChange.current = handleChange
+  }, [handleChange])
+
+  useEffect(() => {
+    if (!latestHandleChange.current) return
+    if (color.hex.length !== 6) return
+    latestHandleChange.current(color)
+  }, [color])
 
   return (
     <>
@@ -351,10 +363,6 @@ const ColorPicker = ({
                 s: value.s,
                 l: value.l,
               })
-              const newColor = { ...value, hex: hex_formatted }
-
-              if (handleChange) handleChange(newColor)
-
               return { ...value, hex: hex_formatted }
             })
           }}
