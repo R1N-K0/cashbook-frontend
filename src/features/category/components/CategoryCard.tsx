@@ -7,7 +7,7 @@ type Props = {
 
 export default function CategoryCard({ data }: Props) {
   return (
-    <div className="flex flex-row items-center justify-between rounded-2xl border border-gray-200 bg-white shadow-sm hover:shadow-md transition-shadow duration-200 p-4  w-full">
+    <div className="flex flex-row items-center justify-between rounded-2xl border border-gray-200 bg-white shadow-sm hover:shadow-md transition-shadow duration-200 p-4 mb-3  w-full">
       <div className="flex flex-row items-center space-x-4">
         <div
           style={{ color: data.color }}

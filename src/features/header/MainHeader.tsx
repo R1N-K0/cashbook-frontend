@@ -6,8 +6,6 @@ import {
   useSidebarIsOpen,
 } from '@/provider/SideBarProvider'
 
-import { TiThMenu } from 'react-icons/ti'
-
 export default function MainHeader() {
   const pageName = useHeaderTitle()
   const setIsOpen = useSidebarDispatch()
@@ -18,11 +16,17 @@ export default function MainHeader() {
       <nav className="fixed inset-x-0 top-0 z-50 bg-white py-2 px-7 border-b-2 border-gray-100">
         <div className="w-full flex flex-row items-center justify-items-center">
           <div className="flex mr-auto gap-9">
-            <TiThMenu
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
               onClick={() => setIsOpen(!IsOpen)}
-              size={24}
-              color="#364153"
-            />
+              className="w-7 h-auto hover:cursor-pointer"
+              viewBox="0 0 512 512"
+            >
+              <path
+                fill="#000000"
+                d="M80 96h352v32H80zm0 144h352v32H80zm0 144h352v32H80z"
+              />
+            </svg>
 
             <div className="text-xl font-extrabold text-gray-700">
               {pageName}
