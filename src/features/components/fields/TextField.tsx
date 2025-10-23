@@ -22,6 +22,7 @@ export default function TextField<T extends FieldValues>({
   placeholder,
   defaultValue,
   style,
+  disabled,
 }: TextFieldProps<T>) {
   return (
     <FormField
@@ -37,6 +38,7 @@ export default function TextField<T extends FieldValues>({
               placeholder={placeholder}
               style={style}
               rows={4}
+              disabled={disabled}
             />
           </FormControl>
           <FormMessage />

@@ -38,6 +38,7 @@ export default function NumberField<S extends FieldValues>({
                 const val = e.target.value === '' ? '' : Number(e.target.value)
                 field.onChange(val)
               }}
+              disabled={inputProps.disabled}
             />
           </FormControl>
 
