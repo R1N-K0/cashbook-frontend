@@ -3,7 +3,6 @@ import { Checkbox } from '@/components/ui/checkbox'
 import TransactionDeleteButton from '@/features/transactions/components/TransactionDeleteButton'
 import type { TransactionData } from '@/types'
 import type { ColumnDef } from '@tanstack/react-table'
-import clsx from 'clsx'
 import { ArrowUpDown } from 'lucide-react'
 import Link from 'next/link'
 
@@ -182,63 +181,30 @@ export const listColumns: ColumnDef<TransactionData>[] = [
     },
     cell: ({ row }) => (
       <>
-        <Link href={`/transactions/detail/${row.getValue('id')}`}>
-          <button>
+        <Link
+          href={`/transactions/edit/${row.getValue('id')}`}
+          className="group"
+        >
+          <div className="flex flex-row items-center space-x-1 text-gray-500 hover:text-gray-900 cursor-pointer">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="w-7 h-auto"
+              className="w-5 h-auto"
               viewBox="0 0 24 24"
             >
               <path
-                fill="currentColor"
-                d="m12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                fill="#000000"
+                d="m18 12l.354-.354l.353.354l-.353.354zm-12 .5a.5.5 0 0 1 0-1zm8.354-4.854l4 4l-.708.708l-4-4zm4 4.708l-4 4l-.708-.708l4-4zM18 12.5H6v-1h12z"
               />
             </svg>
-          </button>
+            <span className="text-gray-500 opacity-0 group-hover:opacity-100  transition-opacity duration-300">
+              詳細
+            </span>
+          </div>
         </Link>
       </>
     ),
   },
 
-  {
-    accessorKey: 'editable',
-    meta: { label: '編集' },
-    header: ({ column }) => {
-      return <>{column.columnDef.meta?.label}</>
-    },
-    cell: ({ row }) => (
-      <>
-        <Link
-          href={
-            row.getValue('editable')
-              ? `/transactions/edit/${row.getValue('id')}`
-              : '#'
-          }
-        >
-          <button
-            className={clsx(
-              'rounded-lg',
-              'hover:bg-gray-100',
-              row.getValue('editable')
-                ? 'text-blue-500 hover:cursor-pointer'
-                : 'text-gray-500 bg-gray-200 cursor-not-allowed',
-            )}
-          >
-            <svg
-              className="w-5 h-auto"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 1025 1023"
-            >
-              <path
-                fill="currentColor"
-                d="M896.428 1023h-768q-53 0-90.5-37.5T.428 895V127q0-53 37.5-90t90.5-37h576l-128 127h-384q-27 0-45.5 19t-18.5 45v640q0 27 19 45.5t45 18.5h640q27 0 45.5-18.5t18.5-45.5V447l128-128v576q0 53-37.5 90.5t-90.5 37.5zm-576-464l144 144l-208 64zm208 96l-160-159l479-480q17-16 40.5-16t40.5 16l79 80q16 16 16.5 39.5t-16.5 40.5z"
-              />
-            </svg>
-          </button>
-        </Link>
-      </>
-    ),
-  },
   {
     accessorKey: 'deletable',
     meta: { label: '削除' },
@@ -248,7 +214,7 @@ export const listColumns: ColumnDef<TransactionData>[] = [
     cell: ({ row }) => (
       <TransactionDeleteButton
         id={row.getValue('id')}
-        editable={row.getValue('editable')}
+        editable={row.original.editable}
       />
     ),
   },

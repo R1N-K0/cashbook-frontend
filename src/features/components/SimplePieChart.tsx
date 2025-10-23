@@ -118,7 +118,7 @@ export default function SimplePieChart(props: Props) {
         </div>
       ) : (
         <>
-          <div className="w-full max-w-md min-w-sm  lg:h-53 md:h-43 h-60">
+          <div className="w-full max-w-md   lg:h-53 md:h-43 h-60">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie

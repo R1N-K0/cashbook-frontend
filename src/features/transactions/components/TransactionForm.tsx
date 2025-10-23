@@ -83,7 +83,7 @@ export default function TransactionForm({
               onClick={
                 pageType !== 'create'
                   ? () => changePageType('detail')
-                  : methods.reset
+                  : () => methods.reset
               }
             >
               キャンセル
