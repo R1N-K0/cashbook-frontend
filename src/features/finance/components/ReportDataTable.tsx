@@ -15,20 +15,40 @@ export default function ReportDataTable({ data, year, month }: Props) {
     <div className="w-full pt-5">
       <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-4">
         <div className="w-full">
-          <FinanceCard title="収支" amount={data.balance} />
+          <FinanceCard
+            title="収支"
+            amount={data.balance}
+            change={data.balanceChange}
+          />
         </div>
         <div className="w-full">
-          <FinanceCard title="収入" amount={data.income} />
+          <FinanceCard
+            title="収入"
+            amount={data.income}
+            change={data.incomeChange}
+          />
         </div>
         <div className="w-full">
-          <FinanceCard title="支出" amount={data.expense} />
+          <FinanceCard
+            title="支出"
+            amount={data.expense}
+            change={data.expenseChange}
+          />
         </div>
         <div className="w-full">
-          <FinanceCard title="取引件数" amount={data.count} />
+          <FinanceCard
+            title="取引件数"
+            amount={data.count}
+            change={data.countChange}
+          />
         </div>
 
         <div className="w-full">
-          <FinanceCard title="却下" amount={data.cancelCount} />
+          <FinanceCard
+            title="却下"
+            amount={data.cancelCount}
+            change={data.cancelCountChange}
+          />
         </div>
       </div>
 

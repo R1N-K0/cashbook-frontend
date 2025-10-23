@@ -127,13 +127,17 @@ export type AmountByUser = {
 
 export type ReportRes = {
   balance: number
+  balanceChange: number
   count: number
+  countChange: number
   cancelCount: number
+  cancelCountChange: number
   expense: number
+  expenseChange: number
   expenseByCategory: PieChartData[]
   incomeByCategory: PieChartData[]
   income: number
-  profitLoss: number
+  incomeChange: number
   incomeByUser: BarChartData[]
   expenseByUser: BarChartData[]
   transactions: TransactionData[]
