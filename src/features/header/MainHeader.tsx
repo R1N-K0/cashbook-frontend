@@ -15,7 +15,7 @@ export default function MainHeader() {
 
   return (
     <>
-      <nav className="py-2 px-7 border-b-2 border-gray-100 ">
+      <nav className="fixed inset-x-0 top-0 z-50 bg-white py-2 px-7 border-b-2 border-gray-100">
         <div className="w-full flex flex-row items-center justify-items-center">
           <div className="flex mr-auto gap-9">
             <TiThMenu
