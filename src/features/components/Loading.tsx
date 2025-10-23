@@ -5,7 +5,7 @@ export default function Loading() {
     <div className="flex flex-col justify-center items-center space-y-2 h-150 font-size-2xl">
       <Spinner variant="bars" />
       <div>
-        <span>取得中です...</span>
+        <span>データを取得中です...</span>
       </div>
     </div>
   )
