@@ -43,15 +43,11 @@ export default function CategoryTable() {
   return (
     <>
       <div className="w-full container-fluid px-8 py-8 flex flex-col space-y-5">
-        <div className="flex flex-row items-center justify-between">
-          <div className="text-3xl font-bold text-gray-700">カテゴリー管理</div>
+        <div className="flex flex-row items-end justify-between">
+          <SearchBox setState={setKeyword} placeholder="カテゴリーを検索" />
           <div>
             <ModalForm />
           </div>
-        </div>
-
-        <div className="flex flex-row items-center justify-end gap-5">
-          <SearchBox setState={setKeyword} placeholder="カテゴリーを検索" />
         </div>
 
         {isLoading ? (
