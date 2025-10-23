@@ -16,7 +16,7 @@ import useCategorySWR from '@/hooks/useCategorySWR'
 import useTransactionSWR from '@/hooks/useTransactionSWR'
 import useUsersSWR from '@/hooks/useUsersSWR'
 import type { formPageType } from '@/types'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { FormProvider } from 'react-hook-form'
 
 type props = {
@@ -31,6 +31,8 @@ export default function TransactionForm({
   const { data: categoryData } = useCategorySWR()
   const { data: userData } = useUsersSWR()
   const { data: transactionDatas } = useTransactionSWR()
+  const [inputPossible, setInputPossible] = useState(true)
+  const [pageType, setPageType] = useState<formPageType>(formPageType)
 
   const { methods, onSubmit, selectedUser, status } = useTransactionForm({
     userData,
@@ -42,8 +44,15 @@ export default function TransactionForm({
   const transaction = transactionDatas.find((data) => data.id === transactionId)
   const managerId = useManager(transaction, userData)
 
+  const changePageType = (pageType: formPageType) => {
+    if (pageType === 'detail') {
+      setInputPossible(true)
+      setPageType(pageType)
+    }
+  }
+
   useEffect(() => {
-    if (transactionDatas && transactionId && formPageType !== 'create') {
+    if (transactionDatas && transactionId && pageType !== 'create') {
       if (transaction) {
         methods.setValue('title', transaction.title)
         methods.setValue('description', transaction.description)
@@ -51,7 +60,7 @@ export default function TransactionForm({
         methods.setValue('amount', transaction.amount)
       }
     }
-  }, [transactionDatas, transactionId, formPageType, methods, transaction])
+  }, [transactionDatas, transactionId, pageType, methods, transaction])
 
   return (
     <FormProvider {...methods}>
@@ -59,6 +68,32 @@ export default function TransactionForm({
         onSubmit={methods.handleSubmit(onSubmit)}
         className="space-y-8 mx-auto px-8 lg:container-fluid container lg:max-w-5xl"
       >
+        <div className="flex flex-row justify-end items-center space-x-3 px-55">
+          {inputPossible !== true && (
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => changePageType('detail')}
+            >
+              キャンセル
+            </Button>
+          )}
+
+          {inputPossible !== true && (
+            <Button type="submit" onClick={() => changePageType('edit')}>
+              {pageType === 'create' ? '取引を登録する' : '取引を更新する'}
+            </Button>
+          )}
+
+          {inputPossible && (
+            <Button
+              type="button"
+              onClick={() => setInputPossible(!inputPossible)}
+            >
+              編集
+            </Button>
+          )}
+        </div>
         <FormError />
         <div className="flex flex-row justify-start items-center space-x-3">
           <DateField
@@ -69,21 +104,22 @@ export default function TransactionForm({
                 ? utsToJst(new Date(transaction?.date))
                 : undefined
             }
+            disabled={inputPossible}
           />
           <div className="flex flex-row items-end space-x-2">
             <UserSelectField
               name="createdUserId"
               label="申請者"
               data={userData}
-              style={formPageType === 'detail' ? { pointerEvents: 'none' } : {}}
+              style={pageType === 'detail' ? { pointerEvents: 'none' } : {}}
               managerId={managerId}
+              disabled={inputPossible}
             />
             <p className="text-sm text-gray-500 mt-0">
               残り上限: {selectedUser?.remainingAmount}円
             </p>
           </div>
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-5 gap-2">
           <div className="col-span-3">
             <InputField
@@ -91,7 +127,7 @@ export default function TransactionForm({
               name="title"
               label="取引内容"
               placeholder="取引内容を入力"
-              readOnly={formPageType === 'detail'}
+              disabled={inputPossible}
             />
           </div>
           <CategorySelectField
@@ -99,9 +135,9 @@ export default function TransactionForm({
             label="カテゴリー"
             data={categoryData}
             style={formPageType === 'detail' ? { pointerEvents: 'none' } : {}}
+            disabled={inputPossible}
           />
         </div>
-
         <div className="grid grid-cols-5 items-center space-x-3">
           <div className="col-span-3">
             <InputField
@@ -109,8 +145,8 @@ export default function TransactionForm({
               name="description"
               label="取引理由"
               placeholder="取引理由を入力"
-              readOnly={formPageType === 'detail'}
               className="flex-grow w-full"
+              disabled={inputPossible}
             />
           </div>
           <NumberField
@@ -118,44 +154,25 @@ export default function TransactionForm({
             name="amount"
             placeholder="取引金額を入力"
             label="取引金額"
-            readOnly={formPageType === 'detail'}
+            disabled={inputPossible}
           />
         </div>
-
         <BoolSelectField
           control={methods.control}
           name="status"
           label="申請許可"
-          disabled={formPageType === 'detail'}
           defaultValue={transaction?.status?.toString() ?? undefined}
+          disabled={inputPossible}
         />
-
         {status === false && (
           <TextField
             control={methods.control}
             name="memo"
             placeholder="却下理由を入力"
             label="却下理由"
-            disabled={formPageType === 'detail'}
             defaultValue={transaction?.memo ?? ''}
+            disabled={inputPossible}
           />
-        )}
-
-        {formPageType !== 'detail' && (
-          <div className="grid grid-cols-2 w-full gap-5">
-            <Button
-              type="button"
-              variant="outline"
-              className="w-full"
-              onClick={() => methods.reset()}
-            >
-              キャンセル
-            </Button>
-
-            <Button type="submit" className="w-full">
-              {formPageType === 'create' ? '取引を登録する' : '取引を更新する'}
-            </Button>
-          </div>
         )}
       </form>
     </FormProvider>

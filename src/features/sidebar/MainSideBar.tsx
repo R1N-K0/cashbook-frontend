@@ -17,7 +17,7 @@ const MainSidebar = () => {
   return (
     <aside className="sticky top-0 self-start h-[calc(100vh)] pt-9 bg-white border-r border-gray-100">
       {isOpen && (
-        <div className="flex flex-col py-8 gap-6 border-r-2 border-gray-100 h-full ">
+        <div className="flex flex-col py-8 gap-6 border-r-1 border-gray-100 h-full ">
           {items.map((item) => (
             <div key={item.title} className="w-full px-8 hover:bg-gray-100">
               <Link href={item.url}>
