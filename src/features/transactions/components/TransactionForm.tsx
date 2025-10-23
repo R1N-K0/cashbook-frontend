@@ -82,8 +82,11 @@ export default function TransactionForm({
               variant="outline"
               onClick={
                 pageType !== 'create'
-                  ? () => changePageType('detail')
-                  : () => methods.reset
+                  ? () => {
+                      changePageType('detail')
+                      methods.reset()
+                    }
+                  : () => methods.reset()
               }
             >
               キャンセル
@@ -97,16 +100,22 @@ export default function TransactionForm({
               </Button>
             )}
 
-          {inputPossible && pageType !== 'create' && (
-            <Button
-              type="button"
-              onClick={() => {
-                setInputPossible(!inputPossible)
-                changePageType('edit')
-              }}
-            >
-              編集
-            </Button>
+          {transaction?.editable ? (
+            inputPossible &&
+            pageType !== 'create' && (
+              <Button
+                onClick={() => {
+                  setInputPossible(false)
+                  setPageType('edit')
+                }}
+              >
+                編集する
+              </Button>
+            )
+          ) : (
+            <div className="px-2 py-1 bg-orange-200 text-orange-800 rounded-sm text-sm font-medium">
+              締め処理済み
+            </div>
           )}
         </div>
         <FormError />
