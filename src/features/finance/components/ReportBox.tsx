@@ -27,7 +27,7 @@ export default function ReportBox() {
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full pt-3">
       <div className="flex flex-row items-center justify-start space-x-2">
         <MonthYearPicker
           year={year}
