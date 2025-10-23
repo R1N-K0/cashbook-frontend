@@ -1,9 +1,11 @@
 'use client'
 import { useSidebarIsOpen } from '@/provider/SideBarProvider'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 const MainSidebar = () => {
   const isOpen = useSidebarIsOpen()
+  const currentPath = usePathname()
   const items = [
     { title: 'ホーム', url: '/' },
     { title: '取引一覧', url: '/transactions' },
@@ -15,11 +17,17 @@ const MainSidebar = () => {
   return (
     <div className="flex">
       {isOpen && (
-        <div className="flex flex-col p-8 gap-6 border-r-2 border-gray-100 h-full ">
+        <div className="flex flex-col py-8 gap-6 border-r-2 border-gray-100 h-full ">
           {items.map((item) => (
-            <div key={item.title}>
+            <div key={item.title} className="w-full px-8 hover:bg-gray-100">
               <Link href={item.url}>
-                <span className="whitespace-nowrap">{item.title}</span>
+                {currentPath === item.url ? (
+                  <span className="whitespace-nowrap text-blue-500 font-bold">
+                    {item.title}
+                  </span>
+                ) : (
+                  <span className="whitespace-nowrap">{item.title}</span>
+                )}
               </Link>
             </div>
           ))}
