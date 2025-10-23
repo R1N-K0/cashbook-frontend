@@ -52,8 +52,15 @@ export default function TransactionForm({
   }
 
   useEffect(() => {
+    if (pageType === 'create') {
+      setInputPossible(false)
+    }
+  }, [pageType])
+
+  useEffect(() => {
     if (transactionDatas && transactionId && pageType !== 'create') {
       if (transaction) {
+        console.log('useEffect')
         methods.setValue('title', transaction.title)
         methods.setValue('description', transaction.description)
         methods.setValue('memo', transaction.memo ?? '')
@@ -73,22 +80,30 @@ export default function TransactionForm({
             <Button
               type="button"
               variant="outline"
-              onClick={() => changePageType('detail')}
+              onClick={
+                pageType !== 'create'
+                  ? () => changePageType('detail')
+                  : methods.reset
+              }
             >
               キャンセル
             </Button>
           )}
 
-          {inputPossible !== true && (
-            <Button type="submit" onClick={() => changePageType('edit')}>
-              {pageType === 'create' ? '取引を登録する' : '取引を更新する'}
-            </Button>
-          )}
+          {inputPossible !== true &&
+            (pageType === 'create' || pageType === 'edit') && (
+              <Button type="submit">
+                {pageType === 'create' ? '取引を登録する' : '取引を更新する'}
+              </Button>
+            )}
 
-          {inputPossible && (
+          {inputPossible && pageType !== 'create' && (
             <Button
               type="button"
-              onClick={() => setInputPossible(!inputPossible)}
+              onClick={() => {
+                setInputPossible(!inputPossible)
+                changePageType('edit')
+              }}
             >
               編集
             </Button>
