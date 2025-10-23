@@ -263,13 +263,12 @@ const ColorPicker = ({
 }: ColorPickerProps) => {
   const latestHandleChange = useRef(handleChange)
 
-  // Initialize from controlled prop or a default
   const [color, setColor] = useState<Color>(() => {
     const hex = sanitizeHex(default_value)
     const hsl = hexToHsl({ hex })
     return { ...hsl, hex: sanitizeHex(hex) }
   })
-  // Update from hex input
+
   const handleHexInputChange = (newVal: string) => {
     const hex = sanitizeHex(newVal)
     if (hex.length === 6) {

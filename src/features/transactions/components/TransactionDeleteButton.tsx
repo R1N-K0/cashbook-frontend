@@ -47,10 +47,12 @@ export default function TransactionDeleteButton({ id, editable }: Props) {
             <AlertDialogHeader>
               <AlertDialogTitle>本当に削除しますか？</AlertDialogTitle>
               <AlertDialogDescription>
-                <div className="font-semibold">この操作は元に戻せません。</div>
-                <div>
+                <span className="block font-semibold">
+                  この操作は元に戻せません。
+                </span>
+                <span className="block">
                   この操作によって取引データはダッシュボードから削除されます。
-                </div>
+                </span>
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
