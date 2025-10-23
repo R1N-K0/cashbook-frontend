@@ -16,7 +16,6 @@ export default function SearchBox({ placeholder, setState }: Props) {
       onChange={(e) => setText(e.target.value)}
       onKeyDown={handleKeyDown}
       placeholder={placeholder}
-      className="w-64"
     />
   )
 }
