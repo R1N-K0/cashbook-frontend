@@ -27,7 +27,7 @@ export default function FinanceCard(props: Props) {
           </span>
         ) : (
           <span className="text-xs font-medium px-1 rounded-sm text-gray-300 bg-gray-100">
-            先月0
+            {title === '却下' || title === '取引件数' ? '±0%' : '先月 0'}
           </span>
         )}
       </div>
