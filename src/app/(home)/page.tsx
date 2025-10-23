@@ -72,7 +72,7 @@ const Home = async () => {
   const categoryIncomeData: PieChartData[] = data.incomeByCategory
 
   return (
-    <div className="container-fluid lg:container px-8 mx-auto h-full">
+    <div className="container-fluid lg:container px-8 mx-auto h-full pb-4">
       <div className="pt-3">
         <FinanceCardList simpleCardData={cardData} />
         <div className="grid grid-flow-row gap-8 grid-cols-1 lg:grid-cols-2 ">
