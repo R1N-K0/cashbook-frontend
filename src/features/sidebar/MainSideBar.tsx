@@ -13,13 +13,13 @@ const MainSidebar = () => {
   ]
 
   return (
-    <aside className="sticky top-0 self-start h-[calc(100vh)] pt-8 bg-white border-r border-gray-100">
+    <aside className="sticky top-0 self-start h-[calc(100vh)] pt-9 bg-white border-r border-gray-100">
       {isOpen && (
-        <div className="flex h-full flex-col gap-6 overflow-y-auto px-8 py-10">
+        <div className="flex h-full flex-col gap-6 overflow-y-auto px-4 py-6">
           {items.map((item) => (
             <div key={item.title}>
               <Link href={item.url}>
-                <span className="whitespace-nowrap">{item.title}</span>
+                <span className="whitespace-nowrap ">{item.title}</span>
               </Link>
             </div>
           ))}
