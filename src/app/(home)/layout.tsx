@@ -46,7 +46,7 @@ const HomeLayout = async ({ children }: { children: ReactNode }) => {
       <SidebarProvider>
         <MainHeader />
         <div className="flex gird-cols-[auto_1fr] ">
-          <MainSidebar />
+          {/* <MainSidebar /> */}
 
           <Toaster richColors position="top-center" />
           <ConfigWrapper
