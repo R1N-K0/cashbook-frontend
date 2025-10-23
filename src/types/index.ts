@@ -76,21 +76,26 @@ export type ProfitLossByMonth = {
 
 export type FinanceReq = {
   balance: number
+  balanceChange: number
   expense: number
+  expenseChange: number
   count: number
+  countChange: number
   cancelCount: number
+  cancelCountChange: number
   expenseByCategory: PieChartData[]
   incomeByCategory: PieChartData[]
   income: number
+  incomeChange: number
   profitLoss: number
+  profitLossChange: number
   profitLossByMonth: ProfitLossByMonth[]
-  monthExpenseChange: number
-  monthIncomeChange: number
 }
 
 export type SimpleCardData = {
   name: string
   amount: number
+  change?: number
 }
 
 export type linerCardData = SimpleCardData & {

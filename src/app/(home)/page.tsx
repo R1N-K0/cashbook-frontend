@@ -32,18 +32,24 @@ const Home = async () => {
   const currentIncome = data.income
 
   const cardData: SimpleCardData[] = [
-    { name: '総残高', amount: data.balance },
+    { name: '総残高', amount: data.balance, change: data.balanceChange },
     {
       name: '今月の収入',
       amount: data.income,
+      change: data.incomeChange,
     },
     {
       name: '今月の支出',
       amount: data.expense,
+      change: data.expenseChange,
     },
-    { name: '月間収支', amount: data.profitLoss },
-    { name: '取引件数', amount: data.count },
-    { name: '却下', amount: data.cancelCount },
+    {
+      name: '月間収支',
+      amount: data.profitLoss,
+      change: data.profitLossChange,
+    },
+    { name: '取引件数', amount: data.count, change: data.countChange },
+    { name: '却下', amount: data.cancelCount, change: data.cancelCountChange },
   ]
 
   const barChartData: BarChartData[] = data.profitLossByMonth.map((val) => ({
