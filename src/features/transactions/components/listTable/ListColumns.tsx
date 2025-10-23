@@ -164,7 +164,7 @@ export const listColumns: ColumnDef<TransactionData>[] = [
           <span
             className={`
             px-2 py-1 rounded-xs text-xs font-semibold 
-            ${row.original.status ? 'bg-gray-200 text-gray-800' : 'bg-orange-200 text-orange-800'}
+            ${row.original.status ? 'bg-blue-200 text-blue-800' : 'bg-gray-200 text-gray-800'}
           `}
           >
             {row.original.status ? '許可' : '却下'}
@@ -225,7 +225,7 @@ export const listColumns: ColumnDef<TransactionData>[] = [
             )}
           >
             <svg
-              className="w-7 h-auto"
+              className="w-5 h-auto"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 1025 1023"
             >
