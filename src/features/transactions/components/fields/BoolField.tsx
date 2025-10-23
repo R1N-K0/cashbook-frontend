@@ -41,7 +41,7 @@ export default function BoolSelectField<S extends FieldValues>({
           <Select
             {...selectProps}
             onValueChange={(val: string) => field.onChange(val === 'true')}
-            defaultValue={field.value ? field.value.toString() : defaultValue}
+            value={field.value ? field.value.toString() : defaultValue}
           >
             <FormControl>
               <SelectTrigger style={style}>
