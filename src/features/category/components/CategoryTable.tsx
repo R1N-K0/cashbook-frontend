@@ -79,14 +79,18 @@ export default function CategoryTable() {
           </div>
         ) : (
           <div className="grid lg:gap-12 gap-5 lg:grid-cols-2 grid-cols-1">
-            <CategoriesList
-              name="支出カテゴリ"
-              categories={selectedCategory.expense}
-            />
-            <CategoriesList
-              name="収入カテゴリ"
-              categories={selectedCategory.income}
-            />
+            <div className={filter === '収入' ? 'hidden' : ''}>
+              <CategoriesList
+                name="支出カテゴリ"
+                categories={selectedCategory.expense}
+              />
+            </div>
+            <div className={filter === '支出' ? 'hidden' : ''}>
+              <CategoriesList
+                name="収入カテゴリ"
+                categories={selectedCategory.income}
+              />
+            </div>
           </div>
         )}
       </div>
