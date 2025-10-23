@@ -100,10 +100,11 @@ export default function TransactionForm({
               </Button>
             )}
 
-          {transaction?.editable ? (
-            inputPossible &&
-            pageType !== 'create' && (
+          {inputPossible &&
+            pageType !== 'create' &&
+            (transaction?.editable !== false ? (
               <Button
+                type="button"
                 onClick={() => {
                   setInputPossible(false)
                   setPageType('edit')
@@ -111,12 +112,11 @@ export default function TransactionForm({
               >
                 編集する
               </Button>
-            )
-          ) : (
-            <div className="px-2 py-1 bg-orange-200 text-orange-800 rounded-sm text-sm font-medium">
-              締め処理済み
-            </div>
-          )}
+            ) : (
+              <div className="px-2 py-1 bg-orange-200 text-orange-800 rounded-sm text-sm font-medium">
+                締め処理済みデータ
+              </div>
+            ))}
         </div>
         <FormError />
         <div className="flex flex-row justify-start items-center space-x-3">
@@ -188,7 +188,7 @@ export default function TransactionForm({
           defaultValue={transaction?.status?.toString() ?? undefined}
           disabled={inputPossible}
         />
-        {status === false && (
+        {status === false ? (
           <TextField
             control={methods.control}
             name="memo"
@@ -197,7 +197,7 @@ export default function TransactionForm({
             defaultValue={transaction?.memo ?? ''}
             disabled={inputPossible}
           />
-        )}
+        ) : null}
       </form>
     </FormProvider>
   )
