@@ -45,15 +45,19 @@ export default function CategoryCard({ data }: Props) {
       </div>
 
       <div className="flex flex-row items-center justify-end space-x-0">
-        <button className="p-2 rounded-lg hover:bg-gray-100 text-gray-500">
+        <button className="p-2 rounded-sm hover:bg-gray-100 text-gray-500 cursor-pointer">
           <svg
-            className="w-7 h-auto"
             xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 1025 1023"
+            className="w-7 h-auto"
+            viewBox="0 0 24 24"
           >
             <path
-              fill="currentColor"
-              d="M896.428 1023h-768q-53 0-90.5-37.5T.428 895V127q0-53 37.5-90t90.5-37h576l-128 127h-384q-27 0-45.5 19t-18.5 45v640q0 27 19 45.5t45 18.5h640q27 0 45.5-18.5t18.5-45.5V447l128-128v576q0 53-37.5 90.5t-90.5 37.5zm-576-464l144 144l-208 64zm208 96l-160-159l479-480q17-16 40.5-16t40.5 16l79 80q16 16 16.5 39.5t-16.5 40.5z"
+              fill="none"
+              stroke="#000000"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1.5"
+              d="M4 21h16M5.666 13.187A2.278 2.278 0 0 0 5 14.797V18h3.223c.604 0 1.183-.24 1.61-.668l9.5-9.505a2.278 2.278 0 0 0 0-3.22l-.938-.94a2.277 2.277 0 0 0-3.222.001l-9.507 9.52Z"
             />
           </svg>
         </button>
