@@ -10,7 +10,7 @@ export default function FinanceCard(props: Props) {
     <div className="container  sm:max-w-xs min-w-3  bg-white w-full flex flex-col border border-gray-200 items-start py-4 justify-center space-y-2 shadow-sm rounded-lg px-4">
       <div className="flex flex-row items-center justify-start md:space-x-2 space-x-1">
         <div className=" font-semibold text-gray-400">{title}</div>
-        {change !== undefined && change !== 0 && (
+        {change !== undefined && change !== 0 ? (
           <span
             className={`text-xs font-medium px-1 rounded-sm ${
               title === '却下'
@@ -24,6 +24,10 @@ export default function FinanceCard(props: Props) {
           >
             {change > 0 ? '+' : '-'}
             {Math.abs(change).toLocaleString()}%
+          </span>
+        ) : (
+          <span className="text-xs font-medium px-1 rounded-sm text-gray-300 bg-gray-100">
+            先月0
           </span>
         )}
       </div>
