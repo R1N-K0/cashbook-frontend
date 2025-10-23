@@ -46,6 +46,7 @@ export default function UserSelectField<S extends FieldValues>({
             {...selectProps}
             onValueChange={(val: string) => field.onChange(Number(val))}
             defaultValue={managerId ? managerId : undefined}
+            value={field.value?.toString()}
           >
             <FormControl>
               <SelectTrigger style={style}>
