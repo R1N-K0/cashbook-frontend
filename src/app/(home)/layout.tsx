@@ -54,7 +54,7 @@ const HomeLayout = async ({ children }: { children: ReactNode }) => {
             initialUsersData={UsersRes.data}
             initialTransactionsData={TransactionsRes.data}
           >
-            <div className="w-full">{children}</div>
+            <div className="w-full pt-8">{children}</div>
           </ConfigWrapper>
         </div>
       </SidebarProvider>

@@ -13,9 +13,9 @@ const MainSidebar = () => {
   ]
 
   return (
-    <div className="flex">
+    <aside className="sticky top-0 self-start h-[calc(100vh)] pt-8 bg-white border-r border-gray-100">
       {isOpen && (
-        <div className="flex flex-col p-8 gap-6 border-r-2 border-gray-100 h-full ">
+        <div className="flex h-full flex-col gap-6 overflow-y-auto px-8 py-10">
           {items.map((item) => (
             <div key={item.title}>
               <Link href={item.url}>
@@ -25,7 +25,7 @@ const MainSidebar = () => {
           ))}
         </div>
       )}
-    </div>
+    </aside>
   )
 }
 
