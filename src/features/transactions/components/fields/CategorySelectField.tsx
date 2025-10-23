@@ -47,7 +47,7 @@ export default function CategorySelectField<S extends FieldValues>({
           <Select
             {...selectProps}
             onValueChange={(val: string) => field.onChange(Number(val))}
-            defaultValue={field.value?.toString()}
+            value={field.value?.toString()}
           >
             <FormControl>
               <SelectTrigger style={style}>

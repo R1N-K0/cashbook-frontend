@@ -33,7 +33,6 @@ export default function UserSelectField<S extends FieldValues>({
   data,
   style,
   managerId,
-  disabled,
   ...selectProps
 }: Props<S>) {
   return (
@@ -47,7 +46,6 @@ export default function UserSelectField<S extends FieldValues>({
             {...selectProps}
             onValueChange={(val: string) => field.onChange(Number(val))}
             defaultValue={managerId ? managerId : undefined}
-            disabled={disabled}
           >
             <FormControl>
               <SelectTrigger style={style}>
