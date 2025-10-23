@@ -23,8 +23,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { DataTablePagination } from '@/features/transaction-users/components/DataTable/pagination'
 import { listColumns } from '@/features/transactions/components/listTable/ListColumns'
+import { DataTablePagination } from '@/features/transactions/components/listTable/Pagination'
 import type { TransactionData } from '@/types'
 
 type Props = {

@@ -70,10 +70,10 @@ const TransactionTable = () => {
       {transactionIsValidating || categoryIsValidating || staffIsValidating ? (
         <Loading />
       ) : (
-        <div className="grid grid-rows-[auto_1fr] h-full px-8 pt-5">
+        <div className="grid grid-rows-[auto_1fr] h-full px-8 pt-6">
           <div>
             <div className="flex justify-between items-center">
-              <div className="flex flex-row items-center justify-center gap-5 pt-3">
+              <div className="flex flex-row items-center justify-center gap-5 ">
                 <Calendar22 rangeDate={rangeDate} setRangeDate={setRangeDate} />
                 <FilterBox
                   placeholder="収支"
