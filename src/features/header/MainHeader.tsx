@@ -15,8 +15,8 @@ export default function MainHeader() {
 
   return (
     <>
-      <nav className="py-2 px-7 border-b-4">
-        <div className="w-full flex flex-row items-center">
+      <nav className="py-2 px-7 border-b-2 border-gray-100 ">
+        <div className="w-full flex flex-row items-center justify-items-center">
           <div className="flex mr-auto gap-9">
             <TiThMenu
               onClick={() => setIsOpen(!IsOpen)}
