@@ -20,6 +20,15 @@ type props = {
 
 const Calendar22 = ({ rangeDate, setRangeDate }: props) => {
   const [open, setOpen] = React.useState(false)
+  const [isMounted, setIsMounted] = React.useState(false)
+
+  React.useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
+  if (!isMounted) {
+    return <div className="h-9 w-[240px]" />
+  }
 
   return (
     <div className="flex flex-col gap-3 ">
