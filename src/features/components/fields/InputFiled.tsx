@@ -27,6 +27,7 @@ export default function InputField<S extends FieldValues>({
       <FormField
         control={control}
         name={name}
+        disabled={inputProps.disabled}
         render={({ field }) => (
           <FormItem>
             <FormLabel>{label}</FormLabel>

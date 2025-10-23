@@ -29,6 +29,7 @@ export default function DateField<S extends FieldValues>({
   control,
   label,
   defaultValue,
+  disabled,
 }: Props<S>) {
   return (
     <FormField
@@ -42,6 +43,7 @@ export default function DateField<S extends FieldValues>({
             <PopoverTrigger asChild>
               <FormControl>
                 <Button
+                  disabled={disabled}
                   variant="outline"
                   className={cn(
                     'w-[240px] pl-3 text-left font-normal',
