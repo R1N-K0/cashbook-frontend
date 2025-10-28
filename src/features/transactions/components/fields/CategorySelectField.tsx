@@ -22,7 +22,8 @@ type SelectProps = React.ComponentProps<typeof Select>
 export type Props<T extends FieldValues> = SelectProps &
   UseControllerProps<T> & {
     label: string
-    data: CategoryRes
+    categoryData: CategoryRes
+    selectedDataId?: string
     style?: React.CSSProperties
   }
 
@@ -30,12 +31,13 @@ export default function CategorySelectField<S extends FieldValues>({
   name,
   control,
   label,
-  data,
+  categoryData,
+  selectedDataId,
   style,
 
   ...selectProps
 }: Props<S>) {
-  const datas = [...data?.expense, ...data?.income]
+  const datas = [...categoryData?.expense, ...categoryData?.income]
 
   return (
     <FormField
@@ -47,7 +49,10 @@ export default function CategorySelectField<S extends FieldValues>({
           <Select
             {...selectProps}
             onValueChange={(val: string) => field.onChange(Number(val))}
-            value={field.value?.toString()}
+            value={
+              datas.find((item) => item.id === selectedDataId)?.id ??
+              datas[0]?.id
+            }
           >
             <FormControl>
               <SelectTrigger style={style}>

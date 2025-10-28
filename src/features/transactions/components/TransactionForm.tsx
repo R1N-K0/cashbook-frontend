@@ -60,7 +60,6 @@ export default function TransactionForm({
   useEffect(() => {
     if (transactionDatas && transactionId && pageType !== 'create') {
       if (transaction) {
-        console.log('useEffect')
         methods.setValue('title', transaction.title)
         methods.setValue('description', transaction.description)
         methods.setValue('memo', transaction.memo ?? '')
@@ -158,7 +157,8 @@ export default function TransactionForm({
           <CategorySelectField
             name="categoryId"
             label="カテゴリー"
-            data={categoryData}
+            categoryData={categoryData}
+            selectedDataId={transaction?.category.id.toString()}
             style={formPageType === 'detail' ? { pointerEvents: 'none' } : {}}
             disabled={inputPossible}
           />
